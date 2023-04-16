@@ -1,20 +1,13 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "tty.h"
-#include <ctype.h>
+#include <stdbool.h>
+#include "editor.h"
 
-int main()
+int main(int argc, char **argv)
 {
-	tty_raw_mode();
-	char c = tty_get_char();
-	while (c) {
-		printf("%c\n", c);
-		if (CTRL_KEY('q') == c) {
-			printf("we got a 'q'\n");
-			break;
-		}
-		c = tty_get_char();
-	}
-	tty_cooked_mode();
+	editor_init();
+	if (argc > 1)
+		editor_file_open(argv[1]);
+	editor_close();
 	return 0;
 }

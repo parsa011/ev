@@ -1,5 +1,5 @@
 CC = gcc
-PROGRAM = em
+PROGRAM = ev
 BUILD_PATH = build
 CC_FLAGS = -g -Wall
 
