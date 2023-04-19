@@ -3,6 +3,6 @@
 
 bool prompt_bool(char *message)
 {
-	printf("%s\n", message);
+	puts(message);
 	return true;
 }

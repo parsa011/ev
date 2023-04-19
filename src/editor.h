@@ -3,8 +3,16 @@
 
 #include "basic.h"
 
+
+typedef enum {
+	INSERT,
+	LOCK,
+	PROMPT
+} editor_mode;
+
 typedef struct {
 	char *file_path;
+	editor_mode mode;
 } editor_t;
 
 /*
@@ -17,6 +25,12 @@ void editor_init();
  * question and this kind of stuff
  */
 void editor_close();
+
+
+/*
+ * runs editor infinite loop, taking command and doing them
+ */
+return_message editor_run();
 
 /*
  * opens given file path into our gloabl editor variable 'editor'
