@@ -4,6 +4,6 @@
 #include "base.h"
 #include "../basic.h"
 
-return_message q_command(COMMAND_FUNCTION_ARGS);
+return_message q_command(char **args);
 
 #endif

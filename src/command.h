@@ -25,6 +25,11 @@ command command_read();
 command command_get(char *pattern);
 
 /*
+ * returns true if we have any command that its key_codes start with (or is equal to the given pattern
+ */
+bool command_exists(char *pattern);
+
+/*
  * just prints command in human readable format
  */
 void command_print(command cmd);
