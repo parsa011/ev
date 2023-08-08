@@ -60,44 +60,53 @@ public char tty_get_char(int *remaining)
 public void tty_clear()
 {
 	printf("\033[H\033[2J");
+	fflush(stdout);
 }
 
 public void tty_cursor_hide()
 {
 	printf("\033[?25l");
+	fflush(stdout);
 }
 
 public void tty_cursor_show()
 {
 	printf("\033[?25h");
+	fflush(stdout);
 }
 
 public void tty_cursor_store()
 {
 	printf("\0337");
+	fflush(stdout);
 }
 
 public void tty_cursor_restore()
 {
 	printf("\0338");
+	fflush(stdout);
 }
 
 public void tty_cursor_line_next()
 {
 	printf("\x1b[B");
+	fflush(stdout);
 }
 
 public void tty_cursor_line_prev()
 {
 	printf("\x1b[A");
+	fflush(stdout);
 }
 
 public void tty_cursor_char_next()
 {
 	printf("\x1b[C");
+	fflush(stdout);
 }
 
 public void tty_cursor_char_prev()
 {
 	printf("\x1b[D");
+	fflush(stdout);
 }

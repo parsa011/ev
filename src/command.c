@@ -8,7 +8,8 @@
 command commands[] = {
 	MAKE_COMMAND("Close Buffer", "q", q_command),
 	MAKE_COMMAND("Open File Into a Buffer", "oa", o_command),
-	MAKE_COMMAND("Goto Next Line", "j", j_command)
+	MAKE_COMMAND("Goto Next Line", "j", j_command),
+	MAKE_COMMAND("Goto Next Line", "PAGE_UP", j_command),
 };
 
 public command command_read()

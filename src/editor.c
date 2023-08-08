@@ -12,6 +12,7 @@ private editor_t editor;
 public void editor_init()
 {
 	tty_raw_mode();
+	tty_clear();
 }
 
 public void editor_close()
@@ -23,7 +24,7 @@ public return_message editor_run()
 {
 	while (true) {
 		command cmd = command_read();
-		//command_print(cmd);
+		command_print(cmd);
 		if (cmd.func != null)
 			cmd.func(null);
 	}

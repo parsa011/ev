@@ -1,0 +1,110 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/pms/Desktop/ev/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+ALT_KEY	src/key.h	/^#define ALT_KEY(/;"	d
+ARRAY_LENGTH	src/basic.h	/^#define ARRAY_LENGTH(/;"	d
+ARROW_DOWN	src/key.h	/^	ARROW_DOWN,$/;"	e	enum:__anonb585b7bb0103
+ARROW_LEFT	src/key.h	/^	ARROW_LEFT$/;"	e	enum:__anonb585b7bb0103
+ARROW_RIGHT	src/key.h	/^	ARROW_RIGHT,$/;"	e	enum:__anonb585b7bb0103
+ARROW_UP	src/key.h	/^	ARROW_UP,$/;"	e	enum:__anonb585b7bb0103
+BUILD_PATH	Makefile	/^BUILD_PATH = build$/;"	m
+CC	Makefile	/^CC = gcc$/;"	m
+CC_FLAGS	Makefile	/^CC_FLAGS = -g -Wall$/;"	m
+CTRL_KEY	src/key.h	/^#define CTRL_KEY(/;"	d
+DELETE	src/key.h	/^	DELETE,$/;"	e	enum:__anonb585b7bb0103
+END	src/key.h	/^	END,$/;"	e	enum:__anonb585b7bb0103
+ERROR	src/basic.h	/^	ERROR,$/;"	e	enum:__anon6f6585940103
+ESC	src/key.h	/^#define ESC /;"	d
+F1	src/key.h	/^	F1 = 1000,$/;"	e	enum:__anonb585b7bb0103
+F2	src/key.h	/^	F2,$/;"	e	enum:__anonb585b7bb0103
+F3	src/key.h	/^	F3,$/;"	e	enum:__anonb585b7bb0103
+F4	src/key.h	/^	F4,$/;"	e	enum:__anonb585b7bb0103
+HEADERS	Makefile	/^HEADERS = $(wildcard src\/*.h src\/commands\/*.h)$/;"	m
+HOME	src/key.h	/^	HOME,$/;"	e	enum:__anonb585b7bb0103
+INSERT	src/key.h	/^	INSERT,$/;"	e	enum:__anonb585b7bb0103
+KEY_EXIT	src/key.h	/^#define KEY_EXIT /;"	d
+MAKE_COMMAND	src/command.h	/^#define MAKE_COMMAND(/;"	d
+MODE_INSERT	src/editor.h	/^	MODE_INSERT,$/;"	e	enum:__anonf14592f90103
+MODE_LOCK	src/editor.h	/^	MODE_LOCK,$/;"	e	enum:__anonf14592f90103
+MODE_PROMPT	src/editor.h	/^	MODE_PROMPT$/;"	e	enum:__anonf14592f90103
+PAGE_DOWN	src/key.h	/^	PAGE_DOWN,$/;"	e	enum:__anonb585b7bb0103
+PAGE_UP	src/key.h	/^	PAGE_UP,$/;"	e	enum:__anonb585b7bb0103
+PROGRAM	Makefile	/^PROGRAM = ev$/;"	m
+SRCS	Makefile	/^SRCS = $(wildcard src\/*.c src\/commands\/*.c)$/;"	m
+SUCCESS	src/basic.h	/^	SUCCESS,$/;"	e	enum:__anon6f6585940103
+TERMINATE	src/basic.h	/^	TERMINATE$/;"	e	enum:__anon6f6585940103
+_BASE_H	src/commands/base.h	/^# define _BASE_H$/;"	d
+_BASIC_H	src/basic.h	/^# define _BASIC_H$/;"	d
+_COMMAND_H	src/command.h	/^# define _COMMAND_H$/;"	d
+_EDITOR_H	src/editor.h	/^# define _EDITOR_H$/;"	d
+_J_H	src/commands/j.h	/^# define _J_H$/;"	d
+_KEY_H	src/key.h	/^# define _KEY_H$/;"	d
+_O_H	src/commands/o.h	/^# define _O_H$/;"	d
+_PROMPT_H	src/prompt.h	/^#define _PROMPT_H$/;"	d
+_Q_H	src/commands/q.h	/^# define _Q_H$/;"	d
+_TTY_H	src/tty.h	/^# define _TTY_H$/;"	d
+__anon6f6585940103	src/basic.h	/^typedef enum {$/;"	g
+__anon6f6585940208	src/basic.h	/^typedef struct {$/;"	s
+__anon7a6962710108	src/command.h	/^typedef struct {$/;"	s
+__anonb585b7bb0103	src/key.h	/^enum {$/;"	g
+__anonf14592f90103	src/editor.h	/^typedef enum {$/;"	g
+__anonf14592f90208	src/editor.h	/^typedef struct {$/;"	s
+command	src/command.h	/^} command;$/;"	t	typeref:struct:__anon7a6962710108
+command_exists	src/command.c	/^public bool command_exists(char *pattern)$/;"	f	typeref:typename:public bool
+command_get	src/command.c	/^public command command_get(char *pattern)$/;"	f	typeref:typename:public command
+command_print	src/command.c	/^public void command_print(command cmd)$/;"	f	typeref:typename:public void
+command_read	src/command.c	/^public command command_read()$/;"	f	typeref:typename:public command
+commands	src/command.c	/^command commands[] = {$/;"	v	typeref:typename:command[]
+commands	src/command.h	/^public command commands[];$/;"	v	typeref:typename:public command[]
+create_return_message	src/basic.h	/^#define create_return_message(/;"	d
+desc	src/command.h	/^	char *desc;$/;"	m	struct:__anon7a6962710108	typeref:typename:char *
+editor	src/editor.c	/^private editor_t editor;$/;"	v	typeref:typename:private editor_t
+editor_close	src/editor.c	/^public void editor_close()$/;"	f	typeref:typename:public void
+editor_file_close	src/editor.c	/^public return_message editor_file_close()$/;"	f	typeref:typename:public return_message
+editor_file_open	src/editor.c	/^public return_message editor_file_open(char *file_path)$/;"	f	typeref:typename:public return_message
+editor_file_save	src/editor.c	/^public return_message editor_file_save()$/;"	f	typeref:typename:public return_message
+editor_init	src/editor.c	/^public void editor_init()$/;"	f	typeref:typename:public void
+editor_mode	src/editor.h	/^} editor_mode;$/;"	t	typeref:enum:__anonf14592f90103
+editor_run	src/editor.c	/^public return_message editor_run()$/;"	f	typeref:typename:public return_message
+editor_t	src/editor.h	/^} editor_t;$/;"	t	typeref:struct:__anonf14592f90208
+file_path	src/editor.h	/^	char *file_path;$/;"	m	struct:__anonf14592f90208	typeref:typename:char *
+func	src/command.h	/^	return_message (*func)(char **); \/* function *\/$/;"	m	struct:__anon7a6962710108	typeref:typename:return_message (*)(char **)
+j_command	src/commands/j.c	/^public return_message j_command(char **args)$/;"	f	typeref:typename:public return_message
+key_codes	src/command.h	/^	char *key_codes;$/;"	m	struct:__anon7a6962710108	typeref:typename:char *
+key_read	src/key.c	/^public int key_read()$/;"	f	typeref:typename:public int
+main	Makefile	/^main : $(SRCS) $(HEADERS)$/;"	t
+main	src/main.c	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
+message	src/basic.h	/^	char *message;$/;"	m	struct:__anon6f6585940208	typeref:typename:char *
+mode	src/editor.h	/^	editor_mode mode;$/;"	m	struct:__anonf14592f90208	typeref:typename:editor_mode
+new_termios	src/tty.c	/^private struct termios old_termios, new_termios;$/;"	v	typeref:struct:termios
+null	src/basic.h	/^#define null /;"	d
+o_command	src/commands/o.c	/^public return_message o_command(char **args)$/;"	f	typeref:typename:public return_message
+old_termios	src/tty.c	/^private struct termios old_termios, new_termios;$/;"	v	typeref:struct:termios
+operation_status	src/basic.h	/^} operation_status;$/;"	t	typeref:enum:__anon6f6585940103
+private	src/basic.h	/^#define private /;"	d
+prompt_bool	src/prompt.c	/^bool prompt_bool(char *message)$/;"	f	typeref:typename:bool
+prompt_string	src/prompt.c	/^char *prompt_string(char *message)$/;"	f	typeref:typename:char *
+public	src/basic.h	/^#define public /;"	d
+q_command	src/commands/q.c	/^public return_message q_command(char **args)$/;"	f	typeref:typename:public return_message
+return_message	src/basic.h	/^} return_message;$/;"	t	typeref:struct:__anon6f6585940208
+status	src/basic.h	/^	operation_status status;$/;"	m	struct:__anon6f6585940208	typeref:typename:operation_status
+tty_clear	src/tty.c	/^public void tty_clear()$/;"	f	typeref:typename:public void
+tty_cooked_mode	src/tty.c	/^public void tty_cooked_mode()$/;"	f	typeref:typename:public void
+tty_cursor_char_next	src/tty.c	/^public void tty_cursor_char_next()$/;"	f	typeref:typename:public void
+tty_cursor_char_prev	src/tty.c	/^public void tty_cursor_char_prev()$/;"	f	typeref:typename:public void
+tty_cursor_hide	src/tty.c	/^public void tty_cursor_hide()$/;"	f	typeref:typename:public void
+tty_cursor_line_next	src/tty.c	/^public void tty_cursor_line_next()$/;"	f	typeref:typename:public void
+tty_cursor_line_prev	src/tty.c	/^public void tty_cursor_line_prev()$/;"	f	typeref:typename:public void
+tty_cursor_restore	src/tty.c	/^public void tty_cursor_restore()$/;"	f	typeref:typename:public void
+tty_cursor_show	src/tty.c	/^public void tty_cursor_show()$/;"	f	typeref:typename:public void
+tty_cursor_store	src/tty.c	/^public void tty_cursor_store()$/;"	f	typeref:typename:public void
+tty_get_char	src/tty.c	/^public char tty_get_char(int *remaining)$/;"	f	typeref:typename:public char
+tty_raw_mode	src/tty.c	/^public void tty_raw_mode()$/;"	f	typeref:typename:public void

@@ -4,9 +4,9 @@
 #include "basic.h"
 
 typedef enum {
-	INSERT,
-	LOCK,
-	PROMPT
+	MODE_INSERT,
+	MODE_LOCK,
+	MODE_PROMPT
 } editor_mode;
 
 typedef struct {
