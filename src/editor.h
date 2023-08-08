@@ -3,7 +3,6 @@
 
 #include "basic.h"
 
-
 typedef enum {
 	INSERT,
 	LOCK,
@@ -18,33 +17,32 @@ typedef struct {
 /*
  * init editor in raw mode and other startup configurations
  */
-void editor_init();
+public void editor_init();
 
 /*
  * reset shell to cooked mode and close statements, like save changed file
  * question and this kind of stuff
  */
-void editor_close();
-
+public void editor_close();
 
 /*
  * runs editor infinite loop, taking command and doing them
  */
-return_message editor_run();
+public return_message editor_run();
 
 /*
  * opens given file path into our gloabl editor variable 'editor'
  */
-return_message editor_file_open(char *file_name);
+public return_message editor_file_open(char *file_name);
 
 /*
  * close current file of editor and opens new empty buffer
  */
-return_message editor_file_close();
+public return_message editor_file_close();
 
 /*
  * save buffer into current open file in 'editor'
  */
-return_message editor_file_save();
+public return_message editor_file_save();
 
 #endif

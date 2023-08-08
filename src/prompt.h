@@ -8,4 +8,9 @@
  */
 bool prompt_bool(char *message);
 
+/*
+ *	read a string from user, also we can show some message to user
+ */
+char *prompt_string(char *message);
+
 #endif

@@ -16,22 +16,22 @@ public command commands[];
 /*
  * takes key from user until we find a proper command for key(or keys)
  */
-command command_read();
+public command command_read();
 
 /*
  * finds a command with given pattern, if command's key_codes is null that means
  * if didnt found any command with given pattern
  */
-command command_get(char *pattern);
+public command command_get(char *pattern);
 
 /*
  * returns true if we have any command that its key_codes start with (or is equal to the given pattern
  */
-bool command_exists(char *pattern);
+public bool command_exists(char *pattern);
 
 /*
  * just prints command in human readable format
  */
-void command_print(command cmd);
+public void command_print(command cmd);
 
 #endif

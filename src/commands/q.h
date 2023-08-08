@@ -2,8 +2,7 @@
 # define _Q_H
 
 #include "base.h"
-#include "../basic.h"
 
-return_message q_command(char **args);
+public return_message q_command(char **args);
 
 #endif

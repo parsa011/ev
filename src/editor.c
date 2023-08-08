@@ -9,29 +9,28 @@
 
 private editor_t editor;
 
-void editor_init()
+public void editor_init()
 {
 	tty_raw_mode();
 }
 
-void editor_close()
+public void editor_close()
 {
 	tty_cooked_mode();
 }
 
-return_message editor_run()
+public return_message editor_run()
 {
 	while (true) {
 		command cmd = command_read();
-		command_print(cmd);
-		if (strcmp(cmd.key_codes, "q") == 0) {
-			q_command(null);
-		}
+		//command_print(cmd);
+		if (cmd.func != null)
+			cmd.func(null);
 	}
 	return create_return_message(SUCCESS, "editor closed without error");
 }
 
-return_message editor_file_open(char *file_path)
+public return_message editor_file_open(char *file_path)
 {
 	if (strlen(file_path)) {
 		if (!prompt_bool("a file is open, are you sure ?"))
@@ -44,12 +43,12 @@ return_message editor_file_open(char *file_path)
 	return create_return_message(SUCCESS, "file opened");
 }
 
-return_message editor_file_close()
+public return_message editor_file_close()
 {
 	return create_return_message(SUCCESS, "file closed");
 }
 
-return_message editor_file_save()
+public return_message editor_file_save()
 {
 	return create_return_message(SUCCESS, "file saved");
 }

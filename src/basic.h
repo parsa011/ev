@@ -22,4 +22,6 @@ typedef struct {
 
 #define create_return_message(status, msg) ((return_message){status, msg})
 
+#define ARRAY_LENGTH(arr) (sizeof(arr) / sizeof(arr[0]))
+
 #endif
