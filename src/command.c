@@ -1,9 +1,11 @@
 #include "command.h"
 #include "tty.h"
 #include "key.h"
+#include "editor.h"
 #include "commands/commands.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 command commands[] = {
 	MAKE_COMMAND("Close Buffer", "q", q_command),
@@ -14,20 +16,29 @@ command commands[] = {
 
 public command command_read()
 {
-	static char buffer[32];
-	static int buffer_len;
-read_again :
-	buffer[buffer_len++] = key_read();
-	buffer[buffer_len] = '\0';
-	command cmd = command_get(buffer);
-	if (cmd.func == null) {
-		if (command_exists(buffer))
-			goto read_again;
-		else
-			buffer[buffer_len = 0] = '\0';
-	} else
-		buffer[buffer_len = 0] = '\0';
-	return cmd;
+	int c = key_read();
+	char *str = key_to_str(c);
+	if (str) {
+		printf("%s\n", key_to_str(c));
+	}
+	if (c == 'q') {
+		editor_close();
+		exit(0);
+	}
+	//static char buffer[32];
+	//static int buffer_len;
+//read_again :
+	//buffer[buffer_len++] = key_read();
+	//buffer[buffer_len] = '\0';
+//	command cmd = command_get(buffer);
+//	if (cmd.func == null) {
+//		if (command_exists(buffer))
+//			goto read_again;
+//		else
+//			buffer[buffer_len = 0] = '\0';
+//	} else
+//		buffer[buffer_len = 0] = '\0';
+	return EMPTY_COMMAND;
 }
 
 public command command_get(char *pattern)

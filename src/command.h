@@ -11,6 +11,8 @@ typedef struct {
 
 #define MAKE_COMMAND(desc, keys, func) ((command){desc, keys, func})
 
+#define EMPTY_COMMAND MAKE_COMMAND("Empty Command", "[NULL]", NULL)
+
 public command commands[];
 
 /*
