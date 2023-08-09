@@ -69,47 +69,63 @@ public int key_read()
 
 public char *key_to_str(int key)
 {
-	switch (key) {
-		case F1:
-			return "F1";
-		case F2:
-			return "F2";
-		case F3:
-			return "F3";
-		case F4:
-			return "F4";
-		case HOME:
-			return "HOME";
-		case INSERT:
-			return "INSERT";
-		case DELETE:
-			return "DELETE";
-		case END:
-			return "END";
-		case PAGE_UP:
-			return "PAGE_UP";
-		case PAGE_DOWN:
-			return "PAGE_DOWN";
-		case ARROW_UP:
-			return "ARROW_UP";
-		case ARROW_DOWN:
-			return "ARROW_DOWN";
-		case ARROW_RIGHT:
-			return "ARROW_RIGHT";
-		case ARROW_LEFT:
-			return "ARROW_LEFT";
-	}
 	char *buf = (char *)malloc(16 * sizeof(char));
 	int len = 0;
+
 #define PUSH(c) {        \
 	buf[len++] = c;      \
 	buf[len] = '\0';     \
 }
-#define PUSHS(s) {       \
-	int len = strlen(s); \
-	strcpy(buf, s);      \
-	buf[len] = '\0';     \
-}
+#define PUSHS(s) do {     \
+	int len = strlen(s);  \
+	strcpy(buf, s);       \
+	buf[len] = '\0';      \
+} while (false);
+
+	switch (key) {
+		case F1:
+			PUSHS("F1");
+			return buf;
+		case F2:
+			PUSHS("F2");
+			return buf;
+		case F3:
+			PUSHS("F3");
+			return buf;
+		case F4:
+			PUSHS("F4");
+			return buf;
+		case HOME:
+			PUSHS("HOME");
+			return buf;
+		case INSERT:
+			PUSHS("INSERT");
+			return buf;
+		case DELETE:
+			PUSHS("DELETE");
+			return buf;
+		case END:
+			PUSHS("END");
+			return buf;
+		case PAGE_UP:
+			PUSHS("PAGE_UP");
+			return buf;
+		case PAGE_DOWN:
+			PUSHS("PAGE_DOWN");
+			return buf;
+		case ARROW_UP:
+			PUSHS("ARROW_UP");
+			return buf;
+		case ARROW_DOWN:
+			PUSHS("ARROW_DOWN");
+			return buf;
+		case ARROW_RIGHT:
+			PUSHS("ARROW_RIGHT");
+			return buf;
+		case ARROW_LEFT:
+			PUSHS("ARROW_LEFT");
+			return buf;
+	}
 	if (key == CTRL_KEY(key)) {
 		PUSH('C');
 		PUSH('-');

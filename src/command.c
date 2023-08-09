@@ -18,6 +18,11 @@ public command command_read()
 {
 	int c = key_read();
 	char *str = key_to_str(c);
+	if (c == ARROW_UP) {
+		tty_cursor_line_prev();
+	} else if (c == ARROW_DOWN) {
+		tty_cursor_line_next();
+	}
 	command cmd = command_get(str);
 	while (cmd.func == null && command_exists(str)) {
 		c = key_read();
