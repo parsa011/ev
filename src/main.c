@@ -5,7 +5,8 @@
 #include "editor.h"
 #include "tty.h"
 
-void handleSignals() {
+void handle_signals()
+{
 	signal(SIGWINCH, editor_change_size);
 }
 
