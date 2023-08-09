@@ -1,0 +1,3 @@
+[submodule "llink"]
+	path = llink
+	url = https://github.com/parsa011/llink.git
