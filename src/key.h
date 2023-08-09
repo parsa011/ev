@@ -33,4 +33,6 @@ int key_read();
 
 char *key_to_str();
 
+char *key_combine(char *str, int key);
+
 #endif

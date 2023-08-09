@@ -2,6 +2,7 @@
 #include "key.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 public int key_read()
 {
@@ -121,7 +122,16 @@ public char *key_to_str(int key)
 		PUSH(key + '@');
 	} else
 		PUSH(key);
-	return buf;
 #undef PUSH
 #undef PUSHS
+	return buf;
+}
+
+public char *key_combine(char *str, int key)
+{
+	char *new_key = key_to_str(key);
+	str = (char *) realloc(str, sizeof(char) * (strlen(str) + strlen(new_key)) + 1);
+	strcat(str, new_key);
+	free(new_key);
+	return str;
 }

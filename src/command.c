@@ -11,34 +11,21 @@ command commands[] = {
 	MAKE_COMMAND("Close Buffer", "q", q_command),
 	MAKE_COMMAND("Open File Into a Buffer", "oa", o_command),
 	MAKE_COMMAND("Goto Next Line", "j", j_command),
-	MAKE_COMMAND("Goto Next Line", "PAGE_UP", j_command),
+	MAKE_COMMAND("Goto Next Line", "C-J", j_command),
 };
 
 public command command_read()
 {
 	int c = key_read();
 	char *str = key_to_str(c);
-	if (str) {
-		printf("%s\n", key_to_str(c));
+	command cmd = command_get(str);
+	while (cmd.func == null && command_exists(str)) {
+		c = key_read();
+		key_combine(str, c);
+		cmd = command_get(str);
 	}
-	if (c == 'q') {
-		editor_close();
-		exit(0);
-	}
-	//static char buffer[32];
-	//static int buffer_len;
-//read_again :
-	//buffer[buffer_len++] = key_read();
-	//buffer[buffer_len] = '\0';
-//	command cmd = command_get(buffer);
-//	if (cmd.func == null) {
-//		if (command_exists(buffer))
-//			goto read_again;
-//		else
-//			buffer[buffer_len = 0] = '\0';
-//	} else
-//		buffer[buffer_len = 0] = '\0';
-	return EMPTY_COMMAND;
+	free(str);
+	return cmd;
 }
 
 public command command_get(char *pattern)
