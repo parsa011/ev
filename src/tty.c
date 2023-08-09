@@ -1,7 +1,22 @@
 #include "tty.h"
 #include <stdio.h>
-#include <termios.h>
 #include <unistd.h>
+
+#ifdef _WIN32
+
+#include <io.h>
+#include <windows.h>
+static DWORD orig_in_mode;
+static DWORD orig_out_mode;
+
+#else
+
+#include <sys/ioctl.h>
+#include <termios.h>
+
+#include <unistd.h>
+
+#endif
 
 private struct termios old_termios, new_termios;
 
@@ -56,6 +71,58 @@ public char tty_get_char(int *remaining)
 	*remaining = pending;
 	return c;
 }
+
+#ifdef _WIN32
+public int tty_window_size(int* rows, int* cols)
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+	if (GetConsoleScreenBufferInfo(hStdout, &csbi)) {
+		*cols = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+		*rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+		return 0;
+	}
+	return -1;
+}
+#else
+public int tty_cursor_pos_get(int* rows, int* cols)
+{
+	char buf[32];
+	size_t i = 0;
+
+	if (write(STDOUT_FILENO, "\x1b[6n", 4) != 4)
+		return -1;
+
+	while (i < sizeof(buf) - 1) {
+		if (read(STDIN_FILENO, &buf[i], 1) != 1)
+			break;
+		if (buf[i] == 'R')
+			break;
+		i++;
+	}
+	buf[i] = '\0';
+
+	if (buf[0] != '\x1b' || buf[1] != '[')
+		return -1;
+	if (sscanf(&buf[2], "%d;%d", rows, cols) != 2)
+		return -1;
+	return 0;
+}
+
+public int tty_window_size(int* rows, int* cols)
+{
+	struct winsize ws;
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
+		if (write(STDOUT_FILENO, "\x1b[999C\x1b[999B", 12) != 12)
+			return -1;
+		return tty_cursor_pos_get(rows, cols);
+	} else {
+		*cols = ws.ws_col;
+		*rows = ws.ws_row;
+		return 0;
+	}
+}
+#endif
 
 public void tty_clear()
 {
