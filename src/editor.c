@@ -13,6 +13,12 @@ public void editor_init()
 {
 	tty_raw_mode();
 	tty_clear();
+	tty_window_size(&editor.rows, &editor.cols);
+}
+
+public void editor_change_size()
+{
+	tty_window_size(&editor.rows, &editor.cols);
 }
 
 public void editor_close()

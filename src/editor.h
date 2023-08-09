@@ -12,12 +12,21 @@ typedef enum {
 typedef struct {
 	char *file_path;
 	editor_mode mode;
+
+	int rows;
+	int cols;
 } editor_t;
 
 /*
  * init editor in raw mode and other startup configurations
  */
 public void editor_init();
+
+/*
+ * gets size of terminal, also used everytime that we want to handle
+ * window size changed signal
+ */
+public void editor_change_size();
 
 /*
  * reset shell to cooked mode and close statements, like save changed file

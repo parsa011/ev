@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <signal.h>
 #include "editor.h"
+#include "tty.h"
+
+void handleSignals() {
+	signal(SIGWINCH, editor_change_size);
+}
 
 int main(int argc, char **argv)
 {
