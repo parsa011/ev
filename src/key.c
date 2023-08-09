@@ -1,6 +1,7 @@
 #include "tty.h"
 #include "key.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 public int key_read()
 {
@@ -8,7 +9,6 @@ public int key_read()
 	int c = tty_get_char(&pending);
 	if (c == ESC) {
 		if (pending == 0) {
-			printf("Escape key\r\n");
 			return ESC;
 		}
 		c = tty_get_char(&pending);
@@ -21,71 +21,103 @@ public int key_read()
 					return F2;
 				case 'R':
 					return F3;
-					printf("F3 Presssed\r\n");
-					break;
 				case 'S':
 					return F4;
-					printf("F4 Presssed\r\n");
-					break;
-
 			}
 		} else if (c == '[') {
 			c = tty_get_char(&pending);
-			tty_get_char(&pending);
+			if (pending == 1)
+				tty_get_char(&pending);
 			switch (c) {
 				case '1' :
 					return HOME;
-					printf("Home\r\n");
-					break;
 				case '2' :
 					return INSERT;
-					printf("Insert\r\n");
-					break;
 				case '3' :
 					return DELETE;
-					printf("Delete\r\n");
-					break;
 				case '4' :
 					return END;
-					printf("End\r\n");
-					break;
 				case '5' :
 					return PAGE_UP;
-					printf("page up\r\n");
-					break;
 				case '6' :
 					return PAGE_DOWN;
-					printf("Page down\r\n");
-					break;
 				case 'A' :
 					return ARROW_UP;
-					printf("Arrow Up\r\n");
-					break;
 				case 'B' :
 					return ARROW_DOWN;
-					printf("Arrow Down\r\n");
-					break;
 				case 'C' :
 					return ARROW_RIGHT;
-					printf("Arrow Right\r\n");
-					break;
 				case 'D' :
 					return ARROW_LEFT;
-					printf("Arrow Left\r\n");
-					break;
 			}
 		}
 		// meta key and control meta key
 		if (pending == 0) {
 			if (c == CTRL_KEY(c)) {
-				printf("C-M Key\r\n");
 				return ALT_KEY(CTRL_KEY(c));
 			}
-			printf("M Key\r\n");
 			return ALT_KEY(c);
 		}
 	}
-	if (c == CTRL_KEY(c))
-		printf("C Key\r\n");
 	return c;
+}
+
+public char *key_to_str(int key)
+{
+	switch (key) {
+		case F1:
+			return "F1";
+		case F2:
+			return "F2";
+		case F3:
+			return "F3";
+		case F4:
+			return "F4";
+		case HOME:
+			return "HOME";
+		case INSERT:
+			return "INSERT";
+		case DELETE:
+			return "DELETE";
+		case END:
+			return "END";
+		case PAGE_UP:
+			return "PAGE_UP";
+		case PAGE_DOWN:
+			return "PAGE_DOWN";
+		case ARROW_UP:
+			return "ARROW_UP";
+		case ARROW_DOWN:
+			return "ARROW_DOWN";
+		case ARROW_RIGHT:
+			return "ARROW_RIGHT";
+		case ARROW_LEFT:
+			return "ARROW_LEFT";
+	}
+	char *buf = (char *)malloc(16 * sizeof(char));
+	int len = 0;
+#define PUSH(c) {        \
+	buf[len++] = c;      \
+	buf[len] = '\0';     \
+}
+#define PUSHS(s) {       \
+	int len = strlen(s); \
+	strcpy(buf, s);      \
+	buf[len] = '\0';     \
+}
+	if (key == CTRL_KEY(key)) {
+		PUSH('C');
+		PUSH('-');
+	}
+	if (key == ALT_KEY(key)) {
+		PUSH('M');
+		PUSH('-');
+	}
+	if (key == CTRL_KEY(key)) {
+		PUSH(key + '@');
+	} else
+		PUSH(key);
+	return buf;
+#undef PUSH
+#undef PUSHS
 }

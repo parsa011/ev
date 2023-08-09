@@ -1,9 +1,10 @@
 #ifndef _KEY_H
 # define _KEY_H
 
-#define ESC     0x1B		/* ESC character.               	*/
-#define CTRL_KEY(k) ((k) & 0x1F)
-#define ALT_KEY(k) ((k) | 0x1000)
+#define ESC         0x1B		/* ESC character.               	*/
+#define ALT_MASK    0x1000
+#define CTRL_KEY(k) (k & 0x1F)
+#define ALT_KEY(k)  (k | ALT_MASK)
 
 #define KEY_EXIT 'q'
 
@@ -24,6 +25,12 @@ enum {
 	ARROW_LEFT
 };
 
+/*
+ *	read key from terminal and convert special key to local key
+ *	also we mask meta keys with ALT_KEY macro
+ */
 int key_read();
+
+char *key_to_str();
 
 #endif
