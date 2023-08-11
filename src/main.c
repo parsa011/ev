@@ -2,8 +2,14 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <signal.h>
+#include <stdlib.h>
 #include "editor.h"
 #include "tty.h"
+
+public void die(int code)
+{
+	exit(code);
+}
 
 void handle_signals()
 {

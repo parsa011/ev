@@ -23,4 +23,6 @@ typedef struct {
 
 #define ARRAY_LENGTH(arr) (sizeof(arr) / sizeof(arr[0]))
 
+public void die(int code);
+
 #endif
