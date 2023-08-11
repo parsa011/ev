@@ -1,19 +1,23 @@
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "editor.h"
 #include "prompt.h"
 #include "tty.h"
 #include "command.h"
 #include "key.h"
 #include "commands/commands.h"
-#include <string.h>
-#include <stdio.h>
 
-private editor_t editor;
+editor_t editor;
 
 public void editor_init()
 {
 	tty_raw_mode();
 	tty_clear();
-	tty_window_size(&editor.rows, &editor.cols);
+
+	editor_change_size();
+	editor.tty_in = STDIN_FILENO;
+	editor.tty_out = STDOUT_FILENO;
 }
 
 public void editor_change_size()
@@ -30,7 +34,6 @@ public return_message editor_run()
 {
 	while (true) {
 		command cmd = command_read();
-		command_print(cmd);
 		if (cmd.func != null)
 			cmd.func(null);
 	}

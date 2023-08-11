@@ -10,12 +10,18 @@ typedef enum {
 } editor_mode;
 
 typedef struct {
+	// fd for input and output ttys
+	int tty_in;
+	int tty_out;
+
 	char *file_path;
 	editor_mode mode;
 
 	int rows;
 	int cols;
 } editor_t;
+
+public editor_t editor;
 
 /*
  * init editor in raw mode and other startup configurations
