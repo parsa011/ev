@@ -10,7 +10,6 @@
 command commands[] = {
 	MAKE_COMMAND("Close Buffer", "q", q_command),
 	MAKE_COMMAND("Open File Into a Buffer", "oa", o_command),
-	MAKE_COMMAND("Goto Next Line", "j", j_command),
 	MAKE_COMMAND("Goto Next Line", "C-J", j_command),
 };
 
@@ -22,6 +21,10 @@ public command command_read()
 		tty_cursor_line_prev();
 	} else if (c == ARROW_DOWN) {
 		tty_cursor_line_next();
+	} else if (c == ARROW_RIGHT) {
+		tty_cursor_char_next();
+	} else if (c == ARROW_LEFT) {
+		tty_cursor_char_prev();
 	}
 	command cmd = command_get(str);
 	while (cmd.func == null && command_exists(str)) {
