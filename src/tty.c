@@ -1,6 +1,7 @@
-#include "tty.h"
 #include <stdio.h>
 #include <unistd.h>
+#include "tty.h"
+#include "editor.h"
 
 #ifdef _WIN32
 
@@ -19,6 +20,10 @@ static DWORD orig_out_mode;
 #endif
 
 private struct termios old_termios, new_termios;
+
+/* output buffer, index and size */
+private unsigned char obuf[OBUFSIZE];
+private int obufp = 0;
 
 public void tty_raw_mode()
 {
@@ -123,6 +128,36 @@ public int tty_window_size(int* rows, int* cols)
 	}
 }
 #endif
+
+/* 
+ * write string to output buffer
+ */
+public void tty_put_string(char *s, bool flush_now)
+{
+	while (*s) {
+		tty_put_char(*s++);
+	}
+	if (flush_now)
+		tty_flush();
+}
+
+public void tty_put_char(char c)
+{
+	if (obufp == OBUFSIZE)
+		tty_flush();
+	obuf[obufp++] = c;
+}
+
+public void tty_flush()
+{
+	if (obufp) {
+		if (write(editor.tty_in, obuf, obufp) == 0) {
+			printf("SOMETHING WENT WRONG WHEN WRITING INTO TERMOUT\n");
+			die(0);
+		}
+		obufp = 0;
+	}
+}
 
 public void tty_clear()
 {
