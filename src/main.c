@@ -6,6 +6,7 @@
 #include "editor.h"
 #include "tty.h"
 #include "util.h"
+#include "log.h"
 
 public void die(int code)
 {
@@ -20,6 +21,7 @@ void handle_signals()
 int main(int argc, char **argv)
 {
 	editor_init();
+	log("this is a simple log :))\r\n");
 	if (argc > 1)
 		editor_file_open(argv[1]);
 	editor_run();
