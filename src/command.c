@@ -1,11 +1,11 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "command.h"
 #include "tty.h"
 #include "key.h"
 #include "editor.h"
 #include "commands/commands.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 command commands[] = {
 	MAKE_COMMAND("Close Buffer", "q", q_command),
@@ -17,16 +17,8 @@ public command command_read()
 {
 	int c = key_read();
 	char *str = key_to_str(c);
-	if (c == ARROW_UP) {
-		tty_cursor_line_prev();
-	} else if (c == ARROW_DOWN) {
-		tty_cursor_line_next();
-	} else if (c == ARROW_RIGHT) {
-		tty_cursor_char_next();
-	} else if (c == ARROW_LEFT) {
-		tty_cursor_char_prev();
-	}
 	command cmd = command_get(str);
+	command_print(cmd);
 	while (cmd.func == null && command_exists(str)) {
 		c = key_read();
 		key_combine(str, c);
@@ -59,5 +51,5 @@ public bool command_exists(char *pattern)
 
 public void command_print(command cmd)
 {
-	printf("%s\t%s\r\n", cmd.key_codes, cmd.desc);
+	tty_put_string(true, "%s\t%s\r\n", cmd.key_codes, cmd.desc);
 }

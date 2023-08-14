@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "editor.h"
 #include "tty.h"
+#include "util.h"
 
 public void die(int code)
 {
