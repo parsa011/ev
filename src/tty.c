@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #include "tty.h"
 #include "editor.h"
+#include "util.h"
 
 #ifdef _WIN32
 
@@ -129,16 +132,44 @@ public int tty_window_size(int* rows, int* cols)
 }
 #endif
 
-/* 
+/*
  * write string to output buffer
  */
-public void tty_put_string(char *s, bool flush_now)
+public void tty_put_string(bool flush_now, char *format, ...)
 {
-	while (*s) {
-		tty_put_char(*s++);
+	int n = 0;
+	size_t size = 0;
+	char *str = NULL;
+	va_list ap;
+
+	/* Determine required size */
+
+	va_start(ap, format);
+	n = vsnprintf(NULL, 0, format, ap);
+	va_end(ap);
+
+	if (n < 0)
+		return;
+
+	/* One extra byte for '\0' */
+
+	size = (size_t) n + 1;
+	str = malloc(size);
+	if (str == NULL)
+		return; 
+
+	va_start(ap, format);
+	n = vsnprintf(str, size, format, ap);
+	va_end(ap);
+
+	char *ptr = str;
+	while (*ptr) {
+		tty_put_char(*ptr++);
 	}
 	if (flush_now)
 		tty_flush();
+	if (str)
+		free(str);
 }
 
 public void tty_put_char(char c)

@@ -25,7 +25,7 @@ public int tty_cursor_pos_get(int *rows, int *cols);
  *	sometimes we need to write output immediatly , so we will pass
  *	'true' for flush_now to autocall for tty_flush()
  */
-public void tty_put_string(char *s, bool flush_now);
+public void tty_put_string(bool flush_now, char *s, ...);
 
 /*
  *	add given given into out put array
