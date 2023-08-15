@@ -1,7 +1,15 @@
 #ifndef _EDITOR_H
 # define _EDITOR_H
 
+#include <stdint.h>
 #include "basic.h"
+#include "../llink/llist.h"
+
+typedef struct cursor_pos cursor_pos_t;
+
+typedef struct editor editor_t;
+typedef struct editor_buffer editor_buffer_t;
+typedef struct editor_buffer_line editor_buffer_line_t;
 
 typedef enum {
 	MODE_INSERT,
@@ -9,7 +17,38 @@ typedef enum {
 	MODE_PROMPT
 } editor_mode;
 
-typedef struct {
+struct cursor_pos{
+	uint8_t row;
+	uint8_t col;
+};
+
+struct editor_buffer_line {
+	L_LINK(editor_buffer_t) link;
+};
+
+struct editor_buffer {
+	L_LINK(editor_buffer_t) link;
+	/*
+	 * this will be the name that we show in tabs section, by default will be the filename
+	 */
+	char *name;
+	char *filepath;
+	/*
+	 * total line count, initialized with count of opened file lines 
+	 */
+	uint64_t line_count;
+	/*
+	 * how many lines we passed from first line, starts of 1
+	 */
+	uint64_t line_offset;
+	/*
+	 * we may want to have some more buffer, we will store each buffer cursor pos
+	 * here, so we can restore position
+	 */
+	cursor_pos_t pos;
+};
+
+struct editor {
 	// fd for input and output ttys
 	int tty_in;
 	int tty_out;
@@ -19,7 +58,7 @@ typedef struct {
 
 	int rows;
 	int cols;
-} editor_t;
+};
 
 public editor_t editor;
 
