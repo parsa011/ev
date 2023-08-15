@@ -36,7 +36,7 @@ public command command_get(char *pattern)
 		if (strcmp(commands[i].key_codes, pattern) == 0)
 			return commands[i];
 	}
-	return MAKE_COMMAND("Empty Command", "[NULL]", NULL);
+	return MAKE_COMMAND("Empty Command", "NULL", NULL);
 }
 
 public bool command_exists(char *pattern)
