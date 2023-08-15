@@ -146,12 +146,8 @@ public char *key_to_str(int key)
 public char *key_combine(char *str, int key)
 {
 	char *new_key = key_to_str(key);
-	/*
-	 * alloc two more bytes for \0 and Space between keys str
-	 */
-	str = (char *) realloc(str, sizeof(char) * (strlen(str) + strlen(new_key)) + 2);
-	strcat(str, " ");
-	strcat(str, new_key);
+	str = (char *) realloc(str, sizeof(char) * (strlen(str) + strlen(new_key) + 1));
+	sprintf(str + strlen(str), " %s", new_key);
 	free(new_key);
 	return str;
 }

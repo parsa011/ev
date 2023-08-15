@@ -22,7 +22,6 @@ public command command_read()
 	while (cmd.func == null && command_exists(str)) {
 		c = key_read();
 		key_combine(str, c);
-		printf("%s\r\n", str);
 		cmd = command_get(str);
 	}
 	if (str)
@@ -53,5 +52,5 @@ public bool command_exists(char *pattern)
 
 public void command_print(command cmd)
 {
-	tty_put_string(true, "%s\t%s\r\n", cmd.key_codes, cmd.desc);
+	tty_put_string(true, "[%s] --> %s\r\n", cmd.key_codes, cmd.desc);
 }
