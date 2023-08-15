@@ -10,5 +10,4 @@
 #define log(format, ...)     \
 	tty_put_string(true, _LOG_FORMAT(format), ##__VA_ARGS__)
 
-
 #endif

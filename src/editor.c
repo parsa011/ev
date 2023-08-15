@@ -34,6 +34,7 @@ public return_message editor_run()
 {
 	while (true) {
 		command cmd = command_read();
+		command_print(cmd);
 		if (cmd.func != null)
 			cmd.func(null);
 	}

@@ -1,3 +1,9 @@
+DONE : 
 1 - get and convert key to string, for example convert control + a to C-a or alt + c to M-c
     also compatible for combine, like  C-M-a
 2 - Combine to key, for exable : "A C-b" means first A then Control b
+
+IN PROGRESS :
+
+TODO : 
+3 - open file into editor, also editor should be able to open multiple buffers

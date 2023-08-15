@@ -8,6 +8,7 @@
 #include "commands/commands.h"
 
 command commands[] = {
+	MAKE_COMMAND("Close Buffer", "C-X C-C", q_command),
 	MAKE_COMMAND("Close Buffer", "q", q_command),
 	MAKE_COMMAND("Open File Into a Buffer", "oa", o_command),
 	MAKE_COMMAND("Goto Next Line", "C-J", j_command),
@@ -18,13 +19,14 @@ public command command_read()
 	int c = key_read();
 	char *str = key_to_str(c);
 	command cmd = command_get(str);
-	command_print(cmd);
 	while (cmd.func == null && command_exists(str)) {
 		c = key_read();
 		key_combine(str, c);
+		printf("%s\r\n", str);
 		cmd = command_get(str);
 	}
-	free(str);
+	if (str)
+		free(str);
 	return cmd;
 }
 
