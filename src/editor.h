@@ -15,7 +15,7 @@ typedef enum {
 	MODE_INSERT,
 	MODE_LOCK,
 	MODE_PROMPT
-} editor_mode;
+} editor_buffer_mode;
 
 struct cursor_pos{
 	uint8_t row;
@@ -46,6 +46,10 @@ struct editor_buffer {
 	 * here, so we can restore position
 	 */
 	cursor_pos_t pos;
+	/*
+	 * each buffer can be in one mode at a time, search, insert, lock or ...
+	 */
+	editor_buffer_mode mode;
 };
 
 struct editor {
@@ -53,8 +57,7 @@ struct editor {
 	int tty_in;
 	int tty_out;
 
-	char *file_path;
-	editor_mode mode;
+	editor_buffer_t *current_buffer;
 
 	int rows;
 	int cols;
@@ -85,7 +88,20 @@ public void editor_close();
 public return_message editor_run();
 
 /*
+ * this is just a helper method to get current buffer of editor
+ */
+public editor_buffer_t *editor_buffer();
+
+/*
+ *	initialize new editor buffer, and set basic stuff of buffer
+ *	if path is not NULL, it will open given path into buffer after
+ *	initializing it
+ */
+public editor_buffer_t *editor_buffer_init(char *path);
+
+/*
  * opens given file path into our gloabl editor variable 'editor'
+ * also in currnet buffer, set set second arg to true for open in new buffer
  */
 public return_message editor_file_open(char *file_name);
 
