@@ -17,13 +17,21 @@ typedef enum {
 	MODE_PROMPT
 } editor_buffer_mode;
 
+typedef enum {
+	APPEND,
+	REPLACE
+} line_load_mode;
+
 struct cursor_pos{
 	uint8_t row;
 	uint8_t col;
 };
 
 struct editor_buffer_line {
-	L_LINK(editor_buffer_t) link;
+	L_LINK(editor_buffer_line_t) link;
+
+	char *str;
+	int len;
 };
 
 struct editor_buffer {
@@ -41,6 +49,15 @@ struct editor_buffer {
 	 * how many lines we passed from first line, starts of 1
 	 */
 	uint64_t line_offset;
+	/*
+	 * first line of buffer, we can access to other with line->link.next and ...
+	 */
+	editor_buffer_line_t *first_line;
+	/*
+	 * keep tracking of current line, because in linked list it loose of speed to
+	 * iterate over list every time that we want to acces it
+	 */
+	editor_buffer_line_t *current_line;
 	/*
 	 * we may want to have some more buffer, we will store each buffer cursor pos
 	 * here, so we can restore position
@@ -114,5 +131,23 @@ public return_message editor_file_close();
  * save buffer into current open file in 'editor'
  */
 public return_message editor_file_save();
+
+/*
+ * load lines of given file into current buffer
+ * also we can replace all current lines with file lines, or append
+ * file to buffer
+ */
+public return_message editor_file_load_lines(char *filepath, line_load_mode mode);
+
+/*
+ * initialie new buffer line and copy given string to line str
+ */
+public editor_buffer_line_t *editor_buffer_line_init(char *str, int len);
+
+/*
+ * append given line next to current line
+ * also if first_line is NULL so its gonna be appended as first line
+ */
+public return_message editor_buffer_line_append(editor_buffer_line_t *line);
 
 #endif

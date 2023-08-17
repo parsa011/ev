@@ -1,7 +1,9 @@
 #include <stddef.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "file.h"
 
-char* file_name(char* path)
+public char* file_name(char* path)
 {
 	size_t i = 0;
 	size_t pos = 0;
@@ -14,4 +16,9 @@ char* file_name(char* path)
 		p++;
 	}
 	return path + pos;
+}
+
+public bool file_exists(char *path)
+{
+	return access(path, F_OK) == 0;
 }

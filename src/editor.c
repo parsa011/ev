@@ -9,6 +9,7 @@
 #include "command.h"
 #include "key.h"
 #include "file.h"
+#include "log.h"
 #include "commands/commands.h"
 
 editor_t editor;
@@ -41,8 +42,15 @@ public void editor_close()
 public return_message editor_run()
 {
 	while (true) {
+		tty_clear();
+
+		editor_buffer_line_t *line = editor_buffer()->first_line;
+		while (line) {
+			tty_put_string(true, "%s\r\n", line->str);
+			line = L_LINK_NEXT(line);
+		}
 		command cmd = command_read();
-		command_print(cmd);
+		//command_print(cmd);
 		if (cmd.func != null)
 			cmd.func(null);
 	}
@@ -54,19 +62,20 @@ public editor_buffer_t *editor_buffer()
 	return editor.current_buffer;
 }
 
-public editor_buffer_t *editor_buffer_init(char *path)
+public editor_buffer_t *editor_buffer_init(char *filepath)
 {
-	editor_buffer_t *buffer = (editor_buffer_t *) malloc(sizeof(editor_buffer_t));
-	assert(buffer);
-	return buffer;
+	editor_buffer_t *buf = (editor_buffer_t *) malloc(sizeof(editor_buffer_t));
+	assert(buf);
+	return buf;
 }
 
-public return_message editor_file_open(char *file_path)
+public return_message editor_file_open(char *filepath)
 {
 	editor_buffer_t *buf = editor_buffer();
-	buf->filepath = file_path;
-	buf->name = file_name(file_path);
-	tty_put_string(true, buf->filepath);
+	buf->filepath = filepath;
+	buf->name = file_name(filepath);
+	log("%s", buf->name);
+	editor_file_load_lines(filepath, REPLACE);
 	return create_return_message(SUCCESS, "file opened");
 }
 
@@ -78,4 +87,53 @@ public return_message editor_file_close()
 public return_message editor_file_save()
 {
 	return create_return_message(SUCCESS, "file saved");
+}
+
+public return_message editor_file_load_lines(char *filepath, line_load_mode mode)
+{
+	// TODO : Implement other modes :))
+	if (!file_exists(filepath))
+		return create_return_message(ERROR, "file does not exists");
+	editor_buffer_t *buf = editor_buffer();
+	FILE *fp = fopen(filepath, "r");
+
+	char *line_chars = NULL;
+	size_t linecap = 0;
+	ssize_t line_length;
+
+	editor_buffer_line_t *ln;
+
+	/* read other lines and add them to buffer */  
+	while ((line_length = getline(&line_chars, &linecap, fp)) != EOF) {
+		while (*(line_chars + line_length - 1) == '\n')
+			line_length--;
+		ln = editor_buffer_line_init(line_chars, line_length);
+		editor_buffer_line_append(ln);
+		buf->current_line = ln;
+	}
+	free(line_chars);
+	fclose(fp);
+
+	return create_return_message(SUCCESS, "file lines loaded");
+}
+
+public editor_buffer_line_t *editor_buffer_line_init(char *str, int len)
+{
+	editor_buffer_line_t *line = (editor_buffer_line_t *) malloc(sizeof(editor_buffer_line_t));
+	line->str = (char *) malloc((len + 1) * sizeof(char));
+	strncpy(line->str, str, len);
+	line->len = len;
+	return line;
+}
+
+public return_message editor_buffer_line_append(editor_buffer_line_t *line)
+{
+	editor_buffer_t *buf = editor_buffer();
+	if (!buf->first_line) {
+		buf->first_line = buf->current_line = line;
+	} else {
+		L_LINK_INSERT(buf->current_line, line);
+	}
+	buf->line_count++;
+	return create_return_message(SUCCESS, "line appended");
 }
