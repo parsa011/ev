@@ -1,8 +1,8 @@
 #include <stddef.h>
-#include "j.h"
+#include "next_line.h"
 #include "../editor.h"
 
-public return_message j_command(char **args)
+public return_message next_line_command(char **args)
 {
 	editor_buffer_t *buf = editor_buffer();
 	/*

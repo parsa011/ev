@@ -1,3 +1,3 @@
 #include "q.h"
-#include "j.h"
+#include "next_line.h"
 #include "o.h"
