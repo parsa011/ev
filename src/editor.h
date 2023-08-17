@@ -5,8 +5,6 @@
 #include "basic.h"
 #include "../llink/llist.h"
 
-typedef struct cursor_pos cursor_pos_t;
-
 typedef struct editor editor_t;
 typedef struct editor_buffer editor_buffer_t;
 typedef struct editor_buffer_line editor_buffer_line_t;
@@ -21,11 +19,6 @@ typedef enum {
 	APPEND,
 	REPLACE
 } line_load_mode;
-
-struct cursor_pos{
-	uint8_t row;
-	uint8_t col;
-};
 
 struct editor_buffer_line {
 	L_LINK(editor_buffer_line_t) link;
