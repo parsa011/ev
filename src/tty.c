@@ -5,6 +5,7 @@
 #include "tty.h"
 #include "editor.h"
 #include "util.h"
+#include "log.h"
 
 #ifdef _WIN32
 
@@ -194,6 +195,11 @@ public void tty_clear()
 {
 	printf("\033[H\033[2J");
 	fflush(stdout);
+}
+
+public void tty_cursor_move(cursor_pos_t pos)
+{
+	tty_put_string(true, "\033[%d;%dH", pos.row, pos.col);
 }
 
 public void tty_cursor_hide()

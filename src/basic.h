@@ -2,6 +2,7 @@
 # define _BASIC_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #define public extern
 #define private static
@@ -18,6 +19,18 @@ typedef struct {
 	operation_status status;
 	char *message;
 } return_message;
+
+typedef struct cursor_pos cursor_pos_t;
+
+struct cursor_pos {
+	uint8_t row;
+	uint8_t col;
+};
+
+#define SET_POS(pos, x, y) do {  \
+	pos.row = x;                 \
+	pos.col = y;                 \
+} while(0);
 
 #define create_return_message(status, msg) ((return_message){status, msg})
 
