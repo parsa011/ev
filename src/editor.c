@@ -42,15 +42,23 @@ public void editor_close()
 public return_message editor_run()
 {
 	while (true) {
+
+		editor_buffer_t *buf = editor_buffer();
+
+		/*
+		 * these few lines should be another function, until setting cursor pos
+		 * something like editor_render() or ...
+		 */
 		tty_clear();
 
 		editor_buffer_line_t *line = editor_buffer()->first_line;
+
 		while (line) {
 			tty_put_string(true, "%s\r\n", line->str);
 			line = L_LINK_NEXT(line);
 		}
+		tty_cursor_move(buf->pos);
 		command cmd = command_read();
-		//command_print(cmd);
 		if (cmd.func != null)
 			cmd.func(null);
 	}
@@ -66,6 +74,7 @@ public editor_buffer_t *editor_buffer_init(char *filepath)
 {
 	editor_buffer_t *buf = (editor_buffer_t *) malloc(sizeof(editor_buffer_t));
 	assert(buf);
+	SET_POS(buf->pos, 1, 1);
 	return buf;
 }
 
@@ -74,7 +83,6 @@ public return_message editor_file_open(char *filepath)
 	editor_buffer_t *buf = editor_buffer();
 	buf->filepath = filepath;
 	buf->name = file_name(filepath);
-	log("%s", buf->name);
 	editor_file_load_lines(filepath, REPLACE);
 	return create_return_message(SUCCESS, "file opened");
 }
@@ -111,9 +119,9 @@ public return_message editor_file_load_lines(char *filepath, line_load_mode mode
 		editor_buffer_line_append(ln);
 		buf->current_line = ln;
 	}
+	buf->current_line = buf->first_line;
 	free(line_chars);
 	fclose(fp);
-
 	return create_return_message(SUCCESS, "file lines loaded");
 }
 
