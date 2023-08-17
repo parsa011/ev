@@ -11,7 +11,8 @@ command commands[] = {
 	MAKE_COMMAND("Close Buffer", "C-X C-C", q_command),
 	MAKE_COMMAND("Close Buffer", "q", q_command),
 	MAKE_COMMAND("Open File Into a Buffer", "o a", o_command),
-	MAKE_COMMAND("Goto Next Line", "C-J", next_line_command),
+	MAKE_COMMAND("Goto Next Line", "C-N", next_line_command),
+	MAKE_COMMAND("Goto Next Line", "C-P", prev_line_command),
 };
 
 public command command_read()
