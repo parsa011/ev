@@ -40,6 +40,8 @@ public void tty_flush();
 
 public void tty_clear();
 
+public void tty_cursor_move(cursor_pos_t pos);
+
 public void tty_cursor_hide();
 
 public void tty_cursor_show();
