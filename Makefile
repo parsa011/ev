@@ -9,3 +9,6 @@ HEADERS = $(wildcard src/*.h src/commands/*.h)
 .PHONY : main
 main : $(SRCS) $(HEADERS)
 	$(CC) $(CC_FLAGS) $^ -o $(BUILD_PATH)/$(PROGRAM)
+
+clear:
+	rm -rf ./$(BUILD_PATH)/*
