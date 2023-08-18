@@ -1,4 +1,5 @@
 #include "q.h"
 #include "next_line.h"
 #include "prev_line.h"
+#include "next_char.h"
 #include "o.h"
