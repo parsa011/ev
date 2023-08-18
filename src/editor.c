@@ -43,27 +43,42 @@ public void editor_close()
 public return_message editor_run()
 {
 	while (true) {
-
-		editor_buffer_t *buf = editor_buffer();
-
-		/*
-		 * these few lines should be another function, until setting cursor pos
-		 * something like editor_render() or ...
-		 */
-		tty_clear();
-
-		editor_buffer_line_t *line = editor_buffer()->first_line;
-
-		while (line) {
-			tty_put_string(true, "%s\r\n", line->str);
-			line = L_LINK_NEXT(line);
-		}
-		tty_cursor_move(buf->pos);
+		editor_render();
 		command cmd = command_read();
 		if (cmd.func != null)
 			cmd.func(null);
 	}
 	return create_return_message(SUCCESS, "editor closed without error");
+}
+
+public return_message editor_render()
+{
+	tty_clear();
+	editor_buffer_t *buf = editor_buffer();
+	editor_buffer_line_t *line = editor_buffer()->first_line;
+	while (line) {
+		editor_render_line(line);
+		line = L_LINK_NEXT(line);
+	}
+	log("%s", buf->current_line->str);
+	tty_cursor_move(buf->pos);
+	return create_return_message(SUCCESS, "buffer rendered");
+}
+
+public void editor_render_line(editor_buffer_line_t *line)
+{
+	assert(line);
+	char *ptr = line->str;
+	while (*ptr) {
+		if (*ptr == '\t') {
+			for (int i = 0; i < TAB_SIZE; i++) {
+				tty_put_char(' ');
+			}
+		} else
+			tty_put_char(*ptr);
+		ptr++;
+	}
+	tty_put_string(true, "\r\n");
 }
 
 public editor_buffer_t *editor_buffer()

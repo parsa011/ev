@@ -5,6 +5,8 @@
 #include "basic.h"
 #include "../llink/llist.h"
 
+#define TAB_SIZE 9
+
 typedef struct editor editor_t;
 typedef struct editor_buffer editor_buffer_t;
 typedef struct editor_buffer_line editor_buffer_line_t;
@@ -96,6 +98,17 @@ public void editor_close();
  * runs editor infinite loop, taking command and doing them
  */
 public return_message editor_run();
+
+/*
+ * writes current buffer into screen
+ */
+public return_message editor_render();
+
+/*
+ * writes single file into buffer , at current position of screen (whereever that cursor is)
+ * also will do line render stuff, like showing tabs by specified tab size and ...
+ */
+public void editor_render_line(editor_buffer_line_t *line);
 
 /*
  * this is just a helper method to get current buffer of editor
