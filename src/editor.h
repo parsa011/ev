@@ -54,6 +54,10 @@ struct editor_buffer {
 	 */
 	editor_buffer_line_t *current_line;
 	/*
+	 * how many char we passed from beginning of string, starts with 0 (index)
+	 */
+	uint8_t char_offset;
+	/*
 	 * we may want to have some more buffer, we will store each buffer cursor pos
 	 * here, so we can restore position
 	 */
