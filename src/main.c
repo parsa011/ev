@@ -24,10 +24,11 @@ int main(int argc, char **argv)
 	/*
 	 * this is for test, if we passed any arg to prgram, it will counted as file name for now
 	 * we will open it in current buffer of editor
+	 * also we always use this in main()
+	 * because it will load file lines into buffer , if file does not exists, it will
+	 * create new line for current and first line of buffer
 	 */
-	if (argc > 1) {
-		editor_file_open(argv[1]);
-	}
+	editor_file_open(argv[1]);
 	editor_run();
 	editor_close();
 	return 0;

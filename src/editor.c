@@ -37,6 +37,7 @@ public void editor_change_size()
 public void editor_close()
 {
 	tty_cooked_mode();
+	tty_clear();
 }
 
 public return_message editor_run()
@@ -80,6 +81,10 @@ public editor_buffer_t *editor_buffer_init(char *filepath)
 
 public return_message editor_file_open(char *filepath)
 {
+	if (!file_exists(filepath)) {
+		editor.current_buffer->first_line = editor.current_buffer->current_line = editor_buffer_line_init("", 0);
+		return create_return_message(ERROR, "new buffer");
+	}
 	editor_buffer_t *buf = editor_buffer();
 	buf->filepath = filepath;
 	buf->name = file_name(filepath);
