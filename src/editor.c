@@ -61,6 +61,7 @@ public return_message editor_render()
 		line = L_LINK_NEXT(line);
 	}
 	log("%s", buf->current_line->str);
+	log("%c", *(buf->current_line->str + buf->char_offset));
 	tty_cursor_move(buf->pos);
 	return create_return_message(SUCCESS, "buffer rendered");
 }

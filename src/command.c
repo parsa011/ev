@@ -10,8 +10,9 @@
 command commands[] = {
 	MAKE_COMMAND("Close Buffer", "C-X C-C", q_command),
 	MAKE_COMMAND("Goto Next Line", "C-N", next_line_command),
-	MAKE_COMMAND("Goto Next Line", "C-P", prev_line_command),
-	MAKE_COMMAND("Goto Next Char", "C-F", next_char_command)
+	MAKE_COMMAND("Goto Prev Line", "C-P", prev_line_command),
+	MAKE_COMMAND("Goto Next Char", "C-F", next_char_command),
+	MAKE_COMMAND("Goto Prev Char", "C-B", prev_char_command)
 };
 
 public command command_read()
