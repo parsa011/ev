@@ -5,7 +5,7 @@
 #include "basic.h"
 #include "../llink/llist.h"
 
-#define TAB_SIZE 9
+#define TAB_SIZE 4
 
 typedef struct editor editor_t;
 typedef struct editor_buffer editor_buffer_t;
