@@ -115,6 +115,11 @@ public return_message editor_render();
 public void editor_render_line(editor_buffer_line_t *line);
 
 /*
+ * checks if cursor is out of the current line, if its is, will move cursor to end of current line
+ */
+public void editor_check_offset();
+
+/*
  * this is just a helper method to get current buffer of editor
  */
 public editor_buffer_t *editor_buffer();

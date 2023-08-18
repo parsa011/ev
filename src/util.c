@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "util.h"
+#include "editor.h"
 
-char *make_fmt_string(const char *fmt, ...)
+public char *make_fmt_string(const char *fmt, ...)
 {
 	int n = 0;
 	size_t size = 0;
@@ -36,4 +37,16 @@ char *make_fmt_string(const char *fmt, ...)
 	}
 
 	return p;
+}
+
+public uint8_t string_len_to_offset(char *str, int len)
+{
+	int tot = 0;
+	for (int i = 0; i < len; i++) {
+		if (*(str + i) == '\t')
+			tot += TAB_SIZE;
+		else
+			tot++;
+	}
+	return tot;
 }
