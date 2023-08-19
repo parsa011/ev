@@ -120,6 +120,12 @@ public return_message editor_render();
 public void editor_render_line(editor_buffer_line_t *line);
 
 /*
+ * return line by it's index, starts from 0
+ * also we dont check if line index is greater to buffer line count :)
+ */
+public editor_buffer_line_t *editor_buffer_line_by_index(int index);
+
+/*
  * checks if cursor is out of the current line, if its is, will move cursor to end of current line
  */
 public void editor_check_offset();

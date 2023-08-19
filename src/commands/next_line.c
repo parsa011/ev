@@ -13,9 +13,14 @@ public return_message next_line_command(char **args)
 		return create_return_message(ERROR, "end of buffer");
 	if (buf->pos.row < editor.rows - 1) {
 		buf->pos.row++;
-		buf->current_line = L_LINK_NEXT(buf->current_line);
 		tty_cursor_line_next();
+	} else {
+		if (buf->line_offset + 1 >= buf->line_count)
+			return create_return_message(ERROR, "end of buffer");
+		buf->line_offset++;
+		buf->render = true;
 	}
+	buf->current_line = L_LINK_NEXT(buf->current_line);
 	editor_check_offset();
 	return create_return_message(SUCCESS, "Next Line");
 }

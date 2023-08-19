@@ -58,7 +58,7 @@ public return_message editor_render()
 {
 	tty_clear();
 	editor_buffer_t *buf = editor_buffer();
-	editor_buffer_line_t *line = editor_buffer()->first_line;
+	editor_buffer_line_t *line = editor_buffer_line_by_index(buf->line_offset);
 	int printed_rows = 1;
 	while (line && printed_rows < editor.rows) {
 		editor_render_line(line);
@@ -85,6 +85,15 @@ public void editor_render_line(editor_buffer_line_t *line)
 		ptr++;
 	}
 	tty_put_string(true, "\r\n");
+}
+
+public editor_buffer_line_t *editor_buffer_line_by_index(int index)
+{
+	editor_buffer_line_t *line = editor_buffer()->first_line;
+	for (int i = 0; i < index; i++) {
+		line = L_LINK_NEXT(line);
+	}
+	return line;
 }
 
 public void editor_check_offset()
