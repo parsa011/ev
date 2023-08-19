@@ -12,7 +12,7 @@ public return_message next_char_command(char **args)
 	 * if buffer row is less than editor row count, go to next line
 	 * otherwise scroll one line to down (if there is any more lines)
 	 */
-	if (buf->char_offset + 1 >= cl->len) {
+	if (buf->char_offset + 1 > cl->len) {
 		next_line_command(NULL);
 		return beginning_of_line_command(NULL);
 	}

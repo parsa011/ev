@@ -66,6 +66,11 @@ struct editor_buffer {
 	 * each buffer can be in one mode at a time, search, insert, lock or ...
 	 */
 	editor_buffer_mode mode;
+	/*
+	 * set true if current buffer need to update, for example we don't want to render screen after moving cursor
+	 * one line up or down
+	 */
+	bool render;
 };
 
 struct editor {

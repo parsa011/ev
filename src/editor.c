@@ -44,7 +44,9 @@ public void editor_close()
 public return_message editor_run()
 {
 	while (true) {
-		editor_render();
+		if (editor_buffer()->render)
+			editor_render();
+		tty_cursor_move(editor_buffer()->pos);
 		command cmd = command_read();
 		if (cmd.func != null)
 			cmd.func(null);
@@ -57,13 +59,15 @@ public return_message editor_render()
 	tty_clear();
 	editor_buffer_t *buf = editor_buffer();
 	editor_buffer_line_t *line = editor_buffer()->first_line;
-	while (line) {
+	int printed_rows = 1;
+	while (line && printed_rows < editor.rows) {
 		editor_render_line(line);
 		line = L_LINK_NEXT(line);
+		printed_rows++;
 	}
-	log("%s", buf->current_line->str);
-	log("%c", *(buf->current_line->str + buf->char_offset));
-	tty_cursor_move(buf->pos);
+	buf->render = false;
+	//log("%s", buf->current_line->str);
+	//log("%c", *(buf->current_line->str + buf->char_offset));
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 
@@ -116,6 +120,7 @@ public return_message editor_file_open(char *filepath)
 	buf->filepath = filepath;
 	buf->name = file_name(filepath);
 	editor_file_load_lines(filepath, REPLACE);
+	editor.current_buffer->render = true;
 	return create_return_message(SUCCESS, "file opened");
 }
 
