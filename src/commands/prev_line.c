@@ -12,5 +12,6 @@ public return_message prev_line_command(char **args)
 		buf->current_line = L_LINK_PREV(buf->current_line);
 		tty_cursor_line_prev();
 	}
+	editor_check_offset();
 	return create_return_message(SUCCESS, "prev line");
 }

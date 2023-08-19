@@ -10,6 +10,7 @@
 #include "key.h"
 #include "file.h"
 #include "log.h"
+#include "util.h"
 #include "commands/commands.h"
 
 editor_t editor;
@@ -80,6 +81,16 @@ public void editor_render_line(editor_buffer_line_t *line)
 		ptr++;
 	}
 	tty_put_string(true, "\r\n");
+}
+
+public void editor_check_offset()
+{
+	editor_buffer_t *buf = editor_buffer();
+	editor_buffer_line_t *ln = buf->current_line;
+	if (buf->char_offset >= ln->len) {
+		buf->char_offset = ln->len - 1;
+		buf->pos.col = string_len_to_offset(ln->str, ln->len);
+	}
 }
 
 public editor_buffer_t *editor_buffer()

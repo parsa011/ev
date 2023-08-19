@@ -16,5 +16,6 @@ public return_message next_line_command(char **args)
 		buf->current_line = L_LINK_NEXT(buf->current_line);
 		tty_cursor_line_next();
 	}
+	editor_check_offset();
 	return create_return_message(SUCCESS, "Next Line");
 }
