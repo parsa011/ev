@@ -3,4 +3,6 @@
 #include "prev_line.h"
 #include "next_char.h"
 #include "prev_char.h"
+#include "end_of_line.h"
+#include "beginning_of_line.h"
 #include "o.h"

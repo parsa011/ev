@@ -12,7 +12,9 @@ command commands[] = {
 	MAKE_COMMAND("Goto Next Line", "C-N", next_line_command),
 	MAKE_COMMAND("Goto Prev Line", "C-P", prev_line_command),
 	MAKE_COMMAND("Goto Next Char", "C-F", next_char_command),
-	MAKE_COMMAND("Goto Prev Char", "C-B", prev_char_command)
+	MAKE_COMMAND("Goto Prev Char", "C-B", prev_char_command),
+	MAKE_COMMAND("Goto End Of Line", "C-E", end_of_line_command),
+	MAKE_COMMAND("Goto Beginning Of Line", "C-A", beginning_of_line_command)
 };
 
 public command command_read()
