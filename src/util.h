@@ -10,6 +10,8 @@
  */
 public char *make_fmt_string(const char *fmt, ...);
 
-public uint8_t string_len_to_offset(char *str, int len);
+public uint8_t offset_to_col(char *str, int len);
+
+public uint8_t col_to_offset(char *str, uint8_t col);
 
 #endif

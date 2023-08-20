@@ -39,14 +39,28 @@ public char *make_fmt_string(const char *fmt, ...)
 	return p;
 }
 
-public uint8_t string_len_to_offset(char *str, int len)
+public uint8_t offset_to_col(char *str, int len)
 {
-	int tot = 0;
+	int col = 1;
 	for (int i = 0; i < len; i++) {
 		if (*(str + i) == '\t')
-			tot += TAB_SIZE;
+			col += TAB_SIZE;
 		else
-			tot++;
+			col++;
 	}
-	return tot;
+	return col;
+}
+
+public uint8_t col_to_offset(char *str, uint8_t col)
+{
+	uint8_t current_col = 1;
+	int offset = 0;
+	while (current_col < col) {
+		if (*(str + offset) == '\t') {
+			current_col += TAB_SIZE;
+		} else
+			current_col++;
+		offset++;
+	}
+	return offset;
 }

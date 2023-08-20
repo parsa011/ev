@@ -44,7 +44,7 @@ public void editor_close()
 public return_message editor_run()
 {
 	while (true) {
-		if (editor_buffer()->render)
+		//if (editor_buffer()->render)
 			editor_render();
 		tty_cursor_move(editor_buffer()->pos);
 		command cmd = command_read();
@@ -60,15 +60,15 @@ public return_message editor_render()
 	editor_buffer_t *buf = editor_buffer();
 	editor_buffer_line_t *line = editor_buffer_line_by_index(buf->line_offset);
 	int printed_rows = 1;
-	while (line && printed_rows < editor.rows) {
+	while (line && printed_rows < editor.rows - 3) {
 		editor_render_line(line);
 		line = L_LINK_NEXT(line);
 		printed_rows++;
 	}
 	buf->render = false;
-	//log("%s", buf->current_line->str);
-	//log("%c", *(buf->current_line->str + buf->char_offset));
-	//log("%d", buf->line_offset);
+	log("%s", buf->current_line->str);
+	log("%c", *(buf->current_line->str + buf->char_offset));
+	log("offset : %d\t col : %d\t len : %d", buf->char_offset, buf->pos.col, buf->current_line->len);
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 
@@ -101,9 +101,11 @@ public void editor_check_offset()
 {
 	editor_buffer_t *buf = editor_buffer();
 	editor_buffer_line_t *ln = buf->current_line;
+	buf->char_offset = col_to_offset(ln->str, buf->pos.col);
+	buf->pos.col = offset_to_col(ln->str, buf->char_offset);
+	//buf->pos.col = offset_to_col(ln->str, ln->len);
 	if (buf->char_offset >= ln->len) {
-		buf->char_offset = ln->len - 1;
-		buf->pos.col = string_len_to_offset(ln->str, ln->len);
+		end_of_line_command(NULL);
 	}
 }
 
