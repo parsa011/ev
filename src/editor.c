@@ -103,7 +103,6 @@ public void editor_check_offset()
 	editor_buffer_line_t *ln = buf->current_line;
 	buf->char_offset = col_to_offset(ln->str, buf->pos.col);
 	buf->pos.col = offset_to_col(ln->str, buf->char_offset);
-	//buf->pos.col = offset_to_col(ln->str, ln->len);
 	if (buf->char_offset >= ln->len) {
 		end_of_line_command(NULL);
 	}
