@@ -68,6 +68,7 @@ public return_message editor_render()
 	buf->render = false;
 	//log("%s", buf->current_line->str);
 	//log("%c", *(buf->current_line->str + buf->char_offset));
+	//log("%d", buf->line_offset);
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 

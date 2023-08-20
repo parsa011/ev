@@ -2,8 +2,11 @@ DONE :
 1 - get and convert key to string, for example convert control + a to C-a or alt + c to M-c
     also compatible for combine, like  C-M-a
 2 - Combine to key, for exable : "A C-b" means first A then Control b
+3 - open file into editor, also editor should be able to open multiple buffers
 
 IN PROGRESS :
+4 - check if editor needs to update buffer or no (render it again)
+	because every time render is waste of time
+5 - convert buffer col to char offset, if we move to another line, current char is not current (for char_offset)
 
 TODO : 
-3 - open file into editor, also editor should be able to open multiple buffers
