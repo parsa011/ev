@@ -44,7 +44,7 @@ public void editor_close()
 public return_message editor_run()
 {
 	while (true) {
-		//if (editor_buffer()->render)
+		if (editor_buffer()->render)
 			editor_render();
 		tty_cursor_move(editor_buffer()->pos);
 		command cmd = command_read();
@@ -60,15 +60,15 @@ public return_message editor_render()
 	editor_buffer_t *buf = editor_buffer();
 	editor_buffer_line_t *line = editor_buffer_line_by_index(buf->line_offset);
 	int printed_rows = 1;
-	while (line && printed_rows < editor.rows - 3) {
+	while (line && printed_rows < editor.rows) {
 		editor_render_line(line);
 		line = L_LINK_NEXT(line);
 		printed_rows++;
 	}
 	buf->render = false;
-	log("%s", buf->current_line->str);
-	log("%c", *(buf->current_line->str + buf->char_offset));
-	log("offset : %d\t col : %d\t len : %d", buf->char_offset, buf->pos.col, buf->current_line->len);
+	//log("%s", buf->current_line->str);
+	//log("%c", *(buf->current_line->str + buf->char_offset));
+	//log("offset : %d\t col : %d\t len : %d", buf->char_offset, buf->pos.col, buf->current_line->len);
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 
@@ -76,13 +76,19 @@ public void editor_render_line(editor_buffer_line_t *line)
 {
 	assert(line);
 	char *ptr = line->str;
+	int writed_chars_count = 1;
 	while (*ptr) {
+		if (writed_chars_count + 1 >= editor.cols)
+			break;
 		if (*ptr == '\t') {
+			writed_chars_count += TAB_SIZE;
 			for (int i = 0; i < TAB_SIZE; i++) {
 				tty_put_char(' ');
 			}
-		} else
+		} else {
+			writed_chars_count++;
 			tty_put_char(*ptr);
+		}
 		ptr++;
 	}
 	tty_put_string(true, "\r\n");
