@@ -77,6 +77,10 @@ public void editor_render_line(editor_buffer_line_t *line)
 	assert(line);
 	char *ptr = line->str;
 	int writed_chars_count = 1;
+	/*
+	 * dont write more than terminal width size, with checking writed_chars_count everytime
+	 * TODO : add elipsis for large lines
+	 */
 	while (*ptr) {
 		if (writed_chars_count + 1 >= editor.cols)
 			break;
