@@ -8,27 +8,24 @@
 #include "commands/commands.h"
 
 command commands[] = {
-	MAKE_COMMAND("Close Buffer", "C-X C-C", q_command),
-	MAKE_COMMAND("Goto Next Line", "C-N", next_line_command),
-	MAKE_COMMAND("Goto Prev Line", "C-P", prev_line_command),
-	MAKE_COMMAND("Goto Next Char", "C-F", next_char_command),
-	MAKE_COMMAND("Goto Prev Char", "C-B", prev_char_command),
-	MAKE_COMMAND("Goto End Of Line", "C-E", end_of_line_command),
-	MAKE_COMMAND("Goto Beginning Of Line", "C-A", beginning_of_line_command)
+	MAKE_COMMAND("exit", "C-X C-C", q_command),
+	MAKE_COMMAND("next-line", "C-N", next_line_command),
+	MAKE_COMMAND("prev-line", "C-P", prev_line_command),
+	MAKE_COMMAND("next-char", "C-F", next_char_command),
+	MAKE_COMMAND("prev-char", "C-B", prev_char_command),
+	MAKE_COMMAND("eol", "C-E", end_of_line_command),
+	MAKE_COMMAND("bol", "C-A", beginning_of_line_command)
 };
 
-public command command_read()
+public command command_read(char *str)
 {
-	int c = key_read();
-	char *str = key_to_str(c);
 	command cmd = command_get(str);
+	int c;
 	while (cmd.func == null && command_exists(str)) {
 		c = key_read();
 		key_combine(str, c);
 		cmd = command_get(str);
 	}
-	if (str)
-		free(str);
 	return cmd;
 }
 

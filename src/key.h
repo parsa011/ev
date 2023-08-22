@@ -9,6 +9,7 @@
 #define KEY_EXIT 'q'
 
 enum {
+	BACKSPACE = 127,
 	F1 = 1000,
 	F2,
 	F3,

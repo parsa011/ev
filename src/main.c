@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "editor.h"
 #include "tty.h"
+#include "key.h"
 #include "util.h"
 #include "log.h"
 

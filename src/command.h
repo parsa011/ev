@@ -16,9 +16,11 @@ typedef struct {
 public command commands[];
 
 /*
- * takes key from user until we find a proper command for key(or keys)
+ * takes key string and finds a proper command for key(or keys) if it exists
+ * also if there is commands that start with given str, will get more keys to find
+ * also returns NULL command if there isn't any matched command with given str
  */
-public command command_read();
+public command command_read(char *str);
 
 /*
  * finds a command with given pattern, if command's key_codes is null that means

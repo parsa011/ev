@@ -11,6 +11,7 @@
 #include "file.h"
 #include "log.h"
 #include "util.h"
+#include "text.h"
 #include "commands/commands.h"
 
 editor_t editor;
@@ -43,13 +44,24 @@ public void editor_close()
 
 public return_message editor_run()
 {
+	int c;
+	char *str;
+	editor_buffer_t *buf;
 	while (true) {
-		if (editor_buffer()->render)
+		buf = editor_buffer();
+		//if (buf->render)
 			editor_render();
-		tty_cursor_move(editor_buffer()->pos);
-		command cmd = command_read();
+		tty_cursor_move(buf->pos);
+		c = key_read();
+		str = key_to_str(c);
+		command cmd = command_read(str);
 		if (cmd.func != null)
 			cmd.func(null);
+		else {
+			editor_buffer_line_insert_key(c);
+		}
+		if (str)
+			free(str);
 	}
 	return create_return_message(SUCCESS, "editor closed without error");
 }
@@ -79,7 +91,7 @@ public void editor_render_line(editor_buffer_line_t *line)
 	int writed_chars_count = 1;
 	/*
 	 * dont write more than terminal width size, with checking writed_chars_count everytime
-	 * TODO : add elipsis for large lines
+	 * TODO : add ellipsis for large lines
 	 */
 	while (*ptr) {
 		if (writed_chars_count + 1 >= editor.cols)
@@ -97,6 +109,26 @@ public void editor_render_line(editor_buffer_line_t *line)
 	}
 	tty_put_string(true, "\r\n");
 }
+
+public void editor_buffer_line_insert_key(int key)
+{
+	editor_buffer_t *buf = editor_buffer();
+	buf->render = true;
+	if (key == '\t') {
+		text_insert_string(buf->current_line, "\t", buf->char_offset);
+		buf->pos.col += TAB_SIZE;
+		buf->char_offset++;
+	} else if (key == BACKSPACE) {
+	} else {
+		char *str = key_to_str(key);
+		int len = strlen(str);
+		text_insert_string(buf->current_line, str, buf->char_offset);
+		buf->pos.col += len;
+		buf->char_offset += len;
+		free(str);
+	}
+}
+
 
 public editor_buffer_line_t *editor_buffer_line_by_index(int index)
 {
@@ -172,7 +204,7 @@ public return_message editor_file_load_lines(char *filepath, line_load_mode mode
 	/* read other lines and add them to buffer */  
 	while ((line_length = getline(&line_chars, &linecap, fp)) != EOF) {
 		while (*(line_chars + line_length - 1) == '\n')
-			line_length--;
+			line_chars[--line_length] = '\0';
 		ln = editor_buffer_line_init(line_chars, line_length);
 		editor_buffer_line_append(ln);
 		buf->current_line = ln;

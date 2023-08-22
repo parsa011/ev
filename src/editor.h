@@ -56,7 +56,7 @@ struct editor_buffer {
 	/*
 	 * how many char we passed from beginning of string, starts with 0 (index)
 	 */
-	uint8_t char_offset;
+	uint16_t char_offset;
 	/*
 	 * we may want to have some more buffer, we will store each buffer cursor pos
 	 * here, so we can restore position
@@ -118,6 +118,11 @@ public return_message editor_render();
  * also will do line render stuff, like showing tabs by specified tab size and ...
  */
 public void editor_render_line(editor_buffer_line_t *line);
+
+/*
+ * insert given key to current line
+ */
+public void editor_buffer_line_insert_key(int key);
 
 /*
  * return line by it's index, starts from 0
