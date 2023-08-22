@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "line.h"
+#include "commands/commands.h"
 
 public line_t *line_init(char *str, int len)
 {
@@ -28,6 +29,37 @@ public void line_insert_string(line_t *line, char *str, uint16_t pos)
 	line->len = len;
 }
 
+public void line_append_string(line_t *line, char *str)
+{
+	int str_len = strlen(str);
+	int dest_len = strlen(line->str);
+	int len = str_len + dest_len + 1;
+	line->str = (char *) realloc(line->str, (len + 1) * sizeof(char));
+	strcat(line->str, str);
+	line->len = len;
+}
+
+public void line_delete(bool go_next)
+{
+	buffer_t *buf = editor_buffer();
+	line_t *line = buf->current_line;
+	if (go_next) {
+		if (L_LINK_NEXT(line)) {
+			next_line_command(NULL);
+			buf->current_line = L_LINK_NEXT(line);
+		}
+	} else {
+		if (L_LINK_PREV(line)) {
+			prev_line_command(NULL);
+			buf->current_line = L_LINK_PREV(line);
+		}
+	}
+	L_LINK_REMOVE(line);
+	line_free(line);
+	buf->line_count--;
+	buf->render = true;
+}
+
 public void line_delete_char(line_t *line, uint16_t pos)
 {
 	if (pos < 0)
@@ -51,4 +83,13 @@ public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
 	line->len -= remove_len;
 	line->str = (char *) realloc(line->str, (line->len + 1) * sizeof(char));
 	line->str[line->len] = '\0';
+}
+
+public void line_free(line_t *line)
+{
+	if (line) {
+		if (line->str)
+			free(line->str);
+		free(line);
+	}
 }

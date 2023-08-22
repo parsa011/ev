@@ -80,7 +80,7 @@ public return_message editor_render()
 	buf->render = false;
 	log("%s", buf->current_line->str);
 	log("%d", *(buf->current_line->str + buf->char_offset) == '\0');
-	log("offset : %d\t col : %d\t len : %d", buf->char_offset, buf->pos.col, buf->current_line->len);
+	log("offset : %d\t Row : %d\t col : %d\t len : %d", buf->char_offset, buf->pos.row, buf->pos.col, buf->current_line->len);
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 
