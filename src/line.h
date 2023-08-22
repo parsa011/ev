@@ -26,4 +26,9 @@ public void line_insert_string(line_t *line, char *str, uint16_t pos);
  */
 public void line_delete_char(line_t *line, uint16_t pos);
 
+/*
+ * remove of 'start' until index. both should be index
+ */
+public void line_delete_range(line_t *line, uint16_t start, uint16_t end);
+
 #endif

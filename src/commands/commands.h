@@ -5,3 +5,4 @@
 #include "prev_char.h"
 #include "end_of_line.h"
 #include "beginning_of_line.h"
+#include "kill_line.h"

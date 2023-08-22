@@ -39,3 +39,16 @@ public void line_delete_char(line_t *line, uint16_t pos)
 	line->str = (char *) realloc(line->str, (line->len + 1) * sizeof(char));
 	line->str[line->len] = '\0';
 }
+
+public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
+{
+	if (end > line->len || end < 0 || start >line->len || start < 0 )
+		return;
+	int remove_len = end - start;
+	for (int i = start; i < end; i++) {
+		line->str[i] = line->str[i + remove_len];
+	}
+	line->len -= remove_len;
+	line->str = (char *) realloc(line->str, (line->len + 1) * sizeof(char));
+	line->str[line->len] = '\0';
+}
