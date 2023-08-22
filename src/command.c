@@ -13,6 +13,12 @@ command commands[] = {
 	MAKE_COMMAND("prev-line", "C-P", prev_line_command),
 	MAKE_COMMAND("next-char", "C-F", next_char_command),
 	MAKE_COMMAND("prev-char", "C-B", prev_char_command),
+
+	MAKE_COMMAND("next-line", "ARROW_DOWN", next_line_command),
+	MAKE_COMMAND("prev-line", "ARROW_UP", prev_line_command),
+	MAKE_COMMAND("next-char", "ARROW_RIGHT", next_char_command),
+	MAKE_COMMAND("prev-char", "ARROW_LEFT", prev_char_command),
+
 	MAKE_COMMAND("eol", "C-E", end_of_line_command),
 	MAKE_COMMAND("bol", "C-A", beginning_of_line_command)
 };
