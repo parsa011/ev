@@ -21,6 +21,9 @@ command commands[] = {
 
 	MAKE_COMMAND("eol", "C-E", end_of_line_command),
 	MAKE_COMMAND("bol", "C-A", beginning_of_line_command),
+	MAKE_COMMAND("eol", "END", end_of_line_command),
+	MAKE_COMMAND("bol", "HOME", beginning_of_line_command),
+
 
 	MAKE_COMMAND("kill-line", "C-K", kill_line_command)
 };
