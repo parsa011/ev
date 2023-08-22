@@ -21,4 +21,9 @@ public line_t *line_init(char *str, int len);
  */
 public void line_insert_string(line_t *line, char *str, uint16_t pos);
 
+/*
+ * delete from given in string, return if pos is 0
+ */
+public void line_delete_char(line_t *line, uint16_t pos);
+
 #endif

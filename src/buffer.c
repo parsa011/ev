@@ -89,6 +89,15 @@ public void buffer_insert_key(int key)
 		buf->pos.col += TAB_SIZE;
 		buf->char_offset++;
 	} else if (key == BACKSPACE) {
+		if (buf->char_offset == 0)
+			return;
+		char prev_char = *(buf->current_line->str + buf->char_offset - 1);
+		line_delete_char(buf->current_line, buf->char_offset - 1);
+		if (prev_char == '\t')
+			buf->pos.col -= TAB_SIZE;
+		else
+			buf->pos.col--;
+		buf->char_offset--;
 	} else {
 		line_insert_string(buf->current_line, str, buf->char_offset);
 		buf->pos.col += len;

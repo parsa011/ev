@@ -27,3 +27,15 @@ public void line_insert_string(line_t *line, char *str, uint16_t pos)
 	line->str[len] = '\0';
 	line->len = len;
 }
+
+public void line_delete_char(line_t *line, uint16_t pos)
+{
+	if (pos < 0)
+		return;
+	for (int i = pos; i < line->len - 1; i++) {
+		line->str[i] = line->str[i + 1];
+	}
+	line->len--;
+	line->str = (char *) realloc(line->str, (line->len + 1) * sizeof(char));
+	line->str[line->len] = '\0';
+}
