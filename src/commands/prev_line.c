@@ -4,7 +4,7 @@
 
 public return_message prev_line_command(char **args)
 {
-	editor_buffer_t *buf = editor_buffer();
+	buffer_t *buf = editor_buffer();
 	if (L_LINK_PREV(buf->current_line) == NULL)
 		return create_return_message(ERROR, "beginning of buffer");
 	if (buf->pos.row > 1) {

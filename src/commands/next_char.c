@@ -6,8 +6,8 @@
 
 public return_message next_char_command(char **args)
 {
-	editor_buffer_t *buf = editor_buffer();
-	editor_buffer_line_t *cl = buf->current_line;
+	buffer_t *buf = editor_buffer();
+	line_t *cl = buf->current_line;
 	if (buf->char_offset + 1 > cl->len) {
 		next_line_command(NULL);
 		return beginning_of_line_command(NULL);

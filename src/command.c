@@ -8,7 +8,7 @@
 #include "commands/commands.h"
 
 command commands[] = {
-	MAKE_COMMAND("exit", "C-X C-C", q_command),
+	MAKE_COMMAND("exit", "C-X C-C", exit_command),
 	MAKE_COMMAND("next-line", "C-N", next_line_command),
 	MAKE_COMMAND("prev-line", "C-P", prev_line_command),
 	MAKE_COMMAND("next-char", "C-F", next_char_command),

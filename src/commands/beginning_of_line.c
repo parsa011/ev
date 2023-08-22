@@ -5,7 +5,7 @@
 
 public return_message beginning_of_line_command(char **args)
 {
-	editor_buffer_t *buf = editor_buffer();
+	buffer_t *buf = editor_buffer();
 	buf->char_offset = 0;
 	buf->pos.col = 1;
 	return create_return_message(SUCCESS, "beginning of line");

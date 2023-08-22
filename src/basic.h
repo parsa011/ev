@@ -38,4 +38,8 @@ struct cursor_pos {
 
 public void die(int code);
 
+typedef struct editor editor_t;
+typedef struct buffer buffer_t;
+typedef struct line line_t;
+
 #endif

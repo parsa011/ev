@@ -6,7 +6,7 @@
 
 public return_message prev_char_command(char **args)
 {
-	editor_buffer_t *buf = editor_buffer();
+	buffer_t *buf = editor_buffer();
 	if (buf->char_offset == 0) {
 		if (L_LINK_PREV(buf->current_line)) {
 			prev_line_command(NULL);

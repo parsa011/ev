@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	 * because it will load file lines into buffer , if file does not exists, it will
 	 * create new line for current and first line of buffer
 	 */
-	editor_file_open(argv[1]);
+	buffer_file_open(argv[1]);
 	editor_run();
 	editor_close();
 	return 0;

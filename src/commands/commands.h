@@ -1,4 +1,4 @@
-#include "q.h"
+#include "exit.h"
 #include "next_line.h"
 #include "prev_line.h"
 #include "next_char.h"

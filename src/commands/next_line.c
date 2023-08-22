@@ -4,7 +4,7 @@
 
 public return_message next_line_command(char **args)
 {
-	editor_buffer_t *buf = editor_buffer();
+	buffer_t *buf = editor_buffer();
 	/*
 	 * if buffer row is less than editor row count, go to next line
 	 * otherwise scroll one line to down (if there is any more lines)
