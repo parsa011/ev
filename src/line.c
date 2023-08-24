@@ -6,6 +6,7 @@
 public line_t *line_init(char *str, int len)
 {
 	line_t *line = (line_t *) malloc(sizeof(line_t));
+	memset(line, 0, sizeof(line_t));
 	line->str = (char *) malloc((len + 1) * sizeof(char));
 	if (len > 0)
 		strncpy(line->str, str, len);
@@ -96,12 +97,11 @@ public void line_open()
 
 	line_append_string(new_line, current_line->str + buf->char_offset);
 	line_delete_range(current_line, buf->char_offset, current_line->len);
-	L_LINK_INSERT(current_line, new_line);
+	buffer_append_line(new_line);
 	next_line_command(NULL);
 	beginning_of_line_command(NULL);
 
 	buf->render = true;
-	buf->line_count++;
 }
 
 public void line_free(line_t *line)
