@@ -103,6 +103,11 @@ public return_message buffer_append_line(line_t *line);
 public void buffer_insert_key(int key);
 
 /*
+ * set buffer char offset to given offset and update cursor col
+ */
+public void buffer_go_to_offset(int offset); 
+
+/*
  * return line by it's index, starts from 0
  * also we dont check if line index is greater to buffer line count :)
  */

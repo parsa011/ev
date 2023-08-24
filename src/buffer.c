@@ -5,6 +5,7 @@
 #include "buffer.h"
 #include "key.h"
 #include "file.h"
+#include "util.h"
 #include "commands/commands.h"
 
 public buffer_t *buffer_init(char *filepath)
@@ -91,21 +92,22 @@ public void buffer_insert_key(int key)
 		buf->char_offset++;
 	} else if (key == BACKSPACE) {
 		if (buf->char_offset == 0) {
-			// TODO : append current line to previous line and remove it
 			line_t *prev_line = L_LINK_PREV(buf->current_line);
 			if (!prev_line)
 				return;
+			int prev_line_len = prev_line->len;
 			line_append_string(prev_line, buf->current_line->str);
 			line_delete(false);
-			end_of_line_command(NULL);
+			buffer_go_to_offset(prev_line_len);
+		} else {
+			char prev_char = *(buf->current_line->str + buf->char_offset - 1);
+			line_delete_char(buf->current_line, buf->char_offset - 1);
+			if (prev_char == '\t')
+				buf->pos.col -= TAB_SIZE;
+			else
+				buf->pos.col--;
+			buf->char_offset--;
 		}
-		char prev_char = *(buf->current_line->str + buf->char_offset - 1);
-		line_delete_char(buf->current_line, buf->char_offset - 1);
-		if (prev_char == '\t')
-			buf->pos.col -= TAB_SIZE;
-		else
-			buf->pos.col--;
-		buf->char_offset--;
 	} else if (key == CTRL_KEY('M')) {
 		line_open();
 	} else {
@@ -114,6 +116,18 @@ public void buffer_insert_key(int key)
 		buf->char_offset += len;
 	}
 	free(str);
+}
+
+public void buffer_go_to_offset(int offset)
+{
+	buffer_t *buf = editor_buffer();
+	/*
+	 * offset is index bound and cant be greater or equal to current line len
+	 */
+	if (offset >= buf->current_line->len)
+		return;
+	buf->char_offset = offset;
+	buf->pos.col = offset_to_col(buf->current_line->str, offset);
 }
 
 public line_t *buffer_line_by_index(int index)
