@@ -42,6 +42,11 @@ public void line_delete_char(line_t *line, uint16_t pos);
  */
 public void line_delete_range(line_t *line, uint16_t start, uint16_t end);
 
+/*
+ * open new line in down of current line
+ */
+public void line_open();
+
 public void line_free(line_t *line);
 
 #endif

@@ -7,7 +7,10 @@ public line_t *line_init(char *str, int len)
 {
 	line_t *line = (line_t *) malloc(sizeof(line_t));
 	line->str = (char *) malloc((len + 1) * sizeof(char));
-	strncpy(line->str, str, len);
+	if (len > 0)
+		strncpy(line->str, str, len);
+	else
+		line->str[0] = '\0';
 	line->len = len;
 	return line;
 }
@@ -33,7 +36,7 @@ public void line_append_string(line_t *line, char *str)
 {
 	int str_len = strlen(str);
 	int dest_len = strlen(line->str);
-	int len = str_len + dest_len + 1;
+	int len = str_len + dest_len;
 	line->str = (char *) realloc(line->str, (len + 1) * sizeof(char));
 	strcat(line->str, str);
 	line->len = len;
@@ -83,6 +86,22 @@ public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
 	line->len -= remove_len;
 	line->str = (char *) realloc(line->str, (line->len + 1) * sizeof(char));
 	line->str[line->len] = '\0';
+}
+
+public void line_open()
+{
+	buffer_t *buf = editor_buffer();
+	line_t *current_line = buf->current_line;
+	line_t *new_line = line_init("", 0);
+
+	line_append_string(new_line, current_line->str + buf->char_offset);
+	line_delete_range(current_line, buf->char_offset, current_line->len);
+	L_LINK_INSERT(current_line, new_line);
+	next_line_command(NULL);
+	beginning_of_line_command(NULL);
+
+	buf->render = true;
+	buf->line_count++;
 }
 
 public void line_free(line_t *line)
