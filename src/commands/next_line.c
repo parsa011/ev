@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include "commands/next_line.h"
 #include "editor.h"
+#include "buffer.h"
 
 public return_message next_line_command(char **args)
 {
@@ -21,6 +22,6 @@ public return_message next_line_command(char **args)
 		buf->render = true;
 	}
 	buf->current_line = L_LINK_NEXT(buf->current_line);
-	editor_check_offset();
+	buffer_check_offset();
 	return create_return_message(SUCCESS, "Next Line");
 }

@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include "commands/prev_line.h"
 #include "editor.h"
+#include "buffer.h"
 
 public return_message prev_line_command(char **args)
 {
@@ -17,6 +18,6 @@ public return_message prev_line_command(char **args)
 		buf->render = true;
 	}
 	buf->current_line = L_LINK_PREV(buf->current_line);
-	editor_check_offset();
+	buffer_check_offset();
 	return create_return_message(SUCCESS, "prev line");
 }

@@ -28,7 +28,7 @@ public int key_read()
 		} else if (c == '[') {
 			c = tty_get_char(&pending);
 			/*
-			 * because ARROW keys doesnt have any trailing char, to we have to check if we have anything
+			 * because ARROW keys doesnt have any trailing char, we have to check if we have anything
 			 * remaining or no
 			 */
 			if (pending == 1)

@@ -55,10 +55,6 @@ public return_message editor_render();
  * also will do line render stuff, like showing tabs by specified tab size and ...
  */
 public void editor_render_line(line_t *line);
-/*
- * checks if cursor is out of the current line, if its is, will move cursor to end of current line
- */
-public void editor_check_offset();
 
 /*
  * this is just a helper method to get current buffer of editor

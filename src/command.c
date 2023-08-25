@@ -30,7 +30,10 @@ command commands[] = {
 	MAKE_COMMAND("kill-next-letter", "DELETE", kill_next_letter_command),
 
 	MAKE_COMMAND("next-word", "M-f", next_word_command),
-	MAKE_COMMAND("prev-word", "M-b", prev_word_command)
+	MAKE_COMMAND("prev-word", "M-b", prev_word_command),
+
+	MAKE_COMMAND("page-down", "PAGE_DOWN", page_down_command),
+	MAKE_COMMAND("page-up", "PAGE_UP", page_up_command),
 };
 
 public command command_read(char *str)

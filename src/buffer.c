@@ -116,6 +116,17 @@ public void buffer_insert_key(int key)
 	free(str);
 }
 
+public void buffer_check_offset()
+{
+	buffer_t *buf = editor_buffer();
+	line_t *ln = buf->current_line;
+	buf->char_offset = col_to_offset(ln->str, buf->pos.col);
+	buf->pos.col = offset_to_col(ln->str, buf->char_offset);
+	if (buf->char_offset >= ln->len) {
+		end_of_line_command(NULL);
+	}
+}
+
 public void buffer_go_to_offset(int offset)
 {
 	buffer_t *buf = editor_buffer();
@@ -126,6 +137,18 @@ public void buffer_go_to_offset(int offset)
 		return;
 	buf->char_offset = offset;
 	buf->pos.col = offset_to_col(buf->current_line->str, offset);
+}
+
+public void buffer_go_to_line(int index)
+{
+	buffer_t *buf = editor_buffer();
+	if (index + 1 > buf->line_count)
+		return;
+	buf->line_offset = index;
+	buf->current_line = buffer_line_by_index(index);
+	buf->pos.row = 1;
+	buffer_check_offset();
+	buf->render = true;
 }
 
 public char buffer_current_char()

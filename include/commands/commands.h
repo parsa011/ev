@@ -10,3 +10,5 @@
 #include "kill_next_letter.h"
 #include "next_word.h"
 #include "prev_word.h"
+#include "page_down.h"
+#include "page_up.h"

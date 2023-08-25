@@ -103,9 +103,19 @@ public return_message buffer_append_line(line_t *line);
 public void buffer_insert_key(int key);
 
 /*
+ * checks if cursor is out of the current line, if its is, will move cursor to end of current line
+ */
+public void buffer_check_offset();
+
+/*
  * set buffer char offset to given offset and update cursor col
  */
 public void buffer_go_to_offset(int offset); 
+
+/*
+ * go to line, index based
+ */
+public void buffer_go_to_line(int index);
 
 /*
  * return current char under the cursor
