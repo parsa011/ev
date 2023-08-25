@@ -1,8 +1,8 @@
 #include <stddef.h>
-#include "next_char.h"
-#include "prev_line.h"
-#include "end_of_line.h"
-#include "../editor.h"
+#include "commands/next_char.h"
+#include "commands/prev_line.h"
+#include "commands/end_of_line.h"
+#include "editor.h"
 
 public return_message prev_char_command(char **args)
 {

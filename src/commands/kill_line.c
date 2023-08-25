@@ -1,8 +1,8 @@
 #include <stddef.h>
-#include "kill_line.h"
-#include "next_char.h"
-#include "../buffer.h"
-#include "../key.h"
+#include "commands/kill_line.h"
+#include "commands/next_char.h"
+#include "buffer.h"
+#include "key.h"
 
 public return_message kill_line_command(char **args)
 {

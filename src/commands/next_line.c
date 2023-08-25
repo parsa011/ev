@@ -1,6 +1,6 @@
 #include <stddef.h>
-#include "next_line.h"
-#include "../editor.h"
+#include "commands/next_line.h"
+#include "editor.h"
 
 public return_message next_line_command(char **args)
 {

@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "exit.h"
-#include "../editor.h"
+#include "commands/exit.h"
+#include "editor.h"
 
 public return_message exit_command(char **args)
 {

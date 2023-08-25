@@ -1,5 +1,5 @@
-#include "new_line.h"
-#include "../line.h"
+#include "commands/new_line.h"
+#include "line.h"
 
 public return_message new_line_command(char **args)
 {

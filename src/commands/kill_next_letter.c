@@ -1,8 +1,8 @@
 #include <stddef.h>
-#include "kill_next_letter.h"
-#include "next_char.h"
-#include "../key.h"
-#include "../buffer.h"
+#include "commands/kill_next_letter.h"
+#include "commands/next_char.h"
+#include "key.h"
+#include "buffer.h"
 
 public return_message kill_next_letter_command(char **args)
 {

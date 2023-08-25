@@ -1,8 +1,8 @@
 #include <stddef.h>
 #include <ctype.h>
-#include "prev_word.h"
-#include "prev_char.h"
-#include "next_char.h"
+#include "commands/prev_word.h"
+#include "commands/prev_char.h"
+#include "commands/next_char.h"
 
 public return_message prev_word_command(char **args)
 {

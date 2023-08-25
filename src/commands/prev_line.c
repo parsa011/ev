@@ -1,6 +1,6 @@
 #include <stddef.h>
-#include "prev_line.h"
-#include "../editor.h"
+#include "commands/prev_line.h"
+#include "editor.h"
 
 public return_message prev_line_command(char **args)
 {

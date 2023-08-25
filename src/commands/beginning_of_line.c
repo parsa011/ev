@@ -1,7 +1,7 @@
 #include <stddef.h>
-#include "end_of_line.h"
-#include "../editor.h"
-#include "../util.h"
+#include "commands/end_of_line.h"
+#include "editor.h"
+#include "util.h"
 
 public return_message beginning_of_line_command(char **args)
 {
