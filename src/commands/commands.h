@@ -7,3 +7,4 @@
 #include "beginning_of_line.h"
 #include "kill_line.h"
 #include "next_word.h"
+#include "prev_word.h"
