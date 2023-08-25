@@ -5,6 +5,7 @@
 #include "prev_char.h"
 #include "end_of_line.h"
 #include "beginning_of_line.h"
+#include "new_line.h"
 #include "kill_line.h"
 #include "kill_next_letter.h"
 #include "next_word.h"

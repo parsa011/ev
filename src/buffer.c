@@ -108,8 +108,6 @@ public void buffer_insert_key(int key)
 				buf->pos.col--;
 			buf->char_offset--;
 		}
-	} else if (key == CTRL_KEY('M')) {
-		line_open();
 	} else {
 		line_insert_string(buf->current_line, str, buf->char_offset);
 		buf->pos.col += len;

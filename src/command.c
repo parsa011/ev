@@ -24,6 +24,7 @@ command commands[] = {
 	MAKE_COMMAND("eol", "END", end_of_line_command),
 	MAKE_COMMAND("bol", "HOME", beginning_of_line_command),
 
+	MAKE_COMMAND("new-line", "C-M", new_line_command),
 	MAKE_COMMAND("kill-line", "C-K", kill_line_command),
 	MAKE_COMMAND("kill-next-letter", "C-D", kill_next_letter_command),
 
