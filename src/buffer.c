@@ -19,7 +19,7 @@ public buffer_t *buffer_init(char *filepath)
 public return_message buffer_file_open(char *filepath)
 {
 	if (!file_exists(filepath)) {
-		editor.current_buffer->first_line = editor.current_buffer->current_line = line_init("", 0);
+		buffer_append_line(line_init("", 0));
 		return create_return_message(ERROR, "new buffer");
 	}
 	buffer_t *buf = editor_buffer();
@@ -142,7 +142,7 @@ public void buffer_go_to_offset(int offset)
 public void buffer_go_to_line(int index)
 {
 	buffer_t *buf = editor_buffer();
-	if (index + 1 > buf->line_count)
+	if (index >= buf->line_count)
 		return;
 	buf->line_offset = index;
 	buf->current_line = buffer_line_by_index(index);

@@ -72,15 +72,15 @@ public return_message editor_render()
 	buffer_t *buf = editor_buffer();
 	line_t *line = buffer_line_by_index(buf->line_offset);
 	int printed_rows = 1;
-	while (line && printed_rows < editor.rows) {
+	while (line && printed_rows < editor.rows - 3) {
 		editor_render_line(line);
 		line = L_LINK_NEXT(line);
 		printed_rows++;
 	}
 	buf->render = false;
-	//log("%s", buf->current_line->str);
-	//log("%d", *(buf->current_line->str + buf->char_offset) == '\0');
-	//log("offset : %d\t Row : %d\t col : %d\t len : %d", buf->char_offset, buf->pos.row, buf->pos.col, buf->current_line->len);
+	log("%s", buf->current_line->str);
+	log("%d", buf->line_count);
+	log("offset : %d\t Row : %d\t col : %d\t len : %d", buf->char_offset, buf->pos.row, buf->pos.col, buf->current_line->len);
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 
