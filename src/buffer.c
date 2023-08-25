@@ -130,6 +130,12 @@ public void buffer_go_to_offset(int offset)
 	buf->pos.col = offset_to_col(buf->current_line->str, offset);
 }
 
+public char buffer_current_char()
+{
+	buffer_t *buf = editor_buffer();
+	return *(buf->current_line->str + buf->char_offset);
+}
+
 public line_t *buffer_line_by_index(int index)
 {
 	line_t *line = editor_buffer()->first_line;

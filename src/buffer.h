@@ -108,6 +108,11 @@ public void buffer_insert_key(int key);
 public void buffer_go_to_offset(int offset); 
 
 /*
+ * return current char under the cursor
+ */
+public char buffer_current_char();
+
+/*
  * return line by it's index, starts from 0
  * also we dont check if line index is greater to buffer line count :)
  */

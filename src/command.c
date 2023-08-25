@@ -24,8 +24,9 @@ command commands[] = {
 	MAKE_COMMAND("eol", "END", end_of_line_command),
 	MAKE_COMMAND("bol", "HOME", beginning_of_line_command),
 
+	MAKE_COMMAND("kill-line", "C-K", kill_line_command),
 
-	MAKE_COMMAND("kill-line", "C-K", kill_line_command)
+	MAKE_COMMAND("next-word", "M-f", next_word_command)
 };
 
 public command command_read(char *str)
