@@ -34,6 +34,8 @@ command commands[] = {
 
 	MAKE_COMMAND("page-down", "PAGE_DOWN", page_down_command),
 	MAKE_COMMAND("page-up", "PAGE_UP", page_up_command),
+	MAKE_COMMAND("page-down", "C-V", page_down_command),
+	MAKE_COMMAND("page-up", "M-v", page_up_command),
 };
 
 public command command_read(char *str)
