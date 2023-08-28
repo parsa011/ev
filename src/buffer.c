@@ -16,6 +16,12 @@ public buffer_t *buffer_init(char *filepath)
 	return buf;
 }
 
+public void buffer_dirty()
+{
+	buffer_t *buf = editor_buffer();
+	buf->dirty = buf->render = true;
+}
+
 public return_message buffer_file_open(char *filepath)
 {
 	if (!file_exists(filepath)) {

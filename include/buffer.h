@@ -59,6 +59,10 @@ struct buffer {
 	 * one line up or down
 	 */
 	bool render;
+	/*
+	 * did we change buffer ? yes if there was any change
+	 */
+	bool dirty;
 };
 
 /*
@@ -67,6 +71,11 @@ struct buffer {
  *	initializing it
  */
 public buffer_t *buffer_init(char *path);
+
+/*
+ * call it after any change to buffer texts
+ */
+public void buffer_dirty();
 
 /*
  * opens given file path into our gloabl editor variable 'editor'

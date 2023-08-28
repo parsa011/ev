@@ -59,6 +59,7 @@ public return_message editor_run()
 			cmd.func(null);
 		else {
 			buffer_insert_key(c);
+			buffer_dirty();
 		}
 		if (str)
 			free(str);
