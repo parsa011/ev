@@ -72,8 +72,10 @@ public return_message editor_run()
 public return_message editor_render()
 {
 	tty_clear();
+	tty_cursor_hide();
 	editor_render_buffer();
 	editor_render_statusbar();
+	tty_cursor_show();
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 
