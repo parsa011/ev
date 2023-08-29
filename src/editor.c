@@ -109,12 +109,12 @@ public void editor_render_statusbar()
 	ADD_TEXTF("Line Count : %ld -- Line Offset : %ld -- "
 			"Current Line Index : %ld -- Char Offset : %d -- Cursor Pos : ",
 			cbuf->line_count,
-			cbuf->line_offset, 0, cbuf->char_offset);
-	print_pos(current_window->cursor_pos);
+			cbuf->line_offset, cbuf->line_offset, cbuf->char_offset);
+	//print_pos(cbuf->cursor_pos);
 	if (cbuf->current_line) {
-		char *c = buf->current_line->str + cbuf->char_offset;
+		char *c = cbuf->current_line->str + cbuf->char_offset;
 		ADD_TEXTF(" --- Current char : %c", *c == '\t' ? 'T' : *c);
-		ADD_TEXTF(" --- Line Length : %d", buf->current_line->len);
+		ADD_TEXTF(" --- Line Length : %d", cbuf->current_line->len);
 	}
 #else
 	ADD_TEXT("EV-Editor ");
