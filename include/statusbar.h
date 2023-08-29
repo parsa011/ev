@@ -10,7 +10,7 @@ struct statusbar {
 	 */
 	int margin;
 	int height;
-
+	
 	line_t content;
 };
 

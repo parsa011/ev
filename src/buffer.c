@@ -103,7 +103,7 @@ public void buffer_insert_key(int key)
 				return;
 			int prev_line_len = prev_line->len;
 			line_append_string(prev_line, buf->current_line->str);
-			line_delete(false);
+			buffer_delete_line(false);
 			buffer_go_to_offset(prev_line_len);
 		} else {
 			char prev_char = *(buf->current_line->str + buf->char_offset - 1);
@@ -170,4 +170,40 @@ public line_t *buffer_line_by_index(int index)
 		line = L_LINK_NEXT(line);
 	}
 	return line;
+}
+
+public void buffer_delete_line(bool go_next)
+{
+	buffer_t *buf = editor_buffer();
+	line_t *line = buf->current_line;
+	if (go_next) {
+		if (L_LINK_NEXT(line)) {
+			next_line_command(NULL);
+			buf->current_line = L_LINK_NEXT(line);
+		}
+	} else {
+		if (L_LINK_PREV(line)) {
+			prev_line_command(NULL);
+			buf->current_line = L_LINK_PREV(line);
+		}
+	}
+	L_LINK_REMOVE(line);
+	line_free(line);
+	buf->line_count--;
+	buf->render = true;
+}
+
+public void buffer_open_line()
+{
+	buffer_t *buf = editor_buffer();
+	line_t *current_line = buf->current_line;
+	line_t *new_line = line_init("", 0);
+
+	line_append_string(new_line, current_line->str + buf->char_offset);
+	line_delete_range(current_line, buf->char_offset, current_line->len);
+	buffer_append_line(new_line);
+	next_line_command(NULL);
+	beginning_of_line_command(NULL);
+
+	buf->render = true;
 }

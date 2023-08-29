@@ -43,27 +43,6 @@ public void line_append_string(line_t *line, char *str)
 	line->len = len;
 }
 
-public void line_delete(bool go_next)
-{
-	buffer_t *buf = editor_buffer();
-	line_t *line = buf->current_line;
-	if (go_next) {
-		if (L_LINK_NEXT(line)) {
-			next_line_command(NULL);
-			buf->current_line = L_LINK_NEXT(line);
-		}
-	} else {
-		if (L_LINK_PREV(line)) {
-			prev_line_command(NULL);
-			buf->current_line = L_LINK_PREV(line);
-		}
-	}
-	L_LINK_REMOVE(line);
-	line_free(line);
-	buf->line_count--;
-	buf->render = true;
-}
-
 public void line_delete_char(line_t *line, uint16_t pos)
 {
 	if (pos < 0)
@@ -87,21 +66,6 @@ public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
 	line->len -= remove_len;
 	line->str = (char *) realloc(line->str, (line->len + 1) * sizeof(char));
 	line->str[line->len] = '\0';
-}
-
-public void line_open()
-{
-	buffer_t *buf = editor_buffer();
-	line_t *current_line = buf->current_line;
-	line_t *new_line = line_init("", 0);
-
-	line_append_string(new_line, current_line->str + buf->char_offset);
-	line_delete_range(current_line, buf->char_offset, current_line->len);
-	buffer_append_line(new_line);
-	next_line_command(NULL);
-	beginning_of_line_command(NULL);
-
-	buf->render = true;
 }
 
 public void line_free(line_t *line)

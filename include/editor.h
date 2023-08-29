@@ -6,9 +6,9 @@
 #include "buffer.h"
 #include "line.h"
 #include "../llink/llist.h"
+#include "statusbar.h"
 
 #define TAB_SIZE 4
-
 
 struct editor {
 	// fd for input and output ttys

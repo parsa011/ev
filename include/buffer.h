@@ -5,6 +5,7 @@
 #include "basic.h"
 #include "line.h"
 #include "editor.h"
+#include "statusbar.h"
 
 typedef enum {
 	MODE_INSERT,
@@ -19,6 +20,7 @@ typedef enum {
 
 struct buffer {
 	L_LINK(buffer_t) link;
+	statusbar_t statusbar;
 	/*
 	 * this will be the name that we show in tabs section, by default will be the filename
 	 */
@@ -136,5 +138,15 @@ public char buffer_current_char();
  * also we dont check if line index is greater to buffer line count :)
  */
 public line_t *buffer_line_by_index(int index);
+
+/*
+ * delete current line fully and go to next or prev line
+ */
+public void buffer_delete_line(bool go_next);
+
+/*
+ * open new line in down of current line
+ */
+public void buffer_open_line();
 
 #endif
