@@ -28,10 +28,9 @@ public void editor_init()
 	/*
 	 * init base stuff for editor, like buffer
 	 */
-	editor.current_buffer = buffer_init(NULL);
-	editor.current_buffer->rows = editor.rows - 2;
+	editor.current_buffer = buffer_init(NULL, editor.rows - 1);
 
-	editor.statusbar.margin = editor.rows - 2;
+	editor.statusbar.margin = editor.rows - 1;
 }
 
 public void editor_change_size()
@@ -95,8 +94,44 @@ public void editor_render_statusbar()
 {
 	tty_cursor_move(MAKE_POS(1, editor.statusbar.margin));
 	tty_put_string(true, "\033[107m\033[30m");
-	tty_put_string(true, "hello");
+	char buf[editor.cols];
+	char *bufp = buf;
+	buffer_t *cbuf = editor_buffer();
+#define ADD_TEXT(s) {									\
+	bufp += sprintf(bufp, s);							\
+}
+#define ADD_TEXTF(s, ...) {							\
+	bufp += sprintf(bufp, s, __VA_ARGS__);			\
+}
+#if DEBUG
+	ADD_TEXTF("Line Count : %ld -- Line Offset : %ld -- "
+			"Current Line Index : %ld -- Char Offset : %d -- Cursor Pos : ",
+			cbuf->line_count,
+			cbuf->line_offset, 0, cbuf->char_offset);
+	print_pos(current_window->cursor_pos);
+	if (cbuf->current_line) {
+		char *c = buf->current_line->str + cbuf->char_offset;
+		ADD_TEXTF(" --- Current char : %c", *c == '\t' ? 'T' : *c);
+		ADD_TEXTF(" --- Line Length : %d", buf->current_line->len);
+	}
+#else
+	ADD_TEXT("EV-Editor ");
+	if (cbuf->dirty) {
+		ADD_TEXT("*");
+	} else
+		ADD_TEXT("-");
+	ADD_TEXTF(" %s", cbuf->name);
+	ADD_TEXTF(" ----- %ld Line ", cbuf->line_count);
+#endif
+	int space = editor.cols - strlen(buf);
+	tty_put_string(true, buf);
+	for (int i = 0; i < space; i++) {
+		tty_put_char('-');
+	}
+	tty_flush();
 	tty_put_string(true, "\033[0m");
+#undef ADD_TEXT
+#undef ADD_TEXTF
 }
 
 public void editor_render_line(line_t *line)

@@ -76,7 +76,7 @@ struct buffer {
  *	if path is not NULL, it will open given path into buffer after
  *	initializing it
  */
-public buffer_t *buffer_init(char *path);
+public buffer_t *buffer_init(char *path, int rows);
 
 /*
  * call it after any change to buffer texts

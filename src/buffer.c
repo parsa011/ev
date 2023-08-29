@@ -8,10 +8,12 @@
 #include "util.h"
 #include "commands/commands.h"
 
-public buffer_t *buffer_init(char *filepath)
+public buffer_t *buffer_init(char *filepath, int rows)
 {
 	buffer_t *buf = (buffer_t *) malloc(sizeof(buffer_t));
 	assert(buf);
+	memset(buf, 0, sizeof(buffer_t));
+	buf->rows = rows;
 	SET_POS(buf->pos, 1, 1);
 	return buf;
 }
