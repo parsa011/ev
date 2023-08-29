@@ -11,7 +11,6 @@
 #include "file.h"
 #include "log.h"
 #include "util.h"
-#include "text.h"
 #include "commands/commands.h"
 
 editor_t editor;
