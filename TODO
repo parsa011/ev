@@ -7,9 +7,10 @@ DONE :
 	because every time render is waste of time
 5 - convert buffer col to char offset, if we move to another line, current char is not current (for char_offset)
 6 - remove line, also remove line when pressing backspace key in empty line
-
-IN PROGRESS :
 7 - Go to first and last line of buffer
 8 - kill next word
+
+IN PROGRESS :
+9 - showing prompt and showing messages
 
 TODO : 
