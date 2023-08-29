@@ -16,6 +16,15 @@ struct editor {
 	int tty_out;
 
 	buffer_t *current_buffer;
+	struct statusbar_t {
+		/*
+		 * margin from top of screen, usually equals to editor.rows - 1
+		 */
+		int margin;
+		int height;
+
+		line_t content;
+	} statusbar;
 
 	int rows;
 	int cols;
@@ -49,6 +58,16 @@ public return_message editor_run();
  * writes current buffer into screen
  */
 public return_message editor_render();
+
+/*
+ * writes current buffer into screen
+ */
+public void editor_render_buffer();
+
+/*
+ * writes information of current buffer into status bar
+ */
+public void editor_render_statusbar();
 
 /*
  * writes single file into buffer , at current position of screen (whereever that cursor is)

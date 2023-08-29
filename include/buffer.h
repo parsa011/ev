@@ -35,6 +35,10 @@ struct buffer {
 	 */
 	uint64_t line_offset;
 	/*
+	 * how many lines we cant write into the screen ?
+	 */
+	uint16_t rows;
+	/*
 	 * first line of buffer, we can access to other with line->link.next and ...
 	 */
 	line_t *first_line;

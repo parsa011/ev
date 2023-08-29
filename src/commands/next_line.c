@@ -12,7 +12,7 @@ public return_message next_line_command(char **args)
 	 */
 	if (L_LINK_NEXT(buf->current_line) == NULL)
 		return create_return_message(ERROR, "end of buffer");
-	if (buf->pos.row < editor.rows - 1) {
+	if (buf->pos.row + 1 < buf->rows) {
 		buf->pos.row++;
 		tty_cursor_line_next();
 	} else {
