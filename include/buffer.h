@@ -90,6 +90,12 @@ public void buffer_dirty();
 public return_message buffer_file_open(char *file_name);
 
 /*
+ * just a helper method to set filename and path for given buffer
+ * we got buffer as an arg, because we may want to set name for new alloced buffer
+ */
+public void buffer_set_file_name(buffer_t *buf, char *filepath);
+
+/*
  * close current file of editor and opens new empty buffer
  */
 public return_message buffer_file_close();

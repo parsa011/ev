@@ -48,6 +48,7 @@ public return_message editor_run()
 	int c;
 	char *str;
 	buffer_t *buf;
+	editor_render();
 	while (true) {
 		buf = editor_buffer();
 		if (buf->render)
@@ -93,7 +94,7 @@ public void editor_render_buffer()
 
 public void editor_render_statusbar()
 {
-	tty_cursor_move(MAKE_POS(1, editor.statusbar.margin));
+	tty_cursor_move(MAKE_POS(editor.statusbar.margin, 1));
 	tty_put_string(true, "\033[107m\033[30m");
 	char buf[editor.cols];
 	char *bufp = buf;

@@ -33,8 +33,8 @@ struct cursor_pos {
 } while(0);
 
 #define MAKE_POS(x, y) (cursor_pos_t) { \
-	.row = y, \
-	.col = x  \
+	.row = x, \
+	.col = y  \
 }
 
 #define create_return_message(status, msg) ((return_message){status, msg})

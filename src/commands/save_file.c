@@ -2,13 +2,16 @@
 #include "commands/save_file.h"
 #include "editor.h"
 #include "buffer.h"
+#include "prompt.h"
 
 public return_message save_file_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
 	if (!buf->filepath) {
-		// PROMPT and get file name
-		return create_return_message(ERROR, "TODO : implement get buffer name");
+		char *file_name = prompt_string("file to save in : "); 
+		if (!file_name)
+			return create_return_message(ERROR, "canceled");
+		buffer_set_file_name(buf, file_name);
 	}
 	FILE *fp = fopen(buf->filepath, "w+");
 	if (!fp) {

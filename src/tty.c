@@ -197,6 +197,12 @@ public void tty_clear()
 	fflush(stdout);
 }
 
+public void tty_clear_eol()
+{
+	printf("\033[K");
+	fflush(stdout);
+}
+
 public void tty_cursor_move(cursor_pos_t pos)
 {
 	tty_put_string(true, "\033[%d;%dH", pos.row, pos.col);

@@ -31,11 +31,17 @@ public return_message buffer_file_open(char *filepath)
 		return create_return_message(ERROR, "new buffer");
 	}
 	buffer_t *buf = editor_buffer();
-	buf->filepath = filepath;
-	buf->name = file_name(filepath);
+	buffer_set_file_name(buf, filepath);
 	buffer_file_load(filepath, REPLACE);
 	editor.current_buffer->render = true;
+	buf->render = true;
 	return create_return_message(SUCCESS, "file opened");
+}
+
+public void buffer_set_file_name(buffer_t *buf, char *filepath)
+{
+	buf->filepath = filepath;
+	buf->name = file_name(filepath);
 }
 
 public return_message buffer_file_close()
