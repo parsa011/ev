@@ -8,6 +8,7 @@
 #include "new_line.h"
 #include "kill_line.h"
 #include "kill_next_letter.h"
+#include "kill_next_word.h"
 #include "next_word.h"
 #include "prev_word.h"
 #include "page_down.h"
