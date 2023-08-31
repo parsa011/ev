@@ -9,8 +9,22 @@
 
 public bool prompt_bool(char *message)
 {
-	puts(message);
-	return true;
+    buffer_t *buf = editor_buffer();
+    cursor_pos_t prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
+
+    tty_cursor_move(MAKE_POS(editor.rows, 1));
+	tty_put_string(true, "%s (y/n) ", message);
+	bool ans;
+    int c;
+    while (true) {
+        c = key_read();
+        if (c == 'y' || c == 'n') {
+            ans = c == 'y';
+            break;
+        }
+    }
+    tty_cursor_move(prev_pos);
+	return ans;
 }
 
 public char *prompt_string(char *message)
@@ -18,7 +32,8 @@ public char *prompt_string(char *message)
 	buffer_t *buf = editor_buffer();
 	cursor_pos_t prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
 
-	tty_cursor_move(MAKE_POS(editor.rows, 1));
+    tty_cursor_move(MAKE_POS(editor.rows, 1));
+    tty_clear_eol();
 	tty_put_string(true, message);
 	int msg_len =  strlen(message);
 	int cursor_col = msg_len + 1;
@@ -70,6 +85,7 @@ print:
 #undef CHAR_OFFSET
 	return str;
 cancel:
+    tty_cursor_move(prev_pos);
 #undef CHAR_OFFSET
 	return NULL;
 }
