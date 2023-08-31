@@ -23,6 +23,8 @@ public bool prompt_bool(char *message)
             break;
         }
     }
+    tty_cursor_move(MAKE_POS(editor.rows, 1));
+    tty_clear_eol();
     tty_cursor_move(prev_pos);
 	return ans;
 }
