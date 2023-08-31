@@ -60,7 +60,6 @@ public return_message editor_run()
 		if (cmd.func != null)
 			cmd.func(null);
 		else {
-insert_key:
 			buffer_insert_key(c);
 			buffer_dirty();
 		}
