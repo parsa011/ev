@@ -20,7 +20,11 @@ public char *prompt_string(char *message)
 
 	tty_cursor_move(MAKE_POS(editor.rows, 1));
 	tty_put_string(true, message);
+	int msg_len =  strlen(message);
+	int cursor_col = msg_len + 1;
+#define CHAR_OFFSET (cursor_col - msg_len - 1)
 	line_t *line = line_init("", 0);
+
 	int c = 0;
 	while (true) {
 		c = key_read();
@@ -29,17 +33,31 @@ public char *prompt_string(char *message)
 		else if (c == CTRL_KEY('m'))
 			break;
 		else if (c == BACKSPACE) {
-			if (line->len < 1)
+			if (CHAR_OFFSET == 0)
 				continue;
-			line_delete_char(line, line->len);
+			line_delete_char(line, CHAR_OFFSET - 1);
+			cursor_col--;
+			goto print;
+		} else if (c == ARROW_LEFT || c == CTRL_KEY('b')) {
+			if (cursor_col - 1 <= msg_len) {
+				continue;
+			}
+			cursor_col--;
+			goto print;
+		} else if (c == ARROW_RIGHT  || c == CTRL_KEY('F')) {
+			if (CHAR_OFFSET + 1 > line->len)
+				continue;
+			cursor_col++;
 			goto print;
 		}
 		char *str = key_to_str(c);
-		line_insert_string(line, str, line->len);
+		line_insert_string(line, str, CHAR_OFFSET);
+		cursor_col += strlen(str);
 print:
-		tty_cursor_move(MAKE_POS(editor.rows, strlen(message)));
+		tty_cursor_move(MAKE_POS(editor.rows, msg_len));
 		tty_clear_eol();
 		tty_put_string(true, " %s", line->str);
+		tty_cursor_move(MAKE_POS(editor.rows, cursor_col));
 		if (str) {
 			free(str);
 			str = NULL;
@@ -49,7 +67,9 @@ print:
 	tty_cursor_move(prev_pos);
 	char *str = strdup(line->str);
 	line_free(line);
+#undef CHAR_OFFSET
 	return str;
 cancel:
+#undef CHAR_OFFSET
 	return NULL;
 }
