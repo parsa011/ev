@@ -56,8 +56,6 @@ public return_message editor_run()
 		tty_cursor_move(buf->pos);
 		c = key_read();
 		str = key_to_str(c);
-		if (strlen(str) == 1)
-			goto insert_key;
 		command cmd = command_read(str);
 		if (cmd.func != null)
 			cmd.func(null);
