@@ -7,6 +7,18 @@
 #include "line.h"
 #include "key.h"
 
+public void prompt_clear(bool restore)
+{
+	buffer_t *buf = editor_buffer();
+    cursor_pos_t prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
+
+	tty_cursor_move(MAKE_POS(editor.rows, 1));
+	tty_clear_eol();
+
+	if (restore)
+		tty_cursor_move(prev_pos);
+}
+
 public bool prompt_bool(char *message)
 {
     buffer_t *buf = editor_buffer();
@@ -23,8 +35,7 @@ public bool prompt_bool(char *message)
             break;
         }
     }
-    tty_cursor_move(MAKE_POS(editor.rows, 1));
-    tty_clear_eol();
+    prompt_clear(false);
     tty_cursor_move(prev_pos);
 	return ans;
 }
@@ -34,8 +45,7 @@ public char *prompt_string(char *message)
 	buffer_t *buf = editor_buffer();
 	cursor_pos_t prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
 
-    tty_cursor_move(MAKE_POS(editor.rows, 1));
-    tty_clear_eol();
+    prompt_clear(false);
 	tty_put_string(true, message);
 	int msg_len =  strlen(message);
 	int cursor_col = msg_len + 1;
@@ -84,9 +94,11 @@ print:
 	tty_cursor_move(prev_pos);
 	char *str = strdup(line->str);
 	line_free(line);
+	prompt_clear(false);
 #undef CHAR_OFFSET
 	return str;
 cancel:
+	prompt_clear(false);
     tty_cursor_move(prev_pos);
 #undef CHAR_OFFSET
 	return NULL;
