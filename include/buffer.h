@@ -131,7 +131,7 @@ public void buffer_check_offset();
 /*
  * set buffer char offset to given offset and update cursor col
  */
-public void buffer_go_to_offset(int offset); 
+public void buffer_go_to_offset(int offset);
 
 /*
  * go to line, index based

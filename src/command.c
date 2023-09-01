@@ -39,6 +39,7 @@ command commands[] = {
 	MAKE_COMMAND("page-up", "M-v", page_up_command),
 
 	MAKE_COMMAND("save-file", "C-X C-S", save_file_command),
+	MAKE_COMMAND("open-file", "C-X C-F", open_file_command),
 };
 
 public command command_read(char *str)

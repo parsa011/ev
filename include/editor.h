@@ -30,6 +30,8 @@ struct editor {
 	int cols;
 };
 
+#define BUFFER_ROW editor.rows - 1
+
 public editor_t editor;
 
 /*
@@ -48,6 +50,16 @@ public void editor_change_size();
  * question and this kind of stuff
  */
 public void editor_close();
+
+/*
+ * append given buffer next to the current buffer
+ */
+public void editor_buffer_append(buffer_t *buf);
+
+/*
+ * means go to the given buffer and set it as current buffer
+ */
+public void editor_buffer_change(buffer_t *buf);
 
 /*
  * runs editor infinite loop, taking command and doing them

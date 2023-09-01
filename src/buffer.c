@@ -70,7 +70,7 @@ public return_message buffer_file_load(char *filepath, line_load_mode mode)
 
 	line_t *ln;
 
-	/* read other lines and add them to buffer */  
+	/* read other lines and add them to buffer */
 	while ((line_length = getline(&line_chars, &linecap, fp)) != EOF) {
 		while (*(line_chars + line_length - 1) == '\n')
 			line_chars[--line_length] = '\0';

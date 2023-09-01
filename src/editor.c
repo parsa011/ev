@@ -27,7 +27,7 @@ public void editor_init()
 	/*
 	 * init base stuff for editor, like buffer
 	 */
-	editor.current_buffer = buffer_init(NULL, editor.rows - 1);
+	editor.current_buffer = buffer_init(NULL, BUFFER_ROW);
 
 	editor.statusbar.margin = editor.rows - 1;
 }
@@ -67,6 +67,17 @@ public return_message editor_run()
 			free(str);
 	}
 	return create_return_message(SUCCESS, "editor closed without error");
+}
+
+public void editor_buffer_append(buffer_t *buf)
+{
+	L_LINK_INSERT(editor_buffer(), buf);
+}
+
+public void editor_buffer_change(buffer_t *buf)
+{
+	editor.current_buffer = buf;
+	buf->render = true;
 }
 
 public return_message editor_render()
