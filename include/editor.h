@@ -27,8 +27,6 @@ struct editor {
 		line_t content;
 	} statusbar;
 
-	promptbar_t promptbar;
-
 	int rows;
 	int cols;
 };
@@ -88,12 +86,6 @@ public void editor_render_buffer();
  * writes information of current buffer into status bar
  */
 public void editor_render_statusbar();
-
-/*
- * checks if there is any message to show to the user, also check for time of message
- * to not be expired
- */
-public void editor_render_promptbar();
 
 /*
  * writes single file into buffer , at current position of screen (whereever that cursor is)

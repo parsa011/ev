@@ -17,9 +17,14 @@ struct promptbar {
 public void prompt_clear(bool restore);
 
 /*
- * just print given message into the prompt bar
+ * set editor prompt bar message to given string
  */
-public void prompt_show(char *str);
+public void prompt_message_show();
+
+/*
+ * shows editor promptbar string 
+ */
+public void prompt_message_set(char *str);
 
 /*
  * shows a Y/N prompt with given message to the user, and returns result as an boolean
