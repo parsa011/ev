@@ -15,3 +15,5 @@
 #include "page_up.h"
 #include "save_file.h"
 #include "open_file.h"
+#include "next_buffer.h"
+#include "prev_buffer.h"

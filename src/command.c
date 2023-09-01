@@ -40,6 +40,9 @@ command commands[] = {
 
 	MAKE_COMMAND("save-file", "C-X C-S", save_file_command),
 	MAKE_COMMAND("open-file", "C-X C-F", open_file_command),
+
+	MAKE_COMMAND("next-buffer", "C-X b n", next_buffer_command),
+	MAKE_COMMAND("prev-buffer", "C-X b p", prev_buffer_command),
 };
 
 public command command_read(char *str)
