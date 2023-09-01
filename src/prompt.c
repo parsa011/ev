@@ -19,6 +19,14 @@ public void prompt_clear(bool restore)
 		tty_cursor_move(prev_pos);
 }
 
+public void prompt_show(char *str)
+{
+	editor.promptbar.msg_time = time(NULL);
+	tty_cursor_move(MAKE_POS(editor.rows, 1));
+	line_insert_string(editor.promptbar.msg, str, strlen(str));
+	tty_put_string(true, str);
+}
+
 public bool prompt_bool(char *message)
 {
     buffer_t *buf = editor_buffer();

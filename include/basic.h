@@ -47,5 +47,6 @@ typedef struct editor editor_t;
 typedef struct buffer buffer_t;
 typedef struct line line_t;
 typedef struct statusbar statusbar_t;
+typedef struct promptbar promptbar_t;
 
 #endif

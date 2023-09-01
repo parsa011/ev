@@ -30,6 +30,7 @@ public void editor_init()
 	editor.current_buffer = buffer_init(NULL, BUFFER_ROW);
 
 	editor.statusbar.margin = editor.rows - 1;
+	editor.promptbar.msg = line_init("", 0);
 }
 
 public void editor_change_size()
@@ -57,8 +58,12 @@ public return_message editor_run()
 		c = key_read();
 		str = key_to_str(c);
 		command cmd = command_read(str);
-		if (cmd.func != null)
-			cmd.func(null);
+		if (cmd.func != null) {
+			return_message res = cmd.func(null);
+			if (res.status == ERROR) {
+				prompt_show(res.message);
+			}
+		}
 		else {
 			buffer_insert_key(c);
 			buffer_dirty();
@@ -86,6 +91,7 @@ public return_message editor_render()
 	tty_cursor_hide();
 	editor_render_buffer();
 	editor_render_statusbar();
+	editor_render_promptbar();
 	tty_cursor_show();
 	return create_return_message(SUCCESS, "buffer rendered");
 }
@@ -134,6 +140,14 @@ public void editor_render_statusbar()
 	tty_put_string(true, "\033[0m");
 #undef ADD_TEXT
 #undef ADD_TEXTF
+}
+
+public void editor_render_promptbar()
+{
+	if ((time(NULL) - editor.promptbar.msg_time > USER_MESSAGE_TIME)) {
+		prompt_clear(false);
+		prompt_show(editor.promptbar.msg->str);
+	}
 }
 
 public void editor_render_line(line_t *line)
