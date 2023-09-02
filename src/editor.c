@@ -129,18 +129,26 @@ public void editor_render_statusbar()
 	char *bufp = buf;
 	// cbuf stands for current_buffer :)
 	buffer_t *cbuf = editor_buffer();
-#define ADD_TEXT(s) {					\
+
+#define ADD_TEXT(s) do {				\
 	bufp += sprintf(bufp, s);			\
-}
-#define ADD_TEXTF(s, ...) {						\
-	bufp += sprintf(bufp, s, __VA_ARGS__);		\
-}
+} while (false);
+
+#define ADD_TEXTF(s, ...) do {					\
+		bufp += sprintf(bufp, s, __VA_ARGS__);	\
+} while (false)
+
 	ADD_TEXT("EV-Editor ");
 	if (cbuf->dirty) {
 		ADD_TEXT("*");
 	} else
 		ADD_TEXT("-");
-	ADD_TEXTF(" %s", cbuf->name);
+
+	if (cbuf->name)
+		ADD_TEXTF(" %s ", cbuf->name);
+	else
+		ADD_TEXT(" [NO FILE] ");
+
 	ADD_TEXTF(" ----- %ld Line ", cbuf->line_count);
 
 	int space = editor.cols - strlen(buf);
