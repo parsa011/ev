@@ -147,7 +147,6 @@ public char *key_combine(char *str, int key)
 {
 	int str_len = strlen(str);
 	char *new_key = key_to_str(key);
-	str = (char *) realloc(str, sizeof(char) * (str_len + strlen(new_key) + 1));
 	sprintf(str + str_len, " %s", new_key);
 	free(new_key);
 	return str;
