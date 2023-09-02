@@ -41,6 +41,7 @@ public void editor_close()
 {
 	tty_cooked_mode();
 	tty_clear();
+	buffer_free(editor.current_buffer);
 }
 
 public return_message editor_run()

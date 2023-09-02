@@ -217,3 +217,17 @@ public void buffer_open_line()
 
 	buf->render = true;
 }
+
+public void buffer_free(buffer_t *buf)
+{
+	if (buf) {
+		line_t *ln = buf->first_line;
+		line_t *next = ln;
+		while (next) {
+			ln = next;
+			next = L_LINK_NEXT(ln);
+			line_free(ln);
+		}
+		free(buf);
+	}
+}

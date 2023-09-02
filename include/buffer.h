@@ -27,7 +27,7 @@ struct buffer {
 	char *name;
 	char *filepath;
 	/*
-	 * total line count, initialized with count of opened file lines 
+	 * total line count, initialized with count of opened file lines
 	 */
 	uint64_t line_count;
 	/*
@@ -158,5 +158,10 @@ public void buffer_delete_line(bool go_next);
  * open new line in down of current line
  */
 public void buffer_open_line();
+
+/*
+ * make given buffer memory free , also with its lines
+ */
+public void buffer_free(buffer_t *buf);
 
 #endif
