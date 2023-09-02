@@ -72,10 +72,9 @@ public return_message buffer_file_load(char *filepath, line_load_mode mode)
 
 	/* read other lines and add them to buffer */
 	while ((line_length = getline(&line_chars, &linecap, fp)) != EOF) {
-		if (line_length > 0) {
-			while (*(line_chars + line_length - 1) == '\n')
-				line_chars[--line_length] = '\0';
-		}
+		while (line_length > 0 && (line_chars[line_length - 1]  == '\n' ||
+								   line_chars[line_length - 1]  == '\r'))
+			line_length--;
 		ln = line_init(line_chars, line_length);
 		buffer_append_line(ln);
 		buf->current_line = ln;
@@ -112,7 +111,7 @@ public void buffer_insert_key(int key)
 		if (buf->char_offset == 0) {
 			line_t *prev_line = L_LINK_PREV(buf->current_line);
 			if (!prev_line)
-				return;
+				goto ret;
 			int prev_line_len = prev_line->len;
 			line_append_string(prev_line, buf->current_line->str);
 			buffer_delete_line(false);
@@ -131,6 +130,7 @@ public void buffer_insert_key(int key)
 		buf->pos.col += len;
 		buf->char_offset += len;
 	}
+  ret:
 	free(str);
 }
 
