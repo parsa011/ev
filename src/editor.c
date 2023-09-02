@@ -41,7 +41,19 @@ public void editor_close()
 {
 	tty_cooked_mode();
 	tty_clear();
-	buffer_free(editor.current_buffer);
+	buffer_t *buf = editor.current_buffer;
+	/*
+	 * go to first buffer
+	 */
+	while (L_LINK_PREV(buf))
+		buf = L_LINK_PREV(buf);
+	buffer_t *next = buf;
+	while (next) {
+		next = L_LINK_NEXT(buf);
+		buffer_free(buf);
+		buf = next;
+
+	}
 }
 
 public return_message editor_run()
@@ -70,6 +82,8 @@ public return_message editor_run()
 		if (str)
 			free(str);
 	}
+	if (str)
+		free(str);
 	return create_return_message(SUCCESS, "editor closed without error");
 }
 

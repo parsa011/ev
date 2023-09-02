@@ -72,8 +72,10 @@ public return_message buffer_file_load(char *filepath, line_load_mode mode)
 
 	/* read other lines and add them to buffer */
 	while ((line_length = getline(&line_chars, &linecap, fp)) != EOF) {
-		while (*(line_chars + line_length - 1) == '\n')
-			line_chars[--line_length] = '\0';
+		if (line_length > 0) {
+			while (*(line_chars + line_length - 1) == '\n')
+				line_chars[--line_length] = '\0';
+		}
 		ln = line_init(line_chars, line_length);
 		buffer_append_line(ln);
 		buf->current_line = ln;
@@ -224,9 +226,9 @@ public void buffer_free(buffer_t *buf)
 		line_t *ln = buf->first_line;
 		line_t *next = ln;
 		while (next) {
-			ln = next;
 			next = L_LINK_NEXT(ln);
 			line_free(ln);
+			ln = next;
 		}
 		free(buf);
 	}
