@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "commands/save_file.h"
 #include "editor.h"
 #include "buffer.h"
@@ -12,6 +13,7 @@ public return_message save_file_command(char **args)
 		if (!file_name)
 			return create_return_message(ERROR, "canceled");
 		buffer_set_file_name(buf, file_name);
+		free(file_name);
 	}
 	FILE *fp = fopen(buf->filepath, "w+");
 	if (!fp) {
