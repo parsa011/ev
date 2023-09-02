@@ -81,9 +81,9 @@ public return_message editor_run()
 		}
 		if (str)
 			free(str);
+		if (editor.exit)
+			break;
 	}
-	if (str)
-		free(str);
 	return create_return_message(SUCCESS, "editor closed without error");
 }
 

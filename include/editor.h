@@ -29,6 +29,11 @@ struct editor {
 
 	int rows;
 	int cols;
+
+	/*
+	 * true every time that we want to quite editor
+	 */
+	bool exit;
 };
 
 #define BUFFER_ROW editor.rows - 1

@@ -17,7 +17,6 @@ public return_message exit_command(char **args)
 		if (!exit_anyway)
 			return create_return_message(ERROR, "canceled");
 	}
-	editor_close();
-	exit(0);
+	editor.exit = true;
 	return create_return_message(SUCCESS, "Usless Message But Exited Successfuly");
 }
