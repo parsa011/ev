@@ -53,6 +53,7 @@ public char *prompt_string(char *message)
 	line_t *line = line_init("", 0);
 
 	int c = 0;
+	char *str = NULL;
 	while (true) {
 		c = key_read();
 		if (c == CTRL_KEY('g'))
@@ -76,8 +77,21 @@ public char *prompt_string(char *message)
 				continue;
 			cursor_col++;
 			goto print;
+		} else if (c == CTRL_KEY('e')) {
+			/*
+			 * if cursor is beginning of line, and line len is 0
+			 * dont move cursor, because cursor_col will be msg_len
+			 * no msg_len + 1
+			 */
+			if (cursor_col == msg_len + 1 && line->len == 0)
+				continue;
+			cursor_col = msg_len + line->len + 1;
+			goto print;
+		} else if (c == CTRL_KEY('a')) {
+			cursor_col = msg_len + 1;
+			goto print;
 		}
-		char *str = key_to_str(c);
+		str = key_to_str(c);
 		line_insert_string(line, str, strlen(str), CHAR_OFFSET);
 		cursor_col += strlen(str);
 print:
@@ -92,11 +106,11 @@ print:
 	}
 
 	tty_cursor_move(prev_pos);
-	char *str = strdup(line->str);
+	char *res = strdup(line->str);
 	line_free(line);
 	prompt_clear(false);
 #undef CHAR_OFFSET
-	return str;
+	return res;
 cancel:
 	prompt_clear(false);
     tty_cursor_move(prev_pos);
