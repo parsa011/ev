@@ -20,7 +20,6 @@ typedef enum {
 
 struct buffer {
 	L_LINK(buffer_t) link;
-	statusbar_t statusbar;
 	/*
 	 * this will be the name that we show in tabs section, by default will be the filename
 	 */

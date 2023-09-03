@@ -145,9 +145,9 @@ public void editor_render_statusbar()
 		ADD_TEXT("-");
 
 	if (cbuf->name)
-		ADD_TEXTF(" %s ", cbuf->name);
+		ADD_TEXTF(" %s", cbuf->name);
 	else
-		ADD_TEXT(" [NO FILE] ");
+		ADD_TEXT(" [NO FILE]");
 
 	ADD_TEXTF(" ----- %ld Line ", cbuf->line_count);
 
@@ -165,25 +165,23 @@ public void editor_render_statusbar()
 public void editor_render_line(line_t *line)
 {
 	assert(line);
-	char *ptr = line->str;
 	int writed_chars_count = 1;
-	/*
-	 * dont write more than terminal width size, with checking writed_chars_count everytime
-	 * TODO : add ellipsis for large lines
-	 */
-	while (*ptr) {
+	char c;
+	for (int i = 0; i < line->len; i++) {
+		c = line->str[i];
+		if (!c)
+			break;
 		if (writed_chars_count + 1 >= editor.cols)
 			break;
-		if (*ptr == '\t') {
+		if (c == '\t') {
 			writed_chars_count += TAB_SIZE;
 			for (int i = 0; i < TAB_SIZE; i++) {
 				tty_put_char(' ');
 			}
 		} else {
 			writed_chars_count++;
-			tty_put_char(*ptr);
+			tty_put_char(c);
 		}
-		ptr++;
 	}
 	tty_put_string(true, "\r\n");
 }

@@ -42,8 +42,8 @@ public return_message buffer_file_open(char *filepath)
 
 public void buffer_set_file_name(buffer_t *buf, char *filepath)
 {
-	buf->filepath = filepath;
-	buf->name = file_name(filepath);
+	buf->filepath = strdup(filepath);
+	buf->name = strdup(file_name(filepath));
 }
 
 public return_message buffer_file_close()
@@ -230,6 +230,10 @@ public void buffer_free(buffer_t *buf)
 			line_free(ln);
 			ln = next;
 		}
+		if (buf->name)
+			free(buf->name);
+		if (buf->filepath)
+			free(buf->filepath);
 		free(buf);
 	}
 }
