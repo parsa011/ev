@@ -20,7 +20,7 @@ public line_t *line_init(char *str, int len);
 /*
  * insert str into line with given position
  */
-public void line_insert_string(line_t *line, char *str, uint16_t pos);
+public void line_insert_string(line_t *line, char *str, int str_len, uint16_t pos);
 
 /*
  * append given 'str' to end of given line

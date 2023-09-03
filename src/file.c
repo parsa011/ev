@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <assert.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "file.h"
@@ -20,5 +21,6 @@ public char* file_name(char* path)
 
 public bool file_exists(char *path)
 {
+	assert(path);
 	return access(path, F_OK) == 0;
 }

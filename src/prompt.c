@@ -78,7 +78,7 @@ public char *prompt_string(char *message)
 			goto print;
 		}
 		char *str = key_to_str(c);
-		line_insert_string(line, str, CHAR_OFFSET);
+		line_insert_string(line, str, strlen(str), CHAR_OFFSET);
 		cursor_col += strlen(str);
 print:
 		tty_cursor_move(MAKE_POS(editor.rows, msg_len));

@@ -16,10 +16,9 @@ public line_t *line_init(char *str, int len)
 	return line;
 }
 
-public void line_insert_string(line_t *line, char *str, uint16_t pos)
+public void line_insert_string(line_t *line, char *str, int str_len, uint16_t pos)
 {
-	int str_len = strlen(str);
-	int dest_len = strlen(line->str);
+	int dest_len = line->len;
 	int len = str_len + dest_len;
 	line->str = (char *) realloc(line->str, (len + 1) * sizeof(char));
 	for (int i = len - 1; i > pos; i--) {
@@ -35,10 +34,10 @@ public void line_insert_string(line_t *line, char *str, uint16_t pos)
 
 public void line_append_string(line_t *line, char *str, int str_len)
 {
-	int dest_len = strlen(line->str);
+	int dest_len = line->len;
 	int len = str_len + dest_len;
 	line->str = (char *) realloc(line->str, (len + 1) * sizeof(char));
-	strcat(line->str, str);
+	strncat(line->str, str, str_len);
 	line->len = len;
 }
 
@@ -60,6 +59,8 @@ public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
 		return;
 	int remove_len = end - start;
 	for (int i = start; i < end; i++) {
+		if (i + remove_len >= line->len)
+			break;
 		line->str[i] = line->str[i + remove_len];
 	}
 	line->len -= remove_len;

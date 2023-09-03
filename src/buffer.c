@@ -30,7 +30,7 @@ public return_message buffer_file_open(char *filepath)
 	if (filepath) {
 		buffer_set_file_name(buf, filepath);
 	}
-	if (!file_exists(filepath)) {
+	if (!filepath || !file_exists(filepath)) {
 		buffer_append_line(line_init("", 0));
 		return create_return_message(ERROR, "new buffer");
 	}
@@ -104,7 +104,7 @@ public void buffer_insert_key(int key)
 	char *str = key_to_str(key);
 	int len = strlen(str);
 	if (key == '\t') {
-		line_insert_string(buf->current_line, "\t", buf->char_offset);
+		line_insert_string(buf->current_line, "\t", 1, buf->char_offset);
 		buf->pos.col += TAB_SIZE;
 		buf->char_offset++;
 	} else if (key == BACKSPACE) {
@@ -126,7 +126,7 @@ public void buffer_insert_key(int key)
 			buf->char_offset--;
 		}
 	} else {
-		line_insert_string(buf->current_line, str, buf->char_offset);
+		line_insert_string(buf->current_line, str, strlen(str), buf->char_offset);
 		buf->pos.col += len;
 		buf->char_offset += len;
 	}
@@ -138,8 +138,8 @@ public void buffer_check_offset()
 {
 	buffer_t *buf = editor_buffer();
 	line_t *ln = buf->current_line;
-	buf->char_offset = col_to_offset(ln->str, buf->pos.col);
-	buf->pos.col = offset_to_col(ln->str, buf->char_offset);
+	buf->char_offset = col_to_offset(ln->str, ln->len, buf->pos.col);
+	buf->pos.col = offset_to_col(ln->str, ln->len, buf->char_offset);
 	if (buf->char_offset >= ln->len) {
 		end_of_line_command(NULL);
 	}
@@ -154,7 +154,7 @@ public void buffer_go_to_offset(int offset)
 	if (offset >= buf->current_line->len)
 		return;
 	buf->char_offset = offset;
-	buf->pos.col = offset_to_col(buf->current_line->str, offset);
+	buf->pos.col = offset_to_col(buf->current_line->str, buf->current_line->len, offset);
 }
 
 public void buffer_go_to_line(int index)

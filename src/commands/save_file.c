@@ -21,7 +21,10 @@ public return_message save_file_command(char **args)
 	}
 	line_t *ln = buf->first_line;
 	for (int i = 0; i < buf->line_count; i++) {
-		fprintf(fp, "%s\n", ln->str);
+		for (int i = 0; i < ln->len; i++) {
+			fputc(*(ln->str + i), fp);
+		}
+		fputc('\n', fp);
 		ln = L_LINK_NEXT(ln);
 	}
 	fclose(fp);
