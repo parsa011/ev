@@ -113,7 +113,7 @@ public void buffer_insert_key(int key)
 			if (!prev_line)
 				goto ret;
 			int prev_line_len = prev_line->len;
-			line_append_string(prev_line, buf->current_line->str);
+			line_append_string(prev_line, buf->current_line->str, buf->current_line->len);
 			buffer_delete_line(false);
 			buffer_go_to_offset(prev_line_len);
 		} else {
@@ -211,7 +211,7 @@ public void buffer_open_line()
 	line_t *current_line = buf->current_line;
 	line_t *new_line = line_init("", 0);
 
-	line_append_string(new_line, current_line->str + buf->char_offset);
+	line_append_string(new_line, current_line->str + buf->char_offset, current_line->len - buf->char_offset);
 	line_delete_range(current_line, buf->char_offset, current_line->len);
 	buffer_append_line(new_line);
 	next_line_command(NULL);

@@ -25,7 +25,7 @@ public void line_insert_string(line_t *line, char *str, uint16_t pos);
 /*
  * append given 'str' to end of given line
  */
-public void line_append_string(line_t *line, char *str);
+public void line_append_string(line_t *line, char *str, int line_len);
 
 /*
  * delete from given in string, return if pos is 0
