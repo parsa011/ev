@@ -54,3 +54,8 @@ dkms.conf
 
 build/
 tags
+GPATH
+GTAGS
+GRTAGS
+TAGS
+logs

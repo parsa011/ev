@@ -21,7 +21,7 @@ void handle_signals()
 
 int main(int argc, char **argv)
 {
-    editor_init();
+	editor_init();
 	/*
 	 * this is for test, if we passed any arg to prgram, it will counted as file name for now
 	 * we will open it in current buffer of editor
