@@ -17,3 +17,4 @@
 #include "open_file.h"
 #include "next_buffer.h"
 #include "prev_buffer.h"
+#include "kill_buffer.h"

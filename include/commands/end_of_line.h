@@ -1,5 +1,5 @@
 #ifndef _END_OF_LINE_H
-# define __END_OF_LINE_H
+# define _END_OF_LINE_H
 
 #include "base.h"
 #include "../tty.h"
