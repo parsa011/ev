@@ -9,9 +9,9 @@ DONE :
 6 - remove line, also remove line when pressing backspace key in empty line
 7 - Go to first and last line of buffer
 8 - kill next word
+10 - kill buffer
 
 IN PROGRESS :
 9 - showing prompt and showing messages
-10 - kill buffer
 
 TODO : 

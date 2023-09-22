@@ -5,7 +5,6 @@
 #include "basic.h"
 #include "line.h"
 #include "editor.h"
-#include "statusbar.h"
 
 typedef enum {
 	MODE_INSERT,

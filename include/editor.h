@@ -6,7 +6,6 @@
 #include "buffer.h"
 #include "line.h"
 #include "../llink/llist.h"
-#include "statusbar.h"
 #include "prompt.h"
 
 #define TAB_SIZE 4
