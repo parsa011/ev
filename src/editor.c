@@ -76,8 +76,12 @@ public return_message editor_run()
 			}
 		}
 		else {
-			buffer_insert_key(c);
-			buffer_dirty();
+			if (c == CTRL_KEY(c)) {
+				//prompt_message_set("Command Not Found");
+			} else {
+				buffer_insert_key(c);
+				buffer_dirty();
+			}
 		}
 		if (str)
 			free(str);
