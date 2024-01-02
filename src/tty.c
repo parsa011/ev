@@ -193,8 +193,7 @@ public void tty_flush()
 
 public void tty_clear()
 {
-	printf("\033[H\033[2J");
-	fflush(stdout);
+	system("clear");
 }
 
 public void tty_clear_eol()
