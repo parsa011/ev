@@ -98,6 +98,12 @@ public void editor_render_statusbar();
 public void editor_render_line(line_t *line);
 
 /*
+ * writes Line number into display
+ * TODO : Toggleable, but not in the action, BTW
+ */
+public void editor_render_line_number(int line_nu);
+
+/*
  * this is just a helper method to get current buffer of editor
  */
 public buffer_t *editor_buffer();

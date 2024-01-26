@@ -39,6 +39,7 @@ public void editor_change_size()
 
 public void editor_close()
 {
+    tty_cooked_mode();
 	tty_cooked_mode();
 	tty_clear();
 	buffer_t *buf = editor.current_buffer;
@@ -76,9 +77,10 @@ public return_message editor_run()
 			}
 		}
 		else {
-			if (c == CTRL_KEY(c)) {
+			if (c == CTRL_KEY(c) && c != '\t') {
 				//prompt_message_set("Command Not Found");
 			} else {
+
 				buffer_insert_key(c);
 				buffer_dirty();
 			}
@@ -117,12 +119,19 @@ public void editor_render_buffer()
 	buffer_t *buf = editor_buffer();
 	line_t *line = buffer_line_by_index(buf->line_offset);
 	int printed_rows = 1;
+	//int line_nu = buf->line_offset + 1;
 	while (line && printed_rows < buf->rows) {
+		//editor_render_line_number(line_nu++);
 		editor_render_line(line);
 		line = L_LINK_NEXT(line);
 		printed_rows++;
 	}
 	buf->render = false;
+}
+
+public void editor_render_line_number(int line_nu)
+{
+	tty_put_string(false, "%d |", line_nu);
 }
 
 public void editor_render_statusbar()
