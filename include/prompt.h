@@ -19,7 +19,7 @@ public void prompt_clear(bool restore);
 /*
  * set editor prompt bar message to given string
  */
-public void prompt_message_show();
+public void prompt_message_show(char *str, int len);
 
 /*
  * shows editor promptbar string 

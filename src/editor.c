@@ -30,6 +30,8 @@ public void editor_init()
 	editor.current_buffer = buffer_init(NULL, BUFFER_ROW);
 
 	editor.statusbar.margin = editor.rows - 1;
+
+	editor.promptbar.msg = line_init("hello", 5);
 }
 
 public void editor_change_size()
@@ -78,9 +80,9 @@ public return_message editor_run()
 		}
 		else {
 			if (c == CTRL_KEY(c) && c != '\t') {
-				//prompt_message_set("Command Not Found");
+    			char *msg = "Command Not Found";
+				prompt_message_show(msg, strlen(msg));
 			} else {
-
 				buffer_insert_key(c);
 				buffer_dirty();
 			}
@@ -90,6 +92,7 @@ public return_message editor_run()
 		if (editor.exit)
 			break;
 	}
+	line_free(editor.promptbar.msg);
 	return create_return_message(SUCCESS, "editor closed without error");
 }
 
@@ -110,6 +113,7 @@ public return_message editor_render()
 	tty_cursor_hide();
 	editor_render_buffer();
 	editor_render_statusbar();
+	editor_render_promptbar();
 	tty_cursor_show();
 	return create_return_message(SUCCESS, "buffer rendered");
 }
@@ -173,6 +177,17 @@ public void editor_render_statusbar()
 	tty_put_string(true, "\033[0m");
 #undef ADD_TEXT
 #undef ADD_TEXTF
+}
+
+public void editor_render_promptbar()
+{
+	tty_cursor_move(MAKE_POS(editor.rows, 1));
+	if (time(NULL) - editor.promptbar.msg_time < 5) {
+    	if (editor.promptbar.msg->str)
+        	tty_put_string(true, "%s", editor.promptbar.msg->str);
+	} else {
+        tty_clear_eol();
+	}
 }
 
 public void editor_render_line(line_t *line)

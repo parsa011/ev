@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "prompt.h"
 #include "editor.h"
 #include "tty.h"
@@ -17,6 +18,14 @@ public void prompt_clear(bool restore)
 
 	if (restore)
 		tty_cursor_move(prev_pos);
+}
+
+public void prompt_message_show(char *str, int str_len)
+{
+    line_delete_range(editor.promptbar.msg, 0, editor.promptbar.msg->len);
+    line_append_string(editor.promptbar.msg, str, strlen(str));
+    editor.promptbar.msg_time = time(NULL);
+    editor_buffer()->render = true;
 }
 
 public bool prompt_bool(char *message)

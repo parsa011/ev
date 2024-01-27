@@ -33,6 +33,7 @@ struct editor {
 	 * true every time that we want to quite editor
 	 */
 	bool exit;
+    struct promptbar promptbar;
 };
 
 #define BUFFER_ROW editor.rows - 1
@@ -90,6 +91,12 @@ public void editor_render_buffer();
  * writes information of current buffer into status bar
  */
 public void editor_render_statusbar();
+
+/*
+ * shows message to user, that was saved in promptbar struct
+ * also mesage time should be less than 5 seconds
+ */
+public void editor_render_promptbar();
 
 /*
  * writes single file into buffer , at current position of screen (whereever that cursor is)
