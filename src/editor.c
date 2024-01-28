@@ -195,21 +195,21 @@ public void editor_render_promptbar()
 public void editor_render_line(line_t *line)
 {
 	assert(line);
-	int writed_chars_count = 1;
+	int wroted_chars_count = 1;
 	char c;
 	for (int i = 0; i < line->len; i++) {
 		c = line->str[i];
 		if (!c)
 			break;
-		if (writed_chars_count + 1 >= editor.cols)
+		if (wroted_chars_count + 1 >= editor.cols)
 			break;
 		if (c == '\t') {
-			writed_chars_count += TAB_SIZE;
+			wroted_chars_count += TAB_SIZE;
 			for (int i = 0; i < TAB_SIZE; i++) {
 				tty_put_char(' ');
 			}
 		} else {
-			writed_chars_count++;
+			wroted_chars_count++;
 			tty_put_char(c);
 		}
 	}
