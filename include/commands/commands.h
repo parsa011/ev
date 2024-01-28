@@ -21,3 +21,4 @@
 #include "prev_buffer.h"
 #include "kill_buffer.h"
 #include "upcase_word.h"
+#include "downcase_word.h"
