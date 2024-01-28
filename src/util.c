@@ -1,6 +1,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include "util.h"
 #include "editor.h"
 
@@ -44,6 +45,7 @@ public uint8_t offset_to_col(char *str, int str_len, int len)
 	int col = 1;
 	if (str_len == 0)
 		return col;
+	assert(str);
 	for (int i = 0; i < len; i++) {
 		if (*(str + i) == '\t')
 			col += TAB_SIZE;
@@ -59,6 +61,7 @@ public uint8_t col_to_offset(char *str, int str_len, uint8_t col)
 	int offset = 0;
 	if (str_len == 0)
 		return offset;
+	assert(str);
 	while (current_col < col) {
 		if (*(str + offset) == '\t') {
 			current_col += TAB_SIZE;

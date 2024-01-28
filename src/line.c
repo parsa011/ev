@@ -1,13 +1,16 @@
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "line.h"
 #include "commands/commands.h"
 
 public line_t *line_init(char *str, int len)
 {
 	line_t *line = (line_t *) malloc(sizeof(line_t));
+	assert(line);
 	memset(line, 0, sizeof(line_t));
 	line->str = (char *) malloc((len + 1) * sizeof(char));
+	assert(line->str);
 	if (len > 0)
 		strncpy(line->str, str, len);
 	else

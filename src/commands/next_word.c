@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include "commands/next_word.h"
 #include "commands/next_char.h"
+#include "buffer.h"
 
 public return_message next_word_command(char **args)
 {
