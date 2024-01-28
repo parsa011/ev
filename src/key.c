@@ -83,6 +83,9 @@ public char *key_to_str(int key)
 } while (false);
 
 	switch (key) {
+		case ESC:
+			PUSHS("ESC");
+			return buf;
 		case F1:
 			PUSHS("F1");
 			return buf;

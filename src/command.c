@@ -37,6 +37,8 @@ command commands[] = {
 	MAKE_COMMAND("page-up", "PAGE_UP", page_up_command),
 	MAKE_COMMAND("page-down", "C-V", page_down_command),
 	MAKE_COMMAND("page-up", "M-v", page_up_command),
+	MAKE_COMMAND("end-of-buffer", "ESC >", end_of_buffer_command),
+	MAKE_COMMAND("beginning-of-buffer", "ESC <", beginning_of_buffer_command),
 
 	MAKE_COMMAND("save-file", "C-X C-S", save_file_command),
 	MAKE_COMMAND("open-file", "C-X C-F", open_file_command),
