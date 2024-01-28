@@ -37,6 +37,11 @@ public void line_delete_char(line_t *line, uint16_t pos);
  */
 public void line_delete_range(line_t *line, uint16_t start, uint16_t end);
 
+/*
+ * replace given char with current char in given line
+ */
+public void line_replace_char(line_t *line, char c, uint16_t pos);
+
 public void line_free(line_t *line);
 
 #endif

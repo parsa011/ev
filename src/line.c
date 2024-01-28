@@ -68,6 +68,13 @@ public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
 	line->str[line->len] = '\0';
 }
 
+public void line_replace_char(line_t *line, char c, uint16_t pos)
+{
+	if (pos >= line->len)
+		return;
+	line->str[pos] = c;
+}
+
 public void line_free(line_t *line)
 {
 	if (line) {
