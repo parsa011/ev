@@ -15,3 +15,8 @@ DONE :
 IN PROGRESS :
 
 TODO : 
+    - implement emacs M-u and M-l commands
+    - more functionalities to prompt bar, like M-f, M-b, M-d, M-u, M-l 
+    - yank and paste
+    - undo
+    - search

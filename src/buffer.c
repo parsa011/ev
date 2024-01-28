@@ -132,6 +132,7 @@ public void buffer_insert_key(int key)
 	}
   ret:
 	free(str);
+	buf->dirty = true;
 }
 
 public void buffer_check_offset()
