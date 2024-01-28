@@ -77,7 +77,8 @@ public return_message editor_run()
 		command cmd = command_read(str);
 		if (cmd.func != null) {
 			return_message res = cmd.func(null);
-			if (res.status == ERROR) {
+			if (res.status != SUCCESS) {
+				prompt_message_show(res.message, strlen(res.message));
 			}
 		}
 		else {

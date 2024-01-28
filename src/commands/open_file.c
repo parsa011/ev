@@ -7,7 +7,7 @@ public return_message open_file_command(char **args)
 {
 	char *file_path = prompt_string("file path : ");
 	if (!file_path) {
-		return create_return_message(TERMINATE, "Canceled");
+		return create_return_message(TERMINATE, "canceled");
 	}
 	buffer_t *buf = buffer_init(file_path, BUFFER_ROW);
 	editor_buffer_append(buf);
