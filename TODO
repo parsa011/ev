@@ -10,8 +10,8 @@ DONE :
 7 - Go to first and last line of buffer
 8 - kill next word
 10 - kill buffer
+9 - showing prompt and showing messages
 
 IN PROGRESS :
-9 - showing prompt and showing messages
 
 TODO : 
