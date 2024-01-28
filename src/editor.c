@@ -69,6 +69,8 @@ public return_message editor_run()
 		buf = editor_buffer();
 		if (buf->render)
 			editor_render();
+		if (prompt_msg_is_expired())
+			editor_render_promptbar();
 		tty_cursor_move(buf->pos);
 		c = key_read();
 		str = key_to_str(c);
@@ -182,7 +184,7 @@ public void editor_render_statusbar()
 public void editor_render_promptbar()
 {
 	tty_cursor_move(MAKE_POS(editor.rows, 1));
-	if (time(NULL) - editor.promptbar.msg_time < 5) {
+	if (!prompt_msg_is_expired()) {
     	if (editor.promptbar.msg->str)
         	tty_put_string(true, "%s", editor.promptbar.msg->str);
 	} else {

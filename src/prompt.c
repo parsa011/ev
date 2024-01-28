@@ -126,3 +126,8 @@ cancel:
 #undef CHAR_OFFSET
 	return NULL;
 }
+
+public bool prompt_msg_is_expired()
+{
+	return time(NULL) - editor.promptbar.msg_time > PROMPT_MSG_TIME;
+}
