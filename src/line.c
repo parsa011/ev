@@ -76,6 +76,7 @@ public void line_replace_char(line_t *line, char c, uint16_t pos)
 	if (pos >= line->len)
 		return;
 	line->str[pos] = c;
+	editor_buffer()->dirty = true;
 }
 
 public void line_free(line_t *line)
