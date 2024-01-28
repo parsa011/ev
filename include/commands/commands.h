@@ -20,3 +20,4 @@
 #include "next_buffer.h"
 #include "prev_buffer.h"
 #include "kill_buffer.h"
+#include "upcase_word.h"

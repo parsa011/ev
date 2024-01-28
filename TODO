@@ -13,10 +13,12 @@ DONE :
 9 - showing prompt and showing messages
 
 IN PROGRESS :
+    - implement emacs M-u (upcase-word) and M-l (downcase-word) commands
 
 TODO : 
-    - implement emacs M-u and M-l commands
+    - indent line
     - more functionalities to prompt bar, like M-f, M-b, M-d, M-u, M-l 
     - yank and paste
     - undo
     - search
+    - syntax highlight
