@@ -66,7 +66,7 @@ public return_message buffer_file_load(char *filepath, line_load_mode mode)
 
 	char *line_chars = NULL;
 	size_t linecap = 0;
-	ssize_t line_length;
+	size_t line_length;
 
 	line_t *ln;
 

@@ -41,6 +41,9 @@ struct cursor_pos {
 
 #define ARRAY_LENGTH(arr) (sizeof(arr) / sizeof(arr[0]))
 
+#define MAX(a, b) (a > b ? a : b)
+#define MIN(a, b) (a < b ? a : b)
+
 public void die(int code);
 
 typedef struct editor editor_t;
