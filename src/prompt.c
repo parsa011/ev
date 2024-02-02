@@ -143,6 +143,21 @@ do {                                              \
     }                                             \
 } while (false);
 
+#define DO_KILL_WORD                              \
+do {                                              \
+    if (isalpha(CURRENT_CHAR)) {                  \
+        while (isalpha(CURRENT_CHAR)              \
+               && CHAR_OFFSET < line->len) {      \
+            DO_KILL_CHAR;                         \
+        }                                         \
+    } else {                                      \
+        while (!isalpha(CURRENT_CHAR)              \
+               && CHAR_OFFSET < line->len) {      \
+            DO_KILL_CHAR;                         \
+        }                                         \
+    }                                             \
+} while (false);
+
 	while (true) {
 		c = key_read();
 		if (c == CTRL_KEY('g')) {
@@ -177,6 +192,9 @@ do {                                              \
             goto print;
 		} else if (c == CTRL_KEY('d')) {
     		DO_KILL_CHAR;
+    		goto print;
+		} else if (c == ALT_KEY('d')) {
+    		DO_KILL_WORD;
     		goto print;
 		}
 		str = key_to_str(c);
