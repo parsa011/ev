@@ -129,6 +129,11 @@ do {                                              \
     }                                             \
 } while (false);
 
+#define DO_KILL_LINE                              \
+do {                                              \
+    line_delete_range(line,                       \
+        CHAR_OFFSET, line->len);                  \
+} while (false);
 
 	while (true) {
 		c = key_read();
@@ -159,6 +164,9 @@ do {                                              \
 		} else if (c == ALT_KEY('b')) {
     		DO_GO_BWORD;
     		goto print;
+		} else if (c == CTRL_KEY('k')) {
+            DO_KILL_LINE;
+            goto print;
 		}
 		str = key_to_str(c);
 		line_insert_string(line, str, strlen(str), CHAR_OFFSET);
