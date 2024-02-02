@@ -58,7 +58,8 @@ public char *prompt_string(char *message)
     prompt_clear(false);
 	tty_put_string(true, message);
 	int msg_len =  strlen(message);
-	int cursor_col = msg_len + 1;
+#define START_COL msg_len + 1
+	int cursor_col = START_COL;
 	line_t *line = line_init("", 0);
 	int c = 0;
 	char *str = NULL;
@@ -107,12 +108,27 @@ do {                                              \
                 DO_GO_FORWARD;                    \
             }                                     \
         }                                         \
-        while (CURRENT_CHAR &&                    \
-               isalpha(CURRENT_CHAR)) {           \
+        while (isalpha(CURRENT_CHAR)) {           \
             DO_GO_FORWARD;                        \
         }                                         \
     }                                             \
+    DO_GO_FORWARD;                                \
 } while (false);
+
+#define DO_GO_BWORD                               \
+do {                                              \
+        if (!isalpha(CURRENT_CHAR)) {             \
+            while (cursor_col != START_COL        \
+                   && !isalpha(CURRENT_CHAR)) {   \
+                DO_GO_BACK;                       \
+            }                                     \
+        }                                         \
+        while (cursor_col != START_COL            \
+               && isalpha(CURRENT_CHAR)) {        \
+            DO_GO_BACK;                           \
+        }                                         \
+} while (false);
+
 
 	while (true) {
 		c = key_read();
@@ -139,6 +155,9 @@ do {                                              \
     		goto print;
 		} else if (c == ALT_KEY('f')) {
     		DO_GO_FWORD;
+    		goto print;
+		} else if (c == ALT_KEY('b')) {
+    		DO_GO_BWORD;
     		goto print;
 		}
 		str = key_to_str(c);
