@@ -224,6 +224,7 @@ public void buffer_open_line()
 	beginning_of_line_command(NULL);
 
 	buf->render = true;
+	buf->dirty = true;
 }
 
 public void buffer_free(buffer_t *buf)
