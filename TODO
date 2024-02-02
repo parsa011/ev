@@ -12,9 +12,11 @@ DONE :
 9 - showing prompt and showing messages
 10 - kill buffer
 11 - implement emacs M-u (upcase-word) and M-l (downcase-word) commands
+12 - more functionalities to prompt bar, like M-f, M-b, M-d, M-u, M-l 
+13 - kill line command for prompt bar
+14 - prompt bar kill word command
 
 IN PROGRESS :
-    - more functionalities to prompt bar, like M-f, M-b, M-d, M-u, M-l 
 
 TODO : 
     - indent line

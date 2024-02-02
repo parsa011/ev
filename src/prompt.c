@@ -151,7 +151,7 @@ do {                                              \
             DO_KILL_CHAR;                         \
         }                                         \
     } else {                                      \
-        while (!isalpha(CURRENT_CHAR)              \
+        while (!isalpha(CURRENT_CHAR)             \
                && CHAR_OFFSET < line->len) {      \
             DO_KILL_CHAR;                         \
         }                                         \
