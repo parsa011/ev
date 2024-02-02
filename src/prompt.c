@@ -58,47 +58,70 @@ public char *prompt_string(char *message)
 	tty_put_string(true, message);
 	int msg_len =  strlen(message);
 	int cursor_col = msg_len + 1;
-#define CHAR_OFFSET (cursor_col - msg_len - 1)
 	line_t *line = line_init("", 0);
-
 	int c = 0;
 	char *str = NULL;
+
+#define CHAR_OFFSET (cursor_col - msg_len - 1)
+#define DO_CANCEL goto cancel
+
+#define DO_BACKSPACE                              \
+do {                                              \
+    if (CHAR_OFFSET != 0) {                       \
+    	line_delete_char(line, CHAR_OFFSET - 1);  \
+    	cursor_col--;                             \
+    }                                             \
+	goto print;                                   \
+} while (false);
+
+#define DO_GO_BACK                                \
+do {                                              \
+    if (cursor_col - 1 >  msg_len) {              \
+	    cursor_col--;                             \
+	}                                             \
+	goto print;                                   \
+} while (false);
+
+#define DO_GO_FORWARD                             \
+do {                                              \
+    if (CHAR_OFFSET < line->len) {                \
+        cursor_col++;                             \
+    }                                             \
+	goto print;                                   \
+} while (false);
+
+#define DO_BOL                                    \
+do {                                              \
+	cursor_col = msg_len + line->len + 1;     \
+	goto print;                                   \
+} while (false);
+
+#define DO_EOL                                    \
+do {                                              \
+    cursor_col = msg_len + 1;                     \
+	goto print;                                   \
+} while (false);
+
 	while (true) {
 		c = key_read();
-		if (c == CTRL_KEY('g'))
-			goto cancel;
-		else if (c == CTRL_KEY('m'))
+		if (c == CTRL_KEY('g')) {
+    		DO_CANCEL;
+		}
+		else if (c == CTRL_KEY('m')) {
 			break;
+		}
 		else if (c == BACKSPACE) {
-			if (CHAR_OFFSET == 0)
-				continue;
-			line_delete_char(line, CHAR_OFFSET - 1);
-			cursor_col--;
-			goto print;
+    		DO_BACKSPACE;
 		} else if (c == ARROW_LEFT || c == CTRL_KEY('b')) {
-			if (cursor_col - 1 <= msg_len) {
-				continue;
-			}
-			cursor_col--;
-			goto print;
+    		DO_GO_BACK;
 		} else if (c == ARROW_RIGHT  || c == CTRL_KEY('F')) {
-			if (CHAR_OFFSET + 1 > line->len)
-				continue;
-			cursor_col++;
-			goto print;
+    		DO_GO_FORWARD;
 		} else if (c == CTRL_KEY('e')) {
-			/*
-			 * if cursor is beginning of line, and line len is 0
-			 * dont move cursor, because cursor_col will be msg_len
-			 * no msg_len + 1
-			 */
-			if (cursor_col == msg_len + 1 && line->len == 0)
-				continue;
-			cursor_col = msg_len + line->len + 1;
-			goto print;
+    		DO_BOL;
 		} else if (c == CTRL_KEY('a')) {
-			cursor_col = msg_len + 1;
-			goto print;
+    		DO_EOL;
+		} else if (c == ALT_KEY('f')) {
+    		// TODO : move word
 		}
 		str = key_to_str(c);
 		line_insert_string(line, str, strlen(str), CHAR_OFFSET);
