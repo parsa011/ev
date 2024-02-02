@@ -135,6 +135,14 @@ do {                                              \
         CHAR_OFFSET, line->len);                  \
 } while (false);
 
+#define DO_KILL_CHAR                              \
+do {                                              \
+    if (CHAR_OFFSET < line->len) {                \
+        DO_GO_FORWARD;                            \
+        DO_BACKSPACE;                             \
+    }                                             \
+} while (false);
+
 	while (true) {
 		c = key_read();
 		if (c == CTRL_KEY('g')) {
@@ -167,6 +175,9 @@ do {                                              \
 		} else if (c == CTRL_KEY('k')) {
             DO_KILL_LINE;
             goto print;
+		} else if (c == CTRL_KEY('d')) {
+    		DO_KILL_CHAR;
+    		goto print;
 		}
 		str = key_to_str(c);
 		line_insert_string(line, str, strlen(str), CHAR_OFFSET);
