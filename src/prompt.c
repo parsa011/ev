@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 #include "prompt.h"
 #include "editor.h"
 #include "tty.h"
@@ -63,6 +64,7 @@ public char *prompt_string(char *message)
 	char *str = NULL;
 
 #define CHAR_OFFSET (cursor_col - msg_len - 1)
+#define CURRENT_CHAR line->str[CHAR_OFFSET]
 #define DO_CANCEL goto cancel
 
 #define DO_BACKSPACE                              \
@@ -71,7 +73,6 @@ do {                                              \
     	line_delete_char(line, CHAR_OFFSET - 1);  \
     	cursor_col--;                             \
     }                                             \
-	goto print;                                   \
 } while (false);
 
 #define DO_GO_BACK                                \
@@ -79,7 +80,6 @@ do {                                              \
     if (cursor_col - 1 >  msg_len) {              \
 	    cursor_col--;                             \
 	}                                             \
-	goto print;                                   \
 } while (false);
 
 #define DO_GO_FORWARD                             \
@@ -87,19 +87,31 @@ do {                                              \
     if (CHAR_OFFSET < line->len) {                \
         cursor_col++;                             \
     }                                             \
-	goto print;                                   \
-} while (false);
-
-#define DO_BOL                                    \
-do {                                              \
-	cursor_col = msg_len + line->len + 1;     \
-	goto print;                                   \
 } while (false);
 
 #define DO_EOL                                    \
 do {                                              \
+	cursor_col = msg_len + line->len + 1;         \
+} while (false);
+
+#define DO_BOL                                    \
+do {                                              \
     cursor_col = msg_len + 1;                     \
-	goto print;                                   \
+} while (false);
+
+#define DO_GO_FWORD                               \
+do {                                              \
+    if (CURRENT_CHAR) {                           \
+        if (!isalpha(CURRENT_CHAR)) {             \
+            while (!isalpha(CURRENT_CHAR)) {      \
+                DO_GO_FORWARD;                    \
+            }                                     \
+        }                                         \
+        while (CURRENT_CHAR &&                    \
+               isalpha(CURRENT_CHAR)) {           \
+            DO_GO_FORWARD;                        \
+        }                                         \
+    }                                             \
 } while (false);
 
 	while (true) {
@@ -112,16 +124,22 @@ do {                                              \
 		}
 		else if (c == BACKSPACE) {
     		DO_BACKSPACE;
+    		goto print;
 		} else if (c == ARROW_LEFT || c == CTRL_KEY('b')) {
     		DO_GO_BACK;
+    		goto print;
 		} else if (c == ARROW_RIGHT  || c == CTRL_KEY('F')) {
     		DO_GO_FORWARD;
+    		goto print;
 		} else if (c == CTRL_KEY('e')) {
-    		DO_BOL;
-		} else if (c == CTRL_KEY('a')) {
     		DO_EOL;
+    		goto print;
+		} else if (c == CTRL_KEY('a')) {
+    		DO_BOL;
+    		goto print;
 		} else if (c == ALT_KEY('f')) {
-    		// TODO : move word
+    		DO_GO_FWORD;
+    		goto print;
 		}
 		str = key_to_str(c);
 		line_insert_string(line, str, strlen(str), CHAR_OFFSET);
