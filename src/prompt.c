@@ -117,16 +117,16 @@ do {                                              \
 
 #define DO_GO_BWORD                               \
 do {                                              \
-        if (!isalpha(CURRENT_CHAR)) {             \
-            while (cursor_col != START_COL        \
-                   && !isalpha(CURRENT_CHAR)) {   \
-                DO_GO_BACK;                       \
-            }                                     \
-        }                                         \
+    if (!isalpha(CURRENT_CHAR)) {                 \
         while (cursor_col != START_COL            \
-               && isalpha(CURRENT_CHAR)) {        \
+               && !isalpha(CURRENT_CHAR)) {       \
             DO_GO_BACK;                           \
         }                                         \
+    }                                             \
+    while (cursor_col != START_COL                \
+           && isalpha(CURRENT_CHAR)) {            \
+        DO_GO_BACK;                               \
+    }                                             \
 } while (false);
 
 
