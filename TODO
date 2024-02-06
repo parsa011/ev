@@ -17,6 +17,7 @@ DONE :
 14 - prompt bar kill word command
 
 IN PROGRESS :
+    - Go to line command
 
 TODO : 
     - indent line
