@@ -50,8 +50,6 @@ public bool prompt_bool(char *message)
 	return ans;
 }
 
-// we should detect if input is cancelled
-// what about null pointer of integer ?
 public int *prompt_int(char *message)
 {
 	char *str = prompt_string(message);
