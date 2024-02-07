@@ -22,3 +22,4 @@
 #include "kill_buffer.h"
 #include "upcase_word.h"
 #include "downcase_word.h"
+#include "goto_line.h"

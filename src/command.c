@@ -48,7 +48,9 @@ command commands[] = {
 	MAKE_COMMAND("kill-buffer", "C-X k", kill_buffer_command),
 
 	MAKE_COMMAND("upcase-word", "M-u", upcase_word_command),
-	MAKE_COMMAND("downcase-word", "M-l", downcase_word_command)
+	MAKE_COMMAND("downcase-word", "M-l", downcase_word_command),
+
+	MAKE_COMMAND("goto-line", "M-g M-g", goto_line_command)
 };
 
 public command command_read(char *str)
