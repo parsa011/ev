@@ -50,6 +50,19 @@ public bool prompt_bool(char *message)
 	return ans;
 }
 
+// we should detect if input is cancelled
+// what about null pointer of integer ?
+public int *prompt_int(char *message)
+{
+	char *str = prompt_string(message);
+	if (str) {
+		int *n = malloc(sizeof(int));
+		*n = atoi(str);
+		return n;
+	}
+	return 0;
+}
+
 public char *prompt_string(char *message)
 {
 	buffer_t *buf = editor_buffer();

@@ -37,6 +37,11 @@ public bool prompt_bool(char *message);
 public char *prompt_string(char *message);
 
 /*
+ * return integer from prompt bar
+ */
+public int *prompt_int(char *message);
+
+/*
  *	check if prompt message is expired or no,
  */
 public bool prompt_msg_is_expired();
