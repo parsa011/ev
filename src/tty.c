@@ -94,6 +94,7 @@ public int tty_window_size(int* rows, int* cols)
 	return -1;
 }
 #else
+
 public int tty_cursor_pos_get(int* rows, int* cols)
 {
 	char buf[32];
@@ -193,7 +194,7 @@ public void tty_flush()
 
 public void tty_clear()
 {
-	system("clear");
+	tty_put_string(true, "%s", "\033[2J");
 }
 
 public void tty_clear_eol()
@@ -209,14 +210,13 @@ public void tty_cursor_move(cursor_pos_t pos)
 
 public void tty_cursor_hide()
 {
-	printf("\033[?25l");
-	fflush(stdout);
+	tty_cursor_move(MAKE_POS(1,1));
+	tty_put_string(true, "%s", "\033[?25l");
 }
 
 public void tty_cursor_show()
 {
-	printf("\033[?25h");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\033[?25h");
 }
 
 public void tty_cursor_store()

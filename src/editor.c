@@ -31,7 +31,7 @@ public void editor_init()
 
 	editor.statusbar.margin = editor.rows - 1;
 
-	editor.promptbar.msg = line_init("hello", 5);
+	editor.promptbar.msg = line_init("", 0);
 }
 
 public void editor_change_size()
@@ -41,7 +41,6 @@ public void editor_change_size()
 
 public void editor_close()
 {
-    tty_cooked_mode();
 	tty_cooked_mode();
 	tty_clear();
 	buffer_t *buf = editor.current_buffer;
@@ -133,6 +132,7 @@ public void editor_render_buffer()
 		line = L_LINK_NEXT(line);
 		printed_rows++;
 	}
+	tty_flush();
 	buf->render = false;
 }
 
@@ -172,11 +172,10 @@ public void editor_render_statusbar()
 	ADD_TEXTF(" ----- %ld Line ", cbuf->line_count);
 
 	int space = editor.cols - strlen(buf);
-	tty_put_string(true, buf);
+	tty_put_string(false, buf);
 	for (int i = 0; i < space; i++) {
 		tty_put_char('-');
 	}
-	tty_flush();
 	tty_put_string(true, "\033[0m");
 #undef ADD_TEXT
 #undef ADD_TEXTF
@@ -186,10 +185,11 @@ public void editor_render_promptbar()
 {
 	tty_cursor_move(MAKE_POS(editor.rows, 1));
 	if (!prompt_msg_is_expired()) {
-    	if (editor.promptbar.msg->str)
+	  if (editor.promptbar.msg->str) {
         	tty_put_string(true, "%s", editor.promptbar.msg->str);
+	  }
 	} else {
-        tty_clear_eol();
+	  tty_clear_eol();
 	}
 }
 
@@ -200,11 +200,11 @@ public void editor_render_line(line_t *line)
 	char c;
 	for (int i = 0; i < line->len; i++) {
 		c = line->str[i];
-		if (!c)
+		if (!c) {
 			break;
-		if (wroted_chars_count + 1 >= editor.cols)
+		} if (wroted_chars_count + 1 >= editor.cols) {
 			break;
-		if (c == '\t') {
+		} if (c == '\t') {
 			wroted_chars_count += TAB_SIZE;
 			for (int i = 0; i < TAB_SIZE; i++) {
 				tty_put_char(' ');
@@ -214,7 +214,7 @@ public void editor_render_line(line_t *line)
 			tty_put_char(c);
 		}
 	}
-	tty_put_string(true, "\r\n");
+	tty_put_string(false, "\r\n");
 }
 
 public buffer_t *editor_buffer()

@@ -44,11 +44,11 @@ struct cursor_pos {
 #define MAX(a, b) (a > b ? a : b)
 #define MIN(a, b) (a < b ? a : b)
 
-public void die(int code);
-
 typedef struct editor editor_t;
 typedef struct buffer buffer_t;
 typedef struct line line_t;
 typedef struct promptbar promptbar_t;
+
+public void die(int code);
 
 #endif
