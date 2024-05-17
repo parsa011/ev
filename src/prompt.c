@@ -17,8 +17,9 @@ public void prompt_clear(bool restore)
 	tty_cursor_move(MAKE_POS(editor.rows, 1));
 	tty_clear_eol();
 
-	if (restore)
+	if (restore) {
 		tty_cursor_move(prev_pos);
+	}
 }
 
 public void prompt_message_show(char *str, int str_len)

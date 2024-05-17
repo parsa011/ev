@@ -112,10 +112,12 @@ public int tty_cursor_pos_get(int* rows, int* cols)
 	}
 	buf[i] = '\0';
 
-	if (buf[0] != '\x1b' || buf[1] != '[')
+	if (buf[0] != '\x1b' || buf[1] != '[') {
 		return -1;
-	if (sscanf(&buf[2], "%d;%d", rows, cols) != 2)
+	}
+	if (sscanf(&buf[2], "%d;%d", rows, cols) != 2) {
 		return -1;
+	}
 	return 0;
 }
 
@@ -123,8 +125,9 @@ public int tty_window_size(int* rows, int* cols)
 {
 	struct winsize ws;
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
-		if (write(STDOUT_FILENO, "\x1b[999C\x1b[999B", 12) != 12)
+		if (write(STDOUT_FILENO, "\x1b[999C\x1b[999B", 12) != 12) {
 			return -1;
+		}
 		return tty_cursor_pos_get(rows, cols);
 	} else {
 		*cols = ws.ws_col;
@@ -150,15 +153,17 @@ public void tty_put_string(bool flush_now, char *format, ...)
 	n = vsnprintf(NULL, 0, format, ap);
 	va_end(ap);
 
-	if (n < 0)
+	if (n < 0) {
 		return;
+	}
 
 	/* One extra byte for '\0' */
 
 	size = (size_t) n + 1;
 	str = malloc(size);
-	if (str == NULL)
+	if (str == NULL) {
 		return; 
+	}
 
 	va_start(ap, format);
 	n = vsnprintf(str, size, format, ap);
@@ -168,16 +173,19 @@ public void tty_put_string(bool flush_now, char *format, ...)
 	while (*ptr) {
 		tty_put_char(*ptr++);
 	}
-	if (flush_now)
+	if (flush_now) {
 		tty_flush();
-	if (str)
+	}
+	if (str) {
 		free(str);
+	}
 }
 
 public void tty_put_char(char c)
 {
-	if (obufp == OBUFSIZE)
+	if (obufp == OBUFSIZE) {
 		tty_flush();
+	}
 	obuf[obufp++] = c;
 }
 

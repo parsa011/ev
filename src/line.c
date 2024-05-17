@@ -11,10 +11,11 @@ public line_t *line_init(char *str, int len)
 	memset(line, 0, sizeof(line_t));
 	line->str = (char *) malloc((len + 1) * sizeof(char));
 	assert(line->str);
-	if (len > 0)
+	if (len > 0) {
 		strncpy(line->str, str, len);
-	else
+	} else {
 		line->str[0] = '\0';
+	}
 	line->len = len;
 	return line;
 }
@@ -46,8 +47,9 @@ public void line_append_string(line_t *line, char *str, int str_len)
 
 public void line_delete_char(line_t *line, uint16_t pos)
 {
-	if (pos < 0)
+	if (pos < 0) {
 		return;
+	}
 	for (int i = pos; i < line->len - 1; i++) {
 		line->str[i] = line->str[i + 1];
 	}
@@ -62,8 +64,9 @@ public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
 		return;
 	int remove_len = end - start;
 	for (int i = start; i < end; i++) {
-		if (i + remove_len >= line->len)
+		if (i + remove_len >= line->len) {
 			break;
+		}
 		line->str[i] = line->str[i + remove_len];
 	}
 	line->len -= remove_len;
@@ -73,8 +76,9 @@ public void line_delete_range(line_t *line, uint16_t start, uint16_t end)
 
 public void line_replace_char(line_t *line, char c, uint16_t pos)
 {
-	if (pos >= line->len)
+	if (pos >= line->len) {
 		return;
+	}
 	line->str[pos] = c;
 	editor_buffer()->dirty = true;
 }
@@ -82,8 +86,9 @@ public void line_replace_char(line_t *line, char c, uint16_t pos)
 public void line_free(line_t *line)
 {
 	if (line) {
-		if (line->str)
+		if (line->str) {
 			free(line->str);
+		}
 		free(line);
 	}
 }

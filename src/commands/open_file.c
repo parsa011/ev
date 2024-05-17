@@ -13,7 +13,8 @@ public return_message open_file_command(char **args)
 	editor_buffer_append(buf);
 	editor_buffer_change(buf);
 	buffer_file_open(file_path);
-	if (file_path)
+	if (file_path) {
 		free(file_path);
+	}
 	return create_return_message(SUCCESS, "file opened");
 }

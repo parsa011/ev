@@ -47,14 +47,14 @@ public void editor_close()
 	/*
 	 * go to first buffer
 	 */
-	while (L_LINK_PREV(buf))
+	while (L_LINK_PREV(buf)) {
 		buf = L_LINK_PREV(buf);
+	}
 	buffer_t *next = buf;
 	while (next) {
 		next = L_LINK_NEXT(buf);
 		buffer_free(buf);
 		buf = next;
-
 	}
 }
 
@@ -66,10 +66,12 @@ public return_message editor_run()
 	editor_render();
 	while (true) {
 		buf = editor_buffer();
-		if (buf->render)
+		if (buf->render) {
 			editor_render();
-		if (prompt_msg_is_expired())
+		}
+		if (prompt_msg_is_expired()) {
 			editor_render_promptbar();
+		}
 		tty_cursor_move(buf->pos);
 		c = key_read();
 		str = key_to_str(c);
@@ -89,10 +91,12 @@ public return_message editor_run()
 				buffer_dirty();
 			}
 		}
-		if (str)
+		if (str) {
 			free(str);
-		if (editor.exit)
+		}
+		if (editor.exit) {
 			break;
+		}
 	}
 	line_free(editor.promptbar.msg);
 	return create_return_message(SUCCESS, "editor closed without error");

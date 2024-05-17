@@ -15,9 +15,10 @@ public return_message prev_char_command(char **args)
 		return create_return_message(ERROR, "no any line");
 	}
 	buf->char_offset--;
-	if (*(buf->current_line->str + buf->char_offset) == '\t')
+	if (*(buf->current_line->str + buf->char_offset) == '\t') {
 		buf->pos.col -= TAB_SIZE;
-	else
+	} else {
 		buf->pos.col--;
+	}
 	return create_return_message(SUCCESS, "prev char");
 }

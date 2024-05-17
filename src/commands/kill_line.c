@@ -11,8 +11,9 @@ public return_message kill_line_command(char **args)
 
 	bool is_end = buf->char_offset == current_line->len;
 	if (is_end) {
-		if (next_char_command(NULL).status == SUCCESS)
+		if (next_char_command(NULL).status == SUCCESS) {
 			buffer_insert_key(BACKSPACE);
+		}
 	} else {
 		line_delete_range(current_line, buf->char_offset, current_line->len);
 	}

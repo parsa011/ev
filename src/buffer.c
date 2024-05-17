@@ -59,8 +59,9 @@ public return_message buffer_file_save()
 public return_message buffer_file_load(char *filepath, line_load_mode mode)
 {
 	// TODO : Implement other modes :))
-	if (!file_exists(filepath))
+	if (!file_exists(filepath)) {
 		return create_return_message(ERROR, "file does not exists");
+	}
 	buffer_t *buf = editor_buffer();
 	FILE *fp = fopen(filepath, "r");
 
@@ -72,9 +73,17 @@ public return_message buffer_file_load(char *filepath, line_load_mode mode)
 
 	/* read other lines and add them to buffer */
 	while ((line_length = getline(&line_chars, &linecap, fp)) != EOF) {
-		while (line_length > 0 && (line_chars[line_length - 1]  == '\n' ||
-								   line_chars[line_length - 1]  == '\r'))
+		while (
+			line_length > 0 
+			&&
+			(
+				line_chars[line_length - 1]  == '\n'
+				||
+				line_chars[line_length - 1]  == '\r'
+			)
+		) {
 			line_length--;
+		}
 		ln = line_init(line_chars, line_length);
 		buffer_append_line(ln);
 		buf->current_line = ln;
@@ -110,8 +119,9 @@ public void buffer_insert_key(int key)
 	} else if (key == BACKSPACE) {
 		if (buf->char_offset == 0) {
 			line_t *prev_line = L_LINK_PREV(buf->current_line);
-			if (!prev_line)
+			if (!prev_line) {
 				goto ret;
+			}
 			int prev_line_len = prev_line->len;
 			line_append_string(prev_line, buf->current_line->str, buf->current_line->len);
 			buffer_delete_line(false);
@@ -119,10 +129,11 @@ public void buffer_insert_key(int key)
 		} else {
 			char prev_char = *(buf->current_line->str + buf->char_offset - 1);
 			line_delete_char(buf->current_line, buf->char_offset - 1);
-			if (prev_char == '\t')
+			if (prev_char == '\t') {
 				buf->pos.col -= TAB_SIZE;
-			else
+			} else {
 				buf->pos.col--;
+			}
 			buf->char_offset--;
 		}
 	} else {
@@ -157,8 +168,9 @@ public void buffer_go_to_offset(int offset)
 	/*
 	 * offset is index bound and cant be greater or equal to current line len
 	 */
-	if (offset >= buf->current_line->len)
+	if (offset >= buf->current_line->len) {
 		return;
+	}
 	buf->char_offset = offset;
 	buf->pos.col = offset_to_col(buf->current_line->str, buf->current_line->len, offset);
 }
@@ -166,8 +178,9 @@ public void buffer_go_to_offset(int offset)
 public void buffer_go_to_line(int index)
 {
 	buffer_t *buf = editor_buffer();
-	if (index >= buf->line_count)
+	if (index >= buf->line_count) {
 		return;
+	}
 	buf->line_offset = index;
 	buf->current_line = buffer_line_by_index(index);
 	buf->pos.row = 1;
@@ -237,10 +250,12 @@ public void buffer_free(buffer_t *buf)
 			line_free(ln);
 			ln = next;
 		}
-		if (buf->name)
+		if (buf->name) {
 			free(buf->name);
-		if (buf->filepath)
+		}
+		if (buf->filepath) {
 			free(buf->filepath);
+		}
 		free(buf);
 	}
 }

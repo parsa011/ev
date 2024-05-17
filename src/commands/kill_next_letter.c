@@ -6,9 +6,10 @@
 
 public return_message kill_next_letter_command(char **args)
 {
-	if (next_char_command(NULL).status == SUCCESS)
+	if (next_char_command(NULL).status == SUCCESS) {
 		buffer_insert_key(BACKSPACE);
-	else
+	} else {
 		return create_return_message(ERROR, "end of buffer");
+	}
 	return create_return_message(SUCCESS, "kill next letter");
 }

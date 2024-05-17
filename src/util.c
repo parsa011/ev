@@ -18,15 +18,16 @@ public char *make_fmt_string(const char *fmt, ...)
 	n = vsnprintf(NULL, 0, fmt, ap);
 	va_end(ap);
 
-	if (n < 0)
+	if (n < 0) {
 		return NULL;
+	}
 
 	/* One extra byte for '\0' */
-
 	size = (size_t) n + 1;
 	p = malloc(size);
-	if (p == NULL)
+	if (p == NULL) {
 		return NULL;
+	}
 
 	va_start(ap, fmt);
 	n = vsnprintf(p, size, fmt, ap);
@@ -43,14 +44,16 @@ public char *make_fmt_string(const char *fmt, ...)
 public uint8_t offset_to_col(char *str, int str_len, int len)
 {
 	int col = 1;
-	if (str_len == 0)
+	if (str_len == 0) {
 		return col;
+	}
 	assert(str);
 	for (int i = 0; i < len; i++) {
-		if (*(str + i) == '\t')
+		if (*(str + i) == '\t') {
 			col += TAB_SIZE;
-		else
+		} else {
 			col++;
+		}
 	}
 	return col;
 }
@@ -59,14 +62,16 @@ public uint8_t col_to_offset(char *str, int str_len, uint8_t col)
 {
 	uint8_t current_col = 1;
 	int offset = 0;
-	if (str_len == 0)
+	if (str_len == 0) {
 		return offset;
+	}
 	assert(str);
 	while (current_col < col) {
 		if (*(str + offset) == '\t') {
 			current_col += TAB_SIZE;
-		} else
+		} else {
 			current_col++;
+		}
 		offset++;
 	}
 	return offset;

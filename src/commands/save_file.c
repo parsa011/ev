@@ -10,8 +10,9 @@ public return_message save_file_command(char **args)
 	buffer_t *buf = editor_buffer();
 	if (!buf->filepath) {
 		char *file_name = prompt_string("file to save in : ");
-		if (!file_name)
+		if (!file_name) {
 			return create_return_message(ERROR, "canceled");
+		}
 		buffer_set_file_name(buf, file_name);
 		free(file_name);
 	}

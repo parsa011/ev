@@ -69,8 +69,9 @@ public command command_get(char *pattern)
 {
 	int len = sizeof(commands) / sizeof(commands[0]);
 	for (int i = 0; i < len; i++) {
-		if (strcmp(commands[i].key_codes, pattern) == 0)
+		if (strcmp(commands[i].key_codes, pattern) == 0) {
 			return commands[i];
+		}
 	}
 	return MAKE_COMMAND("Empty Command", "NULL", NULL);
 }
@@ -80,8 +81,9 @@ public bool command_exists(char *pattern)
 	int len = sizeof(commands) / sizeof(commands[0]);
 	int str_len = strlen(pattern);
 	for (int i = 0; i < len; i++) {
-		if (strncmp(commands[i].key_codes, pattern, str_len) == 0)
+		if (strncmp(commands[i].key_codes, pattern, str_len) == 0) {
 			return true;
+		}
 	}
 	return false;
 }
