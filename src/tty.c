@@ -202,7 +202,7 @@ public void tty_flush()
 
 public void tty_clear()
 {
-	tty_put_string(true, "%s", "\033[2J");
+	system("clear");
 }
 
 public void tty_clear_eol()
