@@ -82,7 +82,10 @@ public bool command_exists(char *pattern)
 	int str_len = strlen(pattern);
 	for (int i = 0; i < len; i++) {
 		if (strncmp(commands[i].key_codes, pattern, str_len) == 0) {
-			return true;
+			// if given command starts with 'C' that means a commands that starts with control
+			// and our given pattern is just a c, return false, because that 'C' world
+			// and that one is 'ctrl' command
+			return !(strlen(commands[i].key_codes) > 1 && str_len == 1);
 		}
 	}
 	return false;
