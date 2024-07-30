@@ -16,6 +16,7 @@ public return_message save_file_command(char **args)
 		buffer_set_file_name(buf, file_name);
 		free(file_name);
 	}
+	// TODO : write into file should be an external api
 	FILE *fp = fopen(buf->filepath, "w+");
 	if (!fp) {
 		die(0);

@@ -155,8 +155,6 @@ public void buffer_check_offset()
 	if (ln->len > offset) {
 		buffer_go_to_offset(offset);
 	}
-	buf->char_offset = col_to_offset(ln->str, ln->len, buf->pos.col);
-	buf->pos.col = offset_to_col(ln->str, ln->len, buf->char_offset);
 	if (buf->char_offset >= ln->len) {
 		end_of_line_command(NULL);
 	}
