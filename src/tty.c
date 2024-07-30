@@ -218,7 +218,6 @@ public void tty_cursor_move(cursor_pos_t pos)
 
 public void tty_cursor_hide()
 {
-	tty_cursor_move(MAKE_POS(1,1));
 	tty_put_string(true, "%s", "\033[?25l");
 }
 
