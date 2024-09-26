@@ -14,13 +14,14 @@ public void die(int code)
 	exit(code);
 }
 
-void handle_signals()
+private void handle_signals()
 {
 	signal(SIGWINCH, editor_change_size);
 }
 
-int main(int argc, char **argv)
+public int main(int argc, char **argv)
 {
+	handle_signals();
 	editor_init();
 	/*
 	 * this is for test, if we passed any arg to prgram, it will counted as file name for now

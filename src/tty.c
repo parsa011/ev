@@ -207,57 +207,50 @@ public void tty_clear()
 
 public void tty_clear_eol()
 {
-	printf("\033[K");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\e[K");
 }
 
 public void tty_cursor_move(cursor_pos_t pos)
 {
-	tty_put_string(true, "\033[%d;%dH", pos.row, pos.col);
+	tty_put_string(true, "\e[%d;%dH", pos.row, pos.col);
 }
 
 public void tty_cursor_hide()
 {
-	tty_put_string(true, "%s", "\033[?25l");
+	tty_put_string(true, "%s", "\e[?25l");
 }
 
 public void tty_cursor_show()
 {
-	tty_put_string(true, "%s", "\033[?25h");
+	tty_put_string(true, "%s", "\e[?25h");
 }
 
 public void tty_cursor_store()
 {
-	printf("\0337");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\e7");
 }
 
 public void tty_cursor_restore()
 {
-	printf("\0338");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\e8");
 }
 
 public void tty_cursor_line_next()
 {
-	printf("\x1b[B");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\e[B");
 }
 
 public void tty_cursor_line_prev()
 {
-	printf("\x1b[A");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\e[A");
 }
 
 public void tty_cursor_char_next()
 {
-	printf("\x1b[C");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\e[C");
 }
 
 public void tty_cursor_char_prev()
 {
-	printf("\x1b[D");
-	fflush(stdout);
+	tty_put_string(true, "%s", "\e[D");
 }

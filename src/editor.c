@@ -18,6 +18,7 @@ editor_t editor;
 public void editor_init()
 {
 	tty_raw_mode();
+	tty_cursor_move(MAKE_POS(1, 1));
 	tty_clear();
 
 	editor_change_size();
