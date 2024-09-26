@@ -26,16 +26,15 @@ public void buffer_dirty()
 
 public return_message buffer_file_open(char *filepath)
 {
-    buffer_t *buf = editor_buffer();
+	buffer_t *buf = editor_buffer();
 	if (filepath) {
 		buffer_set_file_name(buf, filepath);
 	}
-	if (!filepath || !file_exists(filepath)) {
+	if (!file_exists(filepath)) {
 		buffer_append_line(line_init("", 0));
 		return create_return_message(ERROR, "new buffer");
 	}
 	buffer_file_load(filepath, REPLACE);
-	editor.current_buffer->render = true;
 	buf->render = true;
 	return create_return_message(SUCCESS, "file opened");
 }
