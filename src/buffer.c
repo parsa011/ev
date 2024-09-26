@@ -116,15 +116,19 @@ public void buffer_insert_key(int key)
 		buf->pos.col += TAB_SIZE;
 		buf->char_offset++;
 	} else if (key == BACKSPACE) {
+		// cursor is in the beginning of line, after remove char, we should append remaining chars into previous line
+		// also if line is empty (no any remaining char) we should 'remove' the line
 		if (buf->char_offset == 0) {
 			line_t *prev_line = L_LINK_PREV(buf->current_line);
 			if (!prev_line) {
 				goto ret;
 			}
 			int prev_line_len = prev_line->len;
-			line_append_string(prev_line, buf->current_line->str, buf->current_line->len);
+			if (buf->current_line->len > 0) {
+				line_append_string(prev_line, buf->current_line->str, buf->current_line->len);
+			}
 			buffer_delete_line(false);
-			buffer_go_to_offset(prev_line_len);
+			buffer_go_to_offset(prev_line_len - 1);
 		} else {
 			char prev_char = *(buf->current_line->str + buf->char_offset - 1);
 			line_delete_char(buf->current_line, buf->char_offset - 1);
