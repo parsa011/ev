@@ -15,7 +15,7 @@ public return_message next_char_command(char **args)
 			return create_return_message(ERROR, "end of buffer");
 		}
 	}
-	if (*(buf->current_line->str + buf->char_offset) == '\t') {
+	if (*buffer_current_char() == '\t') {
 		buf->pos.col += TAB_SIZE;
 	} else {
 		buf->pos.col++;

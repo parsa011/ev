@@ -130,7 +130,7 @@ public void buffer_insert_key(int key)
 			buffer_delete_line(false);
 			buffer_go_to_offset(prev_line_len - 1);
 		} else {
-			char prev_char = *(buf->current_line->str + buf->char_offset - 1);
+			char prev_char = *buffer_char_at(buf->char_offset - 1);
 			line_delete_char(buf->current_line, buf->char_offset - 1);
 			if (prev_char == '\t') {
 				buf->pos.col -= TAB_SIZE;
@@ -189,10 +189,16 @@ public void buffer_go_to_line(int index)
 	buf->render = true;
 }
 
-public char buffer_current_char()
+public char *buffer_current_char()
 {
 	buffer_t *buf = editor_buffer();
-	return *(buf->current_line->str + buf->char_offset);
+	return buf->current_line->str + buf->char_offset;
+}
+
+public char *buffer_char_at(int offset)
+{
+	buffer_t *buf = editor_buffer();
+	return buf->current_line->str + offset;
 }
 
 public line_t *buffer_line_by_index(int index)
@@ -231,7 +237,7 @@ public void buffer_open_line()
 	line_t *current_line = buf->current_line;
 	line_t *new_line = line_init("", 0);
 
-	line_append_string(new_line, current_line->str + buf->char_offset, current_line->len - buf->char_offset);
+	line_append_string(new_line, buffer_current_char(), current_line->len - buf->char_offset);
 	line_delete_range(current_line, buf->char_offset, current_line->len);
 	buffer_append_line(new_line);
 	next_line_command(NULL);

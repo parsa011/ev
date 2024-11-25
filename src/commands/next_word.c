@@ -6,7 +6,7 @@
 
 public return_message next_word_command(char **args)
 {
-#define IN_WORD isalpha(buffer_current_char())
+#define IN_WORD isalpha(*buffer_current_char())
 	if (IN_WORD) {
 		do {
 			if (!IN_WORD) {

@@ -29,9 +29,7 @@ public void editor_init()
 	 * init base stuff for editor, like buffer
 	 */
 	editor.current_buffer = buffer_init(NULL, BUFFER_ROW);
-
 	editor.statusbar.margin = editor.rows - 1;
-
 	editor.promptbar.msg = line_init("", 0);
 }
 

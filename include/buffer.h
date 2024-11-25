@@ -139,7 +139,13 @@ public void buffer_go_to_line(int index);
 /*
  * return current char under the cursor
  */
-public char buffer_current_char();
+public char *buffer_current_char();
+
+/*
+ * return nth char of current line, with given offset, also program will panic when offset is not valid
+ * means too large, or negative
+ */
+public char *buffer_char_at(int offset);
 
 /*
  * return line by it's index, starts from 0

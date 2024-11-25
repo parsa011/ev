@@ -15,13 +15,16 @@ DONE :
 12 - more functionalities to prompt bar, like M-f, M-b, M-d, M-u, M-l 
 13 - kill line command for prompt bar
 14 - prompt bar kill word command
+15 - Go to line command
 
 IN PROGRESS :
-    - Go to line command
+    - Logging System, one of the most important task that i have to do is logging, so then i can watch what is going on inside my editor, and to track stuff, like current_line or offsets and etc . this can be another process, or file, or new buffer.
+    - automated test for editor, in all functionalities, like moving, text manipulating and etc
 
 TODO : 
     - indent line
     - yank and paste
     - undo
+    - line number
     - search
     - syntax highlight

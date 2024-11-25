@@ -30,7 +30,10 @@ public int main(int argc, char **argv)
 	 * because it will load file lines into buffer , if file does not exists, it will
 	 * create new line for current and first line of buffer
 	 */
-	buffer_file_open(argv[1]);
+	if (argv[1])
+		buffer_file_open(argv[1]);
+	else
+		editor.current_buffer->current_line = line_init("", 0);
 	editor_run();
 	editor_close();
 	return 0;
