@@ -7,21 +7,9 @@
 #include "util.h"
 #include "log.h"
 
-#ifdef _WIN32
-
-#include <io.h>
-#include <windows.h>
-static DWORD orig_in_mode;
-static DWORD orig_out_mode;
-
-#else
-
 #include <sys/ioctl.h>
 #include <termios.h>
-
 #include <unistd.h>
-
-#endif
 
 private struct termios old_termios, new_termios;
 
@@ -81,20 +69,6 @@ public char tty_get_char(int *remaining)
 	return c;
 }
 
-#ifdef _WIN32
-public int tty_window_size(int* rows, int* cols)
-{
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-
-	if (GetConsoleScreenBufferInfo(hStdout, &csbi)) {
-		*cols = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-		*rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-		return 0;
-	}
-	return -1;
-}
-#else
-
 public int tty_cursor_pos_get(int* rows, int* cols)
 {
 	char buf[32];
@@ -135,7 +109,6 @@ public int tty_window_size(int* rows, int* cols)
 		return 0;
 	}
 }
-#endif
 
 /*
  * write string to output buffer
