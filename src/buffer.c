@@ -8,7 +8,7 @@
 #include "util.h"
 #include "commands/commands.h"
 
-public buffer_t *buffer_init(char *filepath, int rows)
+buffer_t *buffer_init(char *filepath, int rows)
 {
 	buffer_t *buf = (buffer_t *) malloc(sizeof(buffer_t));
 	assert(buf);
@@ -18,13 +18,13 @@ public buffer_t *buffer_init(char *filepath, int rows)
 	return buf;
 }
 
-public void buffer_dirty()
+void buffer_dirty()
 {
 	buffer_t *buf = editor_buffer();
 	buf->dirty = buf->render = true;
 }
 
-public return_message buffer_file_open(char *filepath)
+return_message buffer_file_open(char *filepath)
 {
 	buffer_t *buf = editor_buffer();
 	if (filepath) {
@@ -39,23 +39,23 @@ public return_message buffer_file_open(char *filepath)
 	return create_return_message(SUCCESS, "file opened");
 }
 
-public void buffer_set_file_name(buffer_t *buf, char *filepath)
+void buffer_set_file_name(buffer_t *buf, char *filepath)
 {
 	buf->filepath = strdup(filepath);
 	buf->name = strdup(file_name(filepath));
 }
 
-public return_message buffer_file_close()
+return_message buffer_file_close()
 {
 	return create_return_message(SUCCESS, "file closed");
 }
 
-public return_message buffer_file_save()
+return_message buffer_file_save()
 {
 	return create_return_message(SUCCESS, "file saved");
 }
 
-public return_message buffer_file_load(char *filepath, line_load_mode mode)
+return_message buffer_file_load(char *filepath, line_load_mode mode)
 {
 	// TODO : Implement other modes :))
 	if (!file_exists(filepath)) {
@@ -93,7 +93,7 @@ public return_message buffer_file_load(char *filepath, line_load_mode mode)
 	return create_return_message(SUCCESS, "file lines loaded");
 }
 
-public return_message buffer_append_line(line_t *line)
+return_message buffer_append_line(line_t *line)
 {
 	buffer_t *buf = editor_buffer();
 	if (!buf->first_line) {
@@ -105,7 +105,7 @@ public return_message buffer_append_line(line_t *line)
 	return create_return_message(SUCCESS, "line appended");
 }
 
-public void buffer_insert_key(int key)
+void buffer_insert_key(int key)
 {
 	buffer_t *buf = editor_buffer();
 	buf->render = true;
@@ -128,7 +128,7 @@ public void buffer_insert_key(int key)
 				line_append_string(prev_line, buf->current_line->str, buf->current_line->len);
 			}
 			buffer_delete_line(false);
-			buffer_go_to_offset(prev_line_len - 1);
+			buffer_go_to_offset(prev_line_len);
 		} else {
 			char prev_char = *buffer_char_at(buf->char_offset - 1);
 			line_delete_char(buf->current_line, buf->char_offset - 1);
@@ -149,7 +149,7 @@ public void buffer_insert_key(int key)
 	buf->dirty = true;
 }
 
-public void buffer_check_offset()
+void buffer_check_offset()
 {
 	buffer_t *buf = editor_buffer();
 	line_t *ln = buf->current_line;
@@ -163,7 +163,7 @@ public void buffer_check_offset()
 	}
 }
 
-public void buffer_go_to_offset(int offset)
+void buffer_go_to_offset(int offset)
 {
 	buffer_t *buf = editor_buffer();
 	/*
@@ -176,7 +176,7 @@ public void buffer_go_to_offset(int offset)
 	buf->pos.col = offset_to_col(buf->current_line->str, buf->current_line->len, offset);
 }
 
-public void buffer_go_to_line(int index)
+void buffer_go_to_line(int index)
 {
 	buffer_t *buf = editor_buffer();
 	if (index >= buf->line_count) {
@@ -189,19 +189,19 @@ public void buffer_go_to_line(int index)
 	buf->render = true;
 }
 
-public char *buffer_current_char()
+char *buffer_current_char()
 {
 	buffer_t *buf = editor_buffer();
 	return buf->current_line->str + buf->char_offset;
 }
 
-public char *buffer_char_at(int offset)
+char *buffer_char_at(int offset)
 {
 	buffer_t *buf = editor_buffer();
 	return buf->current_line->str + offset;
 }
 
-public line_t *buffer_line_by_index(int index)
+line_t *buffer_line_by_index(int index)
 {
 	line_t *line = editor_buffer()->first_line;
 	for (int i = 0; i < index; i++) {
@@ -210,7 +210,7 @@ public line_t *buffer_line_by_index(int index)
 	return line;
 }
 
-public void buffer_delete_line(bool go_next)
+void buffer_delete_line(bool go_next)
 {
 	buffer_t *buf = editor_buffer();
 	line_t *line = buf->current_line;
@@ -231,7 +231,7 @@ public void buffer_delete_line(bool go_next)
 	buf->render = true;
 }
 
-public void buffer_open_line()
+void buffer_open_line()
 {
 	buffer_t *buf = editor_buffer();
 	line_t *current_line = buf->current_line;
@@ -247,7 +247,7 @@ public void buffer_open_line()
 	buf->dirty = true;
 }
 
-public void buffer_free(buffer_t *buf)
+void buffer_free(buffer_t *buf)
 {
 	if (buf) {
 		line_t *ln = buf->first_line;

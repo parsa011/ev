@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define EV_LOG
+
 #define public extern
 #define private static
 

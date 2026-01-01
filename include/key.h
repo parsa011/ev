@@ -1,6 +1,8 @@
 #ifndef _KEY_H
 # define _KEY_H
 
+#include "basic.h"
+
 #define ESC         0x1B		/* ESC character.               	*/
 #define ALT_MASK    0x1000
 #define CTRL_KEY(k) (k & 0x1F)
@@ -32,7 +34,7 @@ enum {
  */
 int key_read();
 
-char *key_to_str();
+char *key_to_str(int key);
 
 char *key_combine(char *str, int key);
 

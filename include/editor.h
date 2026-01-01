@@ -40,7 +40,7 @@ struct editor {
 #define BUFFER_ROW editor.rows - 1
 
 /*
- *	time to second that we want to show messages to user
+ *	time in seconds that we want to show messages to user
  */
 #define USER_MESSAGE_TIME 2
 

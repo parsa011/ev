@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-public int key_read()
+int key_read()
 {
 	int pending = 0;
 	int c = tty_get_char(&pending);
@@ -67,7 +67,7 @@ public int key_read()
 	return c;
 }
 
-public char *key_to_str(int key)
+char *key_to_str(int key)
 {
 	char *buf = (char *)malloc(16 * sizeof(char));
 	int len = 0;
@@ -146,7 +146,7 @@ public char *key_to_str(int key)
 	return buf;
 }
 
-public char *key_combine(char *str, int key)
+char *key_combine(char *str, int key)
 {
 	int str_len = strlen(str);
 	char *new_key = key_to_str(key);

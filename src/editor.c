@@ -15,8 +15,12 @@
 
 editor_t editor;
 
-public void editor_init()
+void editor_init()
 {
+#ifdef EV_LOG
+	start_logger();
+#endif
+
 	tty_raw_mode();
 	tty_cursor_move(MAKE_POS(1, 1));
 	tty_clear();
@@ -33,12 +37,12 @@ public void editor_init()
 	editor.promptbar.msg = line_init("", 0);
 }
 
-public void editor_change_size()
+void editor_change_size()
 {
 	tty_window_size(&editor.rows, &editor.cols);
 }
 
-public void editor_close()
+void editor_close()
 {
 	tty_cooked_mode();
 	tty_clear();
@@ -55,9 +59,13 @@ public void editor_close()
 		buffer_free(buf);
 		buf = next;
 	}
+#ifdef EV_LOG
+	close_logger();
+#endif
+
 }
 
-public return_message editor_run()
+return_message editor_run()
 {
 	int c;
 	char *str;
@@ -65,6 +73,7 @@ public return_message editor_run()
 	editor_render();
 	while (true) {
 		buf = editor_buffer();
+		log_msg("'%s' \n %d \n %d", buf->current_line->str, buf->current_line->len, buf->char_offset);
 		if (buf->render) {
 			editor_render();
 		}
@@ -101,18 +110,18 @@ public return_message editor_run()
 	return create_return_message(SUCCESS, "editor closed without error");
 }
 
-public void editor_buffer_append(buffer_t *buf)
+void editor_buffer_append(buffer_t *buf)
 {
 	L_LINK_INSERT(editor_buffer(), buf);
 }
 
-public void editor_buffer_change(buffer_t *buf)
+void editor_buffer_change(buffer_t *buf)
 {
 	editor.current_buffer = buf;
 	buf->render = true;
 }
 
-public return_message editor_render()
+return_message editor_render()
 {
 	tty_clear();
 	tty_cursor_hide();
@@ -123,7 +132,7 @@ public return_message editor_render()
 	return create_return_message(SUCCESS, "buffer rendered");
 }
 
-public void editor_render_buffer()
+void editor_render_buffer()
 {
 	buffer_t *buf = editor_buffer();
 	line_t *line = buffer_line_by_index(buf->line_offset);
@@ -139,12 +148,12 @@ public void editor_render_buffer()
 	buf->render = false;
 }
 
-public void editor_render_line_number(int line_nu)
+void editor_render_line_number(int line_nu)
 {
 	tty_put_string(false, "%d |", line_nu);
 }
 
-public void editor_render_statusbar()
+void editor_render_statusbar()
 {
 	tty_cursor_move(MAKE_POS(editor.statusbar.margin, 1));
 	tty_put_string(true, "\033[107m\033[30m");
@@ -184,7 +193,7 @@ public void editor_render_statusbar()
 #undef ADD_TEXTF
 }
 
-public void editor_render_promptbar()
+void editor_render_promptbar()
 {
 	tty_cursor_move(MAKE_POS(editor.rows, 1));
 	if (!prompt_msg_is_expired()) {
@@ -196,7 +205,7 @@ public void editor_render_promptbar()
 	}
 }
 
-public void editor_render_line(line_t *line)
+void editor_render_line(line_t *line)
 {
 	assert(line);
 	int wroted_chars_count = 1;
@@ -220,7 +229,7 @@ public void editor_render_line(line_t *line)
 	tty_put_string(false, "\r\n");
 }
 
-public buffer_t *editor_buffer()
+buffer_t *editor_buffer()
 {
 	return editor.current_buffer;
 }
