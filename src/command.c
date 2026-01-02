@@ -53,7 +53,7 @@ command commands[] = {
 	MAKE_COMMAND("goto-line", "M-g M-g", goto_line_command)
 };
 
-public command command_read(char *str)
+command command_read(char *str)
 {
 	command cmd = command_get(str);
 	int c;
@@ -65,7 +65,7 @@ public command command_read(char *str)
 	return cmd;
 }
 
-public command command_get(char *pattern)
+command command_get(char *pattern)
 {
 	int len = sizeof(commands) / sizeof(commands[0]);
 	for (int i = 0; i < len; i++) {
@@ -76,7 +76,7 @@ public command command_get(char *pattern)
 	return MAKE_COMMAND("Empty Command", "NULL", NULL);
 }
 
-public bool command_exists(char *pattern)
+bool command_exists(char *pattern)
 {
 	int len = sizeof(commands) / sizeof(commands[0]);
 	int str_len = strlen(pattern);
@@ -91,7 +91,7 @@ public bool command_exists(char *pattern)
 	return false;
 }
 
-public void command_print(command cmd)
+void command_print(command cmd)
 {
 	tty_put_string(true, "[%s] --> %s\r\n", cmd.key_codes, cmd.desc);
 }

@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	if (argv[1])
 		buffer_file_open(argv[1]);
 	else
-		editor.current_buffer->current_line = editor.current_buffer->first_line = line_init("", 0);
+		buffer_append_line(line_init("", 0));
 	editor_run();
 	editor_close();
 	return 0;

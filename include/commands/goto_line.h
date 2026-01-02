@@ -1,5 +1,5 @@
 #ifndef _GOTO_LINE_H
-# define _GOTO_LNIE_H
+# define _GOTO_LINE_H
 
 #include "base.h"
 #include "../buffer.h"
