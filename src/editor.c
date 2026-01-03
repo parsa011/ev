@@ -40,6 +40,7 @@ void editor_init()
 void editor_change_size()
 {
 	tty_window_size(&editor.rows, &editor.cols);
+	editor_render();
 }
 
 void editor_close()
@@ -123,6 +124,8 @@ void editor_buffer_change(buffer_t *buf)
 
 return_message editor_render()
 {
+	if (editor.current_buffer == 0)
+		return create_return_message(ERROR, "no buffer");
 	tty_clear();
 	tty_cursor_hide();
 	editor_render_buffer();
