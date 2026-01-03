@@ -8,11 +8,18 @@
 #include "tty.h"
 #include "line.h"
 #include "key.h"
+#include "log.h"
 
-public void prompt_clear(bool restore)
+char *prompt_read(char *base_value);
+void prompt_store_pos();
+
+cursor_pos_t prev_pos;
+int msg_len;
+int base_value_len;
+
+void prompt_clear(bool restore)
 {
-	buffer_t *buf = editor_buffer();
-    cursor_pos_t prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
+	prompt_store_pos();
 
 	tty_cursor_move(MAKE_POS(editor.rows, 1));
 	tty_clear_eol();
@@ -32,9 +39,7 @@ public void prompt_message_show(char *str, int str_len)
 
 public bool prompt_bool(char *message)
 {
-    buffer_t *buf = editor_buffer();
-    cursor_pos_t prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
-
+	prompt_store_pos();
     tty_cursor_move(MAKE_POS(editor.rows, 1));
 	tty_put_string(true, "%s (y/n) ", message);
 	bool ans;
@@ -51,7 +56,7 @@ public bool prompt_bool(char *message)
 	return ans;
 }
 
-public int *prompt_int(char *message)
+int *prompt_int(char *message)
 {
 	char *str = prompt_string(message);
 	if (str) {
@@ -62,28 +67,46 @@ public int *prompt_int(char *message)
 	return 0;
 }
 
-public char *prompt_string(char *message)
+char *prompt_string(char *message)
 {
-	buffer_t *buf = editor_buffer();
-	cursor_pos_t prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
-
     prompt_clear(false);
 	tty_put_string(true, message);
-	int msg_len =  strlen(message);
-#define START_COL msg_len + 1
+	msg_len = strlen(message);
+	return prompt_read(null);
+}
+
+char *prompt_string_with_base(char *message, char *base_value)
+{
+    prompt_clear(false);
+	tty_put_string(true, message);
+	tty_put_string(true, base_value);
+	msg_len = strlen(message);
+	base_value_len = strlen(base_value);
+	return prompt_read(base_value);
+}
+
+public bool prompt_msg_is_expired()
+{
+	return time(NULL) - editor.promptbar.msg_time > PROMPT_MSG_TIME;
+}
+
+char *prompt_read(char *base_value)
+{
+#define START_COL msg_len + base_value_len + 1
+	
+	prompt_store_pos();
 	int cursor_col = START_COL;
-	line_t *line = line_init("", 0);
+	line_t *line = line_init(base_value, base_value_len);
 	int c = 0;
 	char *str = NULL;
 
-#define CHAR_OFFSET (cursor_col - msg_len - 1)
-#define CURRENT_CHAR line->str[CHAR_OFFSET]
+#define CURRENT_CHAR line->str[line->len]
 #define DO_CANCEL goto cancel
 
 #define DO_BACKSPACE                              \
 do {                                              \
-    if (CHAR_OFFSET != 0) {                       \
-    	line_delete_char(line, CHAR_OFFSET - 1);  \
+    if (line->len != 0) {						  \
+    	line_delete_char(line, line->len - 1);  \
     	cursor_col--;                             \
     }                                             \
 } while (false);
@@ -97,7 +120,7 @@ do {                                              \
 
 #define DO_GO_FORWARD                             \
 do {                                              \
-    if (CHAR_OFFSET < line->len) {                \
+    if (line->len < line->len) {				  \
         cursor_col++;                             \
     }                                             \
 } while (false);
@@ -144,12 +167,12 @@ do {                                              \
 #define DO_KILL_LINE                              \
 do {                                              \
     line_delete_range(line,                       \
-        CHAR_OFFSET, line->len);                  \
+        line->len, line->len);                  \
 } while (false);
 
 #define DO_KILL_CHAR                              \
 do {                                              \
-    if (CHAR_OFFSET < line->len) {                \
+    if (line->len < line->len) {                \
         DO_GO_FORWARD;                            \
         DO_BACKSPACE;                             \
     }                                             \
@@ -159,18 +182,19 @@ do {                                              \
 do {                                              \
     if (isalpha(CURRENT_CHAR)) {                  \
         while (isalpha(CURRENT_CHAR)              \
-               && CHAR_OFFSET < line->len) {      \
+               && line->len < line->len) {      \
             DO_KILL_CHAR;                         \
         }                                         \
     } else {                                      \
         while (!isalpha(CURRENT_CHAR)             \
-               && CHAR_OFFSET < line->len) {      \
+               && line->len < line->len) {      \
             DO_KILL_CHAR;                         \
         }                                         \
     }                                             \
 } while (false);
 
 	while (true) {
+		log_msg("%d", line->len);
 		c = key_read();
 		if (c == CTRL_KEY('g')) {
     		DO_CANCEL;
@@ -210,7 +234,7 @@ do {                                              \
     		goto print;
 		}
 		str = key_to_str(c);
-		line_insert_string(line, str, strlen(str), CHAR_OFFSET);
+		line_insert_string(line, str, strlen(str), line->len);
 		cursor_col += strlen(str);
 print:
 		tty_cursor_move(MAKE_POS(editor.rows, msg_len));
@@ -227,16 +251,18 @@ print:
 	char *res = strdup(line->str);
 	line_free(line);
 	prompt_clear(false);
-#undef CHAR_OFFSET
+	log_msg("%s", res);
 	return res;
+	
 cancel:
 	prompt_clear(false);
     tty_cursor_move(prev_pos);
-#undef CHAR_OFFSET
 	return NULL;
 }
 
-public bool prompt_msg_is_expired()
+void prompt_store_pos()
 {
-	return time(NULL) - editor.promptbar.msg_time > PROMPT_MSG_TIME;
+	buffer_t *buf = editor_buffer();
+	prev_pos = MAKE_POS(buf->pos.row, buf->pos.col);
 }
+

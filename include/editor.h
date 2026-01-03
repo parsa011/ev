@@ -17,6 +17,7 @@ struct editor {
 	int tty_out;
 
 	buffer_t *current_buffer;
+	char *running_path;
 	struct statusbar_t {
 		/*
 		 * margin from top of screen, usually equals to editor.rows - 1

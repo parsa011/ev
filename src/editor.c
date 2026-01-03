@@ -29,6 +29,8 @@ void editor_init()
 	editor.tty_in = STDIN_FILENO;
 	editor.tty_out = STDOUT_FILENO;
 
+	editor.running_path = getcwd(NULL, 0);
+
 	/*
 	 * init base stuff for editor, like buffer
 	 */
@@ -74,7 +76,6 @@ return_message editor_run()
 	editor_render();
 	while (true) {
 		buf = editor_buffer();
-		log_msg("'%s' \n %d \n %d", buf->current_line->str, buf->current_line->len, buf->char_offset);
 		if (buf->render) {
 			editor_render();
 		}

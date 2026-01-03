@@ -5,7 +5,7 @@
 
 public return_message open_file_command(char **args)
 {
-	char *file_path = prompt_string("file path : ");
+	char *file_path = prompt_string_with_base("open file : ", editor.running_path);
 	if (!file_path) {
 		return create_return_message(TERMINATE, "canceled");
 	}

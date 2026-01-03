@@ -15,7 +15,7 @@ public return_message exit_command(char **args)
 		}
 		bool exit_anyway = prompt_bool("Modified Buffer exist; exit anyway ?");
 		if (!exit_anyway) {
-			return create_return_message(ERROR, "canceled");
+			return create_return_message(ERROR, "cancelled");
 		}
 	}
 	editor.exit = true;

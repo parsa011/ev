@@ -34,7 +34,8 @@ public bool prompt_bool(char *message);
 /*
  *	read a string from user, also we can show some message to user
  */
-public char *prompt_string(char *message);
+char *prompt_string(char *message);
+char *prompt_string_with_base(char *message, char *base_value);
 
 /*
  * return integer from prompt bar
