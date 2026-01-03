@@ -27,6 +27,7 @@ void buffer_dirty()
 return_message buffer_file_open(char *filepath)
 {
 	buffer_t *buf = editor_buffer();
+	buf->filepath = filepath;
 	if (filepath) {
 		buffer_set_file_name(buf, filepath);
 	}
