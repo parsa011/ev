@@ -47,7 +47,7 @@ void editor_close()
 {
 	tty_cooked_mode();
 	tty_clear();
-	buffer_t *buf = editor.current_buffer;
+	buffer_t *buf = editor_buffer();
 	/*
 	 * go to first buffer
 	 */
@@ -124,7 +124,7 @@ void editor_buffer_change(buffer_t *buf)
 
 return_message editor_render()
 {
-	if (editor.current_buffer == 0)
+	if (editor_buffer() == 0)
 		return create_return_message(ERROR, "no buffer");
 	tty_clear();
 	tty_cursor_hide();
