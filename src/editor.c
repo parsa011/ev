@@ -93,7 +93,7 @@ return_message editor_run()
 			}
 		}
 		else {
-			if (c == CTRL_KEY(c) && c != '\t') {
+			if ((c == CTRL_KEY(c) && c != '\t') || c == ALT_KEY(c)) {
     			char *msg = "Command Not Found";
 				prompt_message_show(msg, strlen(msg));
 			} else {
