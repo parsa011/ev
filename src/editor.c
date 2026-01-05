@@ -218,9 +218,11 @@ void editor_render_line(line_t *line)
 		c = line->str[i];
 		if (!c) {
 			break;
-		} if (wroted_chars_count + 1 >= editor.cols) {
+		}
+		if (wroted_chars_count + 1 >= editor.cols) {
 			break;
-		} if (c == '\t') {
+		}
+		if (c == '\t') {
 			wroted_chars_count += TAB_SIZE;
 			for (int i = 0; i < TAB_SIZE; i++) {
 				tty_put_char(' ');

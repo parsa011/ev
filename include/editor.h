@@ -50,71 +50,71 @@ public editor_t editor;
 /*
  * init editor in raw mode and other startup configurations
  */
-public void editor_init();
+void editor_init();
 
 /*
  * gets size of terminal, also used everytime that we want to handle
  * window size changed signal
  */
-public void editor_change_size();
+void editor_change_size();
 
 /*
  * reset shell to cooked mode and close statements, like save changed file
  * question and this kind of stuff
  */
-public void editor_close();
+void editor_close();
 
 /*
  * append given buffer next to the current buffer
  */
-public void editor_buffer_append(buffer_t *buf);
+void editor_buffer_append(buffer_t *buf);
 
 /*
  * means go to the given buffer and set it as current buffer
  */
-public void editor_buffer_change(buffer_t *buf);
+void editor_buffer_change(buffer_t *buf);
 
 /*
  * runs editor infinite loop, taking command and doing them
  */
-public return_message editor_run();
+return_message editor_run();
 
 /*
  * writes current buffer into screen
  */
-public return_message editor_render();
+return_message editor_render();
 
 /*
  * writes current buffer into screen
  */
-public void editor_render_buffer();
+void editor_render_buffer();
 
 /*
  * writes information of current buffer into status bar
  */
-public void editor_render_statusbar();
+void editor_render_statusbar();
 
 /*
  * shows message to user, that was saved in promptbar struct
  * also mesage time should be less than 5 seconds
  */
-public void editor_render_promptbar();
+void editor_render_promptbar();
 
 /*
  * writes single file into buffer , at current position of screen (whereever that cursor is)
  * also will do line render stuff, like showing tabs by specified tab size and ...
  */
-public void editor_render_line(line_t *line);
+void editor_render_line(line_t *line);
 
 /*
  * writes Line number into display
  * TODO : Toggleable, but not in the action, BTW
  */
-public void editor_render_line_number(int line_nu);
+void editor_render_line_number(int line_nu);
 
 /*
  * this is just a helper method to get current buffer of editor
  */
-public buffer_t *editor_buffer();
+buffer_t *editor_buffer();
 
 #endif
