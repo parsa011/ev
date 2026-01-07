@@ -51,6 +51,6 @@ typedef struct buffer buffer_t;
 typedef struct line line_t;
 typedef struct promptbar promptbar_t;
 
-public void die(int code);
+void die(int code);
 
 #endif

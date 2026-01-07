@@ -42,6 +42,11 @@ void editor_init()
 void editor_change_size()
 {
 	tty_window_size(&editor.rows, &editor.cols);
+	editor.statusbar.margin = editor.rows - 1;
+	buffer_t *buf = editor_buffer();
+	if (buf != null) {
+		buf->rows = editor.rows - 1;
+	}
 	editor_render();
 }
 
