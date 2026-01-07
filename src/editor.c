@@ -145,10 +145,15 @@ void editor_render_buffer()
 {
 	buffer_t *buf = editor_buffer();
 	line_t *line = buffer_line_by_index(buf->line_offset);
+	
 	int printed_rows = 1;
-	//int line_nu = buf->line_offset + 1;
+	int line_nu = buf->line_offset + 1;
+	int line_number_width = int_digits_count(buf->line_count) + 1;
+	
 	while (line && printed_rows < buf->rows) {
-		//editor_render_line_number(line_nu++);
+		if (buf->line_number) {
+			editor_render_line_number(line_number_width, line_nu++);
+		}
 		editor_render_line(line);
 		line = L_LINK_NEXT(line);
 		printed_rows++;
@@ -157,9 +162,14 @@ void editor_render_buffer()
 	buf->render = false;
 }
 
-void editor_render_line_number(int line_nu)
+void editor_render_line_number(int lines_width, int line_nu)
 {
-	tty_put_string(false, "%d |", line_nu);
+	tty_put_string(false, "%d", line_nu);
+	int c = int_digits_count(line_nu);
+	while (c++ < lines_width) {
+		tty_put_char(' ');
+	}
+	tty_put_string(false, "|", line_nu);
 }
 
 void editor_render_statusbar()

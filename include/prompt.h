@@ -14,22 +14,22 @@ struct promptbar {
 /*
  * clears prompt section
  */
-public void prompt_clear(bool restore);
+void prompt_clear(bool restore);
 
 /*
  * set editor prompt bar message to given string
  */
-public void prompt_message_show(char *str, int len);
+void prompt_message_show(char *str, int len);
 
 /*
  * shows editor promptbar string 
  */
-public void prompt_message_set(char *str);
+void prompt_message_set(char *str);
 
 /*
  * shows a Y/N prompt with given message to the user, and returns result as an boolean
  */
-public bool prompt_bool(char *message);
+bool prompt_bool(char *message);
 
 /*
  *	read a string from user, also we can show some message to user
@@ -40,11 +40,11 @@ char *prompt_string_with_base(char *message, char *base_value);
 /*
  * return integer from prompt bar
  */
-public int *prompt_int(char *message);
+int *prompt_int(char *message);
 
 /*
  *	check if prompt message is expired or no,
  */
-public bool prompt_msg_is_expired();
+bool prompt_msg_is_expired();
 
 #endif

@@ -14,6 +14,7 @@ buffer_t *buffer_init(char *filepath, int rows)
 	assert(buf);
 	memset(buf, 0, sizeof(buffer_t));
 	buf->rows = rows;
+	buf->line_number = true;
 	SET_POS(buf->pos, 1, 1);
 	return buf;
 }

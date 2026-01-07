@@ -67,6 +67,8 @@ struct buffer {
 	 * did we change buffer ? yes if there was any change
 	 */
 	bool dirty;
+
+	bool line_number;
 };
 
 /*

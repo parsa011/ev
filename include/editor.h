@@ -110,7 +110,7 @@ void editor_render_line(line_t *line);
  * writes Line number into display
  * TODO : Toggleable, but not in the action, BTW
  */
-void editor_render_line_number(int line_nu);
+void editor_render_line_number(int lines_width, int line_nu);
 
 /*
  * this is just a helper method to get current buffer of editor
