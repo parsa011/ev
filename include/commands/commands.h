@@ -23,3 +23,4 @@
 #include "upcase_word.h"
 #include "downcase_word.h"
 #include "goto_line.h"
+#include "do_backspace.h"

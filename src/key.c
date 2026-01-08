@@ -128,6 +128,9 @@ char *key_to_str(int key)
 		case ARROW_LEFT:
 			PUSHS("ARROW_LEFT");
 			return buf;
+		case BACKSPACE:
+			PUSHS("BACKSPACE");
+			return buf;
 	}
 	if (key == CTRL_KEY(key)) {
 		PUSH('C');

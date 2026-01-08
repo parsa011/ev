@@ -8,7 +8,7 @@ SRCS = $(wildcard src/*.c src/commands/*.c)
 HEADERS = $(wildcard src/*.h src/commands/*.h)
 
 main : $(SRCS) $(HEADERS)
-	$(CC) $(INCLUDES) $(CC_FLAGS) $^ -o $(BUILD_PATH)/$(PROGRAM)
+	$(CC) $(INCLUDES) $(CC_FLAGS) $^ -o $(BUILD_PATH)/$(PROGRAM) -lm
 
 run : main
 	$(BUILD_PATH)/$(PROGRAM)

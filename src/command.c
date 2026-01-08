@@ -25,6 +25,7 @@ command commands[] = {
 	MAKE_COMMAND("bol", "HOME", beginning_of_line_command),
 
 	MAKE_COMMAND("new-line", "C-M", new_line_command),
+	MAKE_COMMAND("backspace", "BACKSPACE", do_backspace_command),
 	MAKE_COMMAND("kill-line", "C-K", kill_line_command),
 	MAKE_COMMAND("kill-next-letter", "C-D", kill_next_letter_command),
 	MAKE_COMMAND("kill-next-letter", "DELETE", kill_next_letter_command),
@@ -50,7 +51,7 @@ command commands[] = {
 	MAKE_COMMAND("upcase-word", "M-u", upcase_word_command),
 	MAKE_COMMAND("downcase-word", "M-l", downcase_word_command),
 
-	MAKE_COMMAND("goto-line", "M-g M-g", goto_line_command)
+	MAKE_COMMAND("goto-line", "M-g M-g", goto_line_command),
 };
 
 command command_read(char *str)

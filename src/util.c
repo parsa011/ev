@@ -81,13 +81,5 @@ public uint8_t col_to_offset(char *str, int str_len, uint8_t col)
 
 int int_digits_count(int n)
 {
-	if (n >= 0 && n <= 9) {
-		return 1;
-	} else if (n <= 99) {
-		return 2;
-	} else if (n <= 999) {
-		return 3;
-	}
-	return 0;
-//	return ceil(log10(n) + 1);
+	return floor(log10(n)) + 1;
 }

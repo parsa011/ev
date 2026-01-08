@@ -103,7 +103,6 @@ return_message editor_run()
 				prompt_message_show(msg, strlen(msg));
 			} else {
 				buffer_insert_key(c);
-				buffer_dirty();
 			}
 		}
 		if (str) {

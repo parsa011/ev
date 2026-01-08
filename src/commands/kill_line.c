@@ -2,6 +2,7 @@
 #include "commands/kill_line.h"
 #include "commands/next_char.h"
 #include "commands/next_char.h"
+#include "commands/do_backspace.h"
 #include "buffer.h"
 #include "key.h"
 
@@ -13,7 +14,7 @@ public return_message kill_line_command(char **args)
 	bool is_end = buf->char_offset == current_line->len;
 	if (is_end) {
 		if (next_char_command(NULL).status == SUCCESS) {
-			buffer_insert_key(BACKSPACE);
+			do_backspace_command(null);
 		}
 	} else {
 		line_delete_range(current_line, buf->char_offset, current_line->len);

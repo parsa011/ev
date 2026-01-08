@@ -76,98 +76,98 @@ struct buffer {
  *	if path is not NULL, it will open given path into buffer after
  *	initializing it
  */
-public buffer_t *buffer_init(char *path, int rows);
+buffer_t *buffer_init(char *path, int rows);
 
 /*
  * call it after any change to buffer texts
  */
-public void buffer_dirty();
+void buffer_dirty();
 
 /*
  * opens given file path into our gloabl editor variable 'editor'
  * also in currnet buffer, set set second arg to true for open in new buffer
  */
-public return_message buffer_file_open(char *file_name);
+return_message buffer_file_open(char *file_name);
 
 /*
  * just a helper method to set filename and path for given buffer
  * we got buffer as an arg, because we may want to set name for new alloced buffer
  */
-public void buffer_set_file_name(buffer_t *buf, char *filepath);
+void buffer_set_file_name(buffer_t *buf, char *filepath);
 
 /*
  * close current file of editor and opens new empty buffer
  */
-public return_message buffer_file_close();
+return_message buffer_file_close();
 
 /*
  * save buffer into current open file in 'editor'
  */
-public return_message buffer_file_save();
+return_message buffer_file_save();
 
 /*
  * load lines of given file into current buffer
  * also we can replace all current lines with file lines, or append
  * file to buffer
  */
-public return_message buffer_file_load(char *filepath, line_load_mode mode);
+return_message buffer_file_load(char *filepath, line_load_mode mode);
 
 /*
  * append given line next to current line
  * also if first_line is NULL so its gonna be appended as first line
  */
-public return_message buffer_append_line(line_t *line);
+return_message buffer_append_line(line_t *line);
 
 /*
  * insert given key to current line
  */
-public void buffer_insert_key(int key);
+void buffer_insert_key(int key);
 
 /*
  * checks if cursor is out of the current line, if its is, will move cursor to end of current line
  */
-public void buffer_check_offset();
+void buffer_check_offset();
 
 /*
  * set buffer char offset to given offset and update cursor col
  */
-public void buffer_go_to_offset(int offset);
+void buffer_go_to_offset(int offset);
 
 /*
  * go to line, index based
  */
-public void buffer_go_to_line(int index);
+void buffer_go_to_line(int index);
 
 /*
  * return current char under the cursor
  */
-public char *buffer_current_char();
+char *buffer_current_char();
 
 /*
  * return nth char of current line, with given offset, also program will panic when offset is not valid
  * means too large, or negative
  */
-public char *buffer_char_at(int offset);
+char *buffer_char_at(int offset);
 
 /*
  * return line by it's index, starts from 0
  * also we dont check if line index is greater to buffer line count :)
  */
-public line_t *buffer_line_by_index(int index);
+line_t *buffer_line_by_index(int index);
 
 /*
  * delete current line fully and go to next or prev line
  */
-public void buffer_delete_line(bool go_next);
+void buffer_delete_line(bool go_next);
 
 /*
  * open new line in down of current line
  */
-public void buffer_open_line();
+void buffer_open_line();
 
 /*
  * make given buffer memory free , also with its lines
  */
-public void buffer_free(buffer_t *buf);
+void buffer_free(buffer_t *buf);
 
 #endif
