@@ -104,7 +104,6 @@ return_message editor_run()
     			char *msg = "Command Not Found";
 				prompt_message_show(msg, strlen(msg));
 			} else {
-				log_msg("Inserting : %s", str);
 				buffer_insert_key(c);
 			}
 		}

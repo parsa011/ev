@@ -4,6 +4,7 @@
 return_message do_backspace_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
+	log_msg("%d", buf->char_offset);
 	if (buf->char_offset == 0) {
 		line_t *prev_line = L_LINK_PREV(buf->current_line);
 		if (!prev_line) {
@@ -14,7 +15,7 @@ return_message do_backspace_command(char **args)
 			line_append_string(prev_line, buf->current_line->str, buf->current_line->len);
 		}
 		buffer_delete_line(false);
-		buffer_go_to_offset(prev_line_len - 1);
+		buffer_go_to_offset(prev_line_len);
 		buffer_dirty();
 	} else {
 		char prev_char = *buffer_char_at(buf->char_offset - 1);

@@ -34,7 +34,6 @@ int key_read()
 			 */
 			if (pending == 1)
 				tty_get_char(&pending);
-			log_msg("%c", c);
 			switch (c) {
 				case '1' :
 					return HOME;
