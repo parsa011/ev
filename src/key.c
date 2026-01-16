@@ -1,5 +1,6 @@
 #include "tty.h"
 #include "key.h"
+#include "log.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,6 +34,7 @@ int key_read()
 			 */
 			if (pending == 1)
 				tty_get_char(&pending);
+			log_msg("%c", c);
 			switch (c) {
 				case '1' :
 					return HOME;
@@ -57,12 +59,13 @@ int key_read()
 			}
 		}
 		// meta key and control meta key
-		if (pending == 0) {
-			if (c == CTRL_KEY(c)) {
-				return ALT_KEY(CTRL_KEY(c));
-			}
-			return ALT_KEY(c);
-		}
+		// if (pending == 0) {
+		// 	if (c == CTRL_KEY(c)) {
+		// 		return CTRL_KEY(c);
+		// 	}
+		// 	return ALT_KEY(c);
+		// }
+		c = ALT_KEY(c);
 	}
 	return c;
 }
@@ -83,6 +86,9 @@ char *key_to_str(int key)
 } while (false);
 
 	switch (key) {
+		case BACKSPACE:
+			PUSHS("BACKSPACE");
+			return buf;
 		case ESC:
 			PUSHS("ESC");
 			return buf;
@@ -128,15 +134,12 @@ char *key_to_str(int key)
 		case ARROW_LEFT:
 			PUSHS("ARROW_LEFT");
 			return buf;
-		case BACKSPACE:
-			PUSHS("BACKSPACE");
-			return buf;
 	}
-	if (key == CTRL_KEY(key)) {
+	if (IS_CTRL_KEY(key)) {
 		PUSH('C');
 		PUSH('-');
 	}
-	if (key == ALT_KEY(key)) {
+	if (IS_ALT_KEY(key)) {
 		PUSH('M');
 		PUSH('-');
 	}

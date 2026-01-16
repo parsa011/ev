@@ -194,7 +194,6 @@ do {                                              \
 } while (false);
 
 	while (true) {
-		log_msg("%d", line->len);
 		c = key_read();
 		if (c == CTRL_KEY('g')) {
     		DO_CANCEL;
@@ -251,7 +250,6 @@ print:
 	char *res = strdup(line->str);
 	line_free(line);
 	prompt_clear(false);
-	log_msg("%s", res);
 	return res;
 	
 cancel:

@@ -9,7 +9,7 @@
 #include "prompt.h"
 
 #define TAB_SIZE 4
-#define PROMPT_MSG_TIME 3
+#define PROMPT_MSG_TIME 1.5
 
 struct editor {
 	// fd for input and output ttys

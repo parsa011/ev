@@ -6,6 +6,7 @@
 #include "key.h"
 #include "file.h"
 #include "util.h"
+#include "log.h"
 #include "commands/commands.h"
 
 buffer_t *buffer_init(char *filepath, int rows)

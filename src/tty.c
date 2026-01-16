@@ -2,14 +2,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <sys/ioctl.h>
+#include <termios.h>
+#include <unistd.h>
+
 #include "tty.h"
 #include "editor.h"
 #include "util.h"
 #include "log.h"
-
-#include <sys/ioctl.h>
-#include <termios.h>
-#include <unistd.h>
 
 private struct termios old_termios, new_termios;
 
@@ -17,7 +17,7 @@ private struct termios old_termios, new_termios;
 private unsigned char obuf[OBUFSIZE];
 private int obufp = 0;
 
-public void tty_raw_mode()
+void tty_raw_mode()
 {
 	tcgetattr(0, &old_termios);
 
@@ -44,12 +44,12 @@ public void tty_raw_mode()
 	tcsetattr(0, TCSADRAIN, &new_termios);
 }
 
-public void tty_cooked_mode()
+void tty_cooked_mode()
 {
 	tcsetattr(0, TCSADRAIN, &old_termios);
 }
 
-public char tty_get_char(int *remaining)
+char tty_get_char(int *remaining)
 {
 	char c;
 	static char buf[32];
@@ -69,7 +69,7 @@ public char tty_get_char(int *remaining)
 	return c;
 }
 
-public int tty_cursor_pos_get(int* rows, int* cols)
+int tty_cursor_pos_get(int* rows, int* cols)
 {
 	char buf[32];
 	size_t i = 0;
@@ -95,7 +95,7 @@ public int tty_cursor_pos_get(int* rows, int* cols)
 	return 0;
 }
 
-public int tty_window_size(int* rows, int* cols)
+int tty_window_size(int* rows, int* cols)
 {
 	struct winsize ws;
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
@@ -113,7 +113,7 @@ public int tty_window_size(int* rows, int* cols)
 /*
  * write string to output buffer
  */
-public void tty_put_string(bool flush_now, char *format, ...)
+void tty_put_string(bool flush_now, char *format, ...)
 {
 	int n = 0;
 	size_t size = 0;
@@ -154,7 +154,7 @@ public void tty_put_string(bool flush_now, char *format, ...)
 	}
 }
 
-public void tty_put_char(char c)
+void tty_put_char(char c)
 {
 	if (obufp == OBUFSIZE) {
 		tty_flush();
@@ -162,7 +162,7 @@ public void tty_put_char(char c)
 	obuf[obufp++] = c;
 }
 
-public void tty_flush()
+void tty_flush()
 {
 	if (obufp) {
 		if (write(editor.tty_in, obuf, obufp) == 0) {
@@ -173,57 +173,57 @@ public void tty_flush()
 	}
 }
 
-public void tty_clear()
+void tty_clear()
 {
 	system("clear");
 }
 
-public void tty_clear_eol()
+void tty_clear_eol()
 {
 	tty_put_string(true, "%s", "\e[K");
 }
 
-public void tty_cursor_move(cursor_pos_t pos)
+void tty_cursor_move(cursor_pos_t pos)
 {
 	tty_put_string(true, "\e[%d;%dH", pos.row, pos.col);
 }
 
-public void tty_cursor_hide()
+void tty_cursor_hide()
 {
 	tty_put_string(true, "%s", "\e[?25l");
 }
 
-public void tty_cursor_show()
+void tty_cursor_show()
 {
 	tty_put_string(true, "%s", "\e[?25h");
 }
 
-public void tty_cursor_store()
+void tty_cursor_store()
 {
 	tty_put_string(true, "%s", "\e7");
 }
 
-public void tty_cursor_restore()
+void tty_cursor_restore()
 {
 	tty_put_string(true, "%s", "\e8");
 }
 
-public void tty_cursor_line_next()
+void tty_cursor_line_next()
 {
 	tty_put_string(true, "%s", "\e[B");
 }
 
-public void tty_cursor_line_prev()
+void tty_cursor_line_prev()
 {
 	tty_put_string(true, "%s", "\e[A");
 }
 
-public void tty_cursor_char_next()
+void tty_cursor_char_next()
 {
 	tty_put_string(true, "%s", "\e[C");
 }
 
-public void tty_cursor_char_prev()
+void tty_cursor_char_prev()
 {
 	tty_put_string(true, "%s", "\e[D");
 }

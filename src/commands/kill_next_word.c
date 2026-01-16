@@ -4,7 +4,7 @@
 #include "commands/kill_next_letter.h"
 #include "editor.h"
 
-public return_message kill_next_word_command(char **args)
+return_message kill_next_word_command(char **args)
 {
 #define IN_WORD isalpha(*buffer_current_char())
 	if (IN_WORD) {

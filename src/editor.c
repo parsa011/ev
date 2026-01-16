@@ -78,6 +78,8 @@ return_message editor_run()
 	int c;
 	char *str;
 	buffer_t *buf;
+	command cmd;
+	return_message cmd_res;
 	editor_render();
 	while (true) {
 		buf = editor_buffer();
@@ -90,11 +92,11 @@ return_message editor_run()
 		tty_cursor_move(buf->pos);
 		c = key_read();
 		str = key_to_str(c);
-		command cmd = command_read(str);
+		cmd = command_read(str);
 		if (cmd.func != null) {
-			return_message res = cmd.func(null);
-			if (res.status != SUCCESS) {
-				prompt_message_show(res.message, strlen(res.message));
+			cmd_res = cmd.func(null);
+			if (cmd_res.status != SUCCESS) {
+				prompt_message_show(cmd_res.message, strlen(cmd_res.message));
 			}
 		}
 		else {
@@ -102,6 +104,7 @@ return_message editor_run()
     			char *msg = "Command Not Found";
 				prompt_message_show(msg, strlen(msg));
 			} else {
+				log_msg("Inserting : %s", str);
 				buffer_insert_key(c);
 			}
 		}

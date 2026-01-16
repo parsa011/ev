@@ -5,10 +5,11 @@
 
 #define ESC         0x1B		/* ESC character.               	*/
 #define ALT_MASK    0x1000
-#define CTRL_KEY(k) (k & 0x1F)
+#define CTRL_MASK   0x1F
+#define CTRL_KEY(k) (k & CTRL_MASK)
+#define IS_CTRL_KEY(k) (k == (k & CTRL_MASK))
 #define ALT_KEY(k)  (k | ALT_MASK)
-
-#define KEY_EXIT 'q'
+#define IS_ALT_KEY(k)  (k == (k | ALT_MASK))
 
 enum {
 	BACKSPACE = 127,
