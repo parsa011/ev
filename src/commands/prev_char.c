@@ -4,7 +4,7 @@
 #include "commands/end_of_line.h"
 #include "editor.h"
 
-public return_message prev_char_command(char **args)
+return_message_t prev_char_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
 	if (buf->char_offset == 0) {
@@ -12,7 +12,7 @@ public return_message prev_char_command(char **args)
 			prev_line_command(NULL);
 			return end_of_line_command(NULL);
 		}
-		return create_return_message(ERROR, "no any line");
+		return CREATE_RETURN_MESSAGE(ERROR, "no any line");
 	}
 	buf->char_offset--;
 	if (*buffer_current_char() == '\t') {
@@ -20,5 +20,5 @@ public return_message prev_char_command(char **args)
 	} else {
 		buf->pos.col--;
 	}
-	return create_return_message(SUCCESS, "prev char");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "prev char");
 }

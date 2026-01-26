@@ -5,12 +5,12 @@
 #include "key.h"
 #include "buffer.h"
 
-public return_message kill_next_letter_command(char **args)
+return_message_t kill_next_letter_command(char **args)
 {
 	if (next_char_command(NULL).status == SUCCESS) {
 		do_backspace_command(null);
 	} else {
-		return create_return_message(ERROR, "end of buffer");
+		return CREATE_RETURN_MESSAGE(ERROR, "end of buffer");
 	}
-	return create_return_message(SUCCESS, "kill next letter");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "kill next letter");
 }

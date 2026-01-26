@@ -3,8 +3,8 @@
 #include "editor.h"
 #include "util.h"
 
-public return_message beginning_of_buffer_command(char **args)
+return_message_t beginning_of_buffer_command(char **args)
 {
     buffer_go_to_line(0);
-	return create_return_message(SUCCESS, "beginning of buffer");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "beginning of buffer");
 }

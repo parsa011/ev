@@ -73,18 +73,18 @@ void editor_close()
 
 }
 
-return_message editor_run()
+return_message_t editor_run()
 {
 	int c;
 	char *str;
 	buffer_t *buf;
 	command cmd;
-	return_message cmd_res;
-	editor_render();
+	return_message_t cmd_res;
 	while (true) {
 		buf = editor_buffer();
+		editor_render();
 		if (buf->render) {
-			editor_render();
+			editor_render_buffer();
 		}
 		if (prompt_msg_is_expired()) {
 			editor_render_promptbar();
@@ -115,7 +115,7 @@ return_message editor_run()
 		}
 	}
 	line_free(editor.promptbar.msg);
-	return create_return_message(SUCCESS, "editor closed without error");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "editor closed without error");
 }
 
 void editor_buffer_append(buffer_t *buf)
@@ -129,21 +129,21 @@ void editor_buffer_change(buffer_t *buf)
 	buf->render = true;
 }
 
-return_message editor_render()
+return_message_t editor_render()
 {
-	if (editor_buffer() == 0)
-		return create_return_message(ERROR, "no buffer");
+	if (!editor_buffer())
+		return CREATE_RETURN_MESSAGE(ERROR, "no buffer");
 	tty_clear();
 	tty_cursor_hide();
-	editor_render_buffer();
 	editor_render_statusbar();
 	editor_render_promptbar();
 	tty_cursor_show();
-	return create_return_message(SUCCESS, "buffer rendered");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "buffer rendered");
 }
 
 void editor_render_buffer()
 {
+	tty_cursor_hide();
 	buffer_t *buf = editor_buffer();
 	line_t *line = buffer_line_by_index(buf->line_offset);
 	
@@ -161,6 +161,7 @@ void editor_render_buffer()
 	}
 	tty_flush();
 	buf->render = false;
+	tty_cursor_show();
 }
 
 void editor_render_line_number(int lines_width, int line_nu)
@@ -200,6 +201,8 @@ void editor_render_statusbar()
 		ADD_TEXTF(" %s", cbuf->name);
 	else
 		ADD_TEXT(" [NO FILE]");
+
+	ADD_TEXTF(" %d-%ld ", cbuf->char_offset + 1, cbuf->line_offset + cbuf->pos.row);
 
 	ADD_TEXTF(" ----- %ld Line ", cbuf->line_count);
 

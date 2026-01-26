@@ -77,12 +77,12 @@ void editor_buffer_change(buffer_t *buf);
 /*
  * runs editor infinite loop, taking command and doing them
  */
-return_message editor_run();
+return_message_t editor_run();
 
 /*
  * writes current buffer into screen
  */
-return_message editor_render();
+return_message_t editor_render();
 
 /*
  * writes current buffer into screen

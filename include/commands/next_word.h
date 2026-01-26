@@ -4,6 +4,6 @@
 #include "base.h"
 #include "../editor.h"
 
-public return_message next_word_command(char **args);
+return_message_t next_word_command(char **args);
 
 #endif

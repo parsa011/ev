@@ -3,6 +3,6 @@
 
 #include "base.h"
 
-public return_message exit_command(char **args);
+return_message_t exit_command(char **args);
 
 #endif

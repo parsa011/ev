@@ -3,6 +3,6 @@
 
 #include "base.h"
 
-public return_message save_file_command(char **args);
+return_message_t save_file_command(char **args);
 
 #endif

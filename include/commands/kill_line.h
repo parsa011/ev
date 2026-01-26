@@ -6,6 +6,6 @@
 /*
  * kill from current pos until end of line
  */
-public return_message kill_line_command(char **args);
+return_message_t kill_line_command(char **args);
 
 #endif

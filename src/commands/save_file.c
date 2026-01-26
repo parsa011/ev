@@ -5,13 +5,13 @@
 #include "buffer.h"
 #include "prompt.h"
 
-public return_message save_file_command(char **args)
+return_message_t save_file_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
 	if (!buf->filepath) {
 		char *file_name = prompt_string("file to save in : ");
 		if (!file_name) {
-			return create_return_message(ERROR, "canceled");
+			return CREATE_RETURN_MESSAGE(ERROR, "canceled");
 		}
 		buffer_set_file_name(buf, file_name);
 		free(file_name);
@@ -32,5 +32,5 @@ public return_message save_file_command(char **args)
 	fclose(fp);
 	buf->dirty = false;
 	buf->render = true;
-	return create_return_message(SUCCESS, "file saved");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "file saved");
 }

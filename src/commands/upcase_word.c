@@ -1,13 +1,13 @@
 #include <ctype.h>
 #include "commands/upcase_word.h"
 
-public return_message upcase_word_command(char **args)
+return_message_t upcase_word_command(char **args)
 {
     buffer_t *buf = editor_buffer();
     char c = *buffer_current_char();
     if (!isalpha(c)) {
         if (next_word_command(NULL).status != SUCCESS) {
-            return create_return_message(ERROR, "Oops, no any character");
+            return CREATE_RETURN_MESSAGE(ERROR, "Oops, no any character");
         }
     }
     c = *buffer_current_char();
@@ -21,5 +21,5 @@ public return_message upcase_word_command(char **args)
         c = *buffer_current_char();
     }
     buf->render = true;
-    return create_return_message(SUCCESS, "done");
+    return CREATE_RETURN_MESSAGE(SUCCESS, "done");
 }

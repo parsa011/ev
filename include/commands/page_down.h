@@ -3,6 +3,6 @@
 
 #include "base.h"
 
-public return_message page_down_command(char **args);
+return_message_t page_down_command(char **args);
 
 #endif

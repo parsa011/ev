@@ -5,7 +5,7 @@
 #include "buffer.h"
 #include "prompt.h"
 
-public return_message exit_command(char **args)
+return_message_t exit_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
 	if (buf->dirty) {
@@ -15,9 +15,9 @@ public return_message exit_command(char **args)
 		}
 		bool exit_anyway = prompt_bool("Modified Buffer exist; exit anyway ?");
 		if (!exit_anyway) {
-			return create_return_message(ERROR, "cancelled");
+			return CREATE_RETURN_MESSAGE(ERROR, "cancelled");
 		}
 	}
 	editor.exit = true;
-	return create_return_message(SUCCESS, "Usless Message But Exited Successfuly");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "Usless Message But Exited Successfuly");
 }

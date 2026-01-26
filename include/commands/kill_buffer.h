@@ -3,6 +3,6 @@
 
 #include "base.h"
 
-public return_message kill_buffer_command(char **args);
+return_message_t kill_buffer_command(char **args);
 
 #endif

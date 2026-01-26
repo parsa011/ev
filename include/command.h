@@ -6,7 +6,7 @@
 typedef struct {
 	char *desc;
 	char *key_codes;
-	return_message (*func)(char **); /* function */
+	return_message_t (*func)(char **); /* function */
 } command;
 
 #define MAKE_COMMAND(desc, keys, func) ((command){desc, keys, func})

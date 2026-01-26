@@ -2,16 +2,16 @@
 #include "editor.h"
 #include "buffer.h"
 
-public return_message kill_buffer_command(char **args)
+return_message_t kill_buffer_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
 	buffer_t *new_buf = !L_LINK_NEXT(buf) ? L_LINK_PREV(buf) : L_LINK_NEXT(buf);
 	if (!new_buf) {
 		editor.exit = true;
-		return create_return_message(SUCCESS, "last buffer, exiting");
+		return CREATE_RETURN_MESSAGE(SUCCESS, "last buffer, exiting");
 	}
 	editor_buffer_change(new_buf);
 	L_LINK_REMOVE(buf);
 	buffer_free(buf);
-	return create_return_message(SUCCESS, "killed buffer");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "killed buffer");
 }

@@ -4,6 +4,6 @@
 #include "base.h"
 #include "../tty.h"
 
-public return_message prev_char_command(char **args);
+return_message_t prev_char_command(char **args);
 
 #endif

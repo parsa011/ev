@@ -3,10 +3,10 @@
 #include "editor.h"
 #include "util.h"
 
-public return_message beginning_of_line_command(char **args)
+return_message_t beginning_of_line_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
 	buf->char_offset = 0;
 	buf->pos.col = 1;
-	return create_return_message(SUCCESS, "beginning of line");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "beginning of line");
 }

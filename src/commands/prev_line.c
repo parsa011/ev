@@ -3,11 +3,11 @@
 #include "editor.h"
 #include "buffer.h"
 
-public return_message prev_line_command(char **args)
+return_message_t prev_line_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
 	if (L_LINK_PREV(buf->current_line) == NULL || (buf->pos.row == 1 && buf->line_offset == 0)) {
-		return create_return_message(ERROR, "beginning of buffer");
+		return CREATE_RETURN_MESSAGE(ERROR, "beginning of buffer");
 	}
 	if (buf->pos.row > 1) {
 		buf->pos.row--;
@@ -17,5 +17,5 @@ public return_message prev_line_command(char **args)
 	}
 	buf->current_line = L_LINK_PREV(buf->current_line);
 	buffer_check_offset();
-	return create_return_message(SUCCESS, "prev line");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "prev line");
 }

@@ -1,14 +1,13 @@
 #include "editor.h"
 #include "commands/do_backspace.h"
 
-return_message do_backspace_command(char **args)
+return_message_t do_backspace_command(char **args)
 {
 	buffer_t *buf = editor_buffer();
-	log_msg("%d", buf->char_offset);
 	if (buf->char_offset == 0) {
 		line_t *prev_line = L_LINK_PREV(buf->current_line);
 		if (!prev_line) {
-			return create_return_message(SUCCESS, "");
+			return CREATE_RETURN_MESSAGE(SUCCESS, "");
 		}
 		int prev_line_len = prev_line->len;
 		if (buf->current_line->len > 0) {
@@ -28,5 +27,5 @@ return_message do_backspace_command(char **args)
 		buf->char_offset--;
 		buffer_dirty();
 	}
-	return create_return_message(SUCCESS, "");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "");
 }

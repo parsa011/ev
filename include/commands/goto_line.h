@@ -4,6 +4,6 @@
 #include "base.h"
 #include "../buffer.h"
 
-public return_message goto_line_command(char **args);
+return_message_t goto_line_command(char **args);
 
 #endif

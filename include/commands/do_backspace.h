@@ -3,6 +3,6 @@
 
 #include "base.h"
 
-return_message do_backspace_command(char **args);
+return_message_t do_backspace_command(char **args);
 
 #endif

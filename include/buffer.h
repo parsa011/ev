@@ -87,7 +87,7 @@ void buffer_dirty();
  * opens given file path into our gloabl editor variable 'editor'
  * also in currnet buffer, set set second arg to true for open in new buffer
  */
-return_message buffer_file_open(char *file_name);
+return_message_t buffer_file_open(char *file_name);
 
 /*
  * just a helper method to set filename and path for given buffer
@@ -98,25 +98,25 @@ void buffer_set_file_name(buffer_t *buf, char *filepath);
 /*
  * close current file of editor and opens new empty buffer
  */
-return_message buffer_file_close();
+return_message_t buffer_file_close();
 
 /*
  * save buffer into current open file in 'editor'
  */
-return_message buffer_file_save();
+return_message_t buffer_file_save();
 
 /*
  * load lines of given file into current buffer
  * also we can replace all current lines with file lines, or append
  * file to buffer
  */
-return_message buffer_file_load(char *filepath, line_load_mode mode);
+return_message_t buffer_file_load(char *filepath, line_load_mode mode);
 
 /*
  * append given line next to current line
  * also if first_line is NULL so its gonna be appended as first line
  */
-return_message buffer_append_line(line_t *line);
+return_message_t buffer_append_line(line_t *line);
 
 /*
  * insert given key to current line

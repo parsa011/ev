@@ -4,6 +4,6 @@
 #include "base.h"
 #include "../tty.h"
 
-public return_message beginning_of_line_command(char **args);
+return_message_t beginning_of_line_command(char **args);
 
 #endif

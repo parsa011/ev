@@ -9,6 +9,6 @@
 #include "next_word.h"
 #include "../editor.h"
 
-public return_message downcase_word_command(char **args);
+return_message_t downcase_word_command(char **args);
 
 #endif

@@ -4,6 +4,6 @@
 #include "base.h"
 #include "../tty.h"
 
-public return_message end_of_buffer_command(char **args);
+return_message_t end_of_buffer_command(char **args);
 
 #endif

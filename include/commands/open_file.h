@@ -3,6 +3,6 @@
 
 #include "base.h"
 
-public return_message open_file_command(char **args);
+return_message_t open_file_command(char **args);
 
 #endif

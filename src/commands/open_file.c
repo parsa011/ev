@@ -3,11 +3,11 @@
 #include "editor.h"
 #include "prompt.h"
 
-public return_message open_file_command(char **args)
+return_message_t open_file_command(char **args)
 {
 	char *file_path = prompt_string_with_base("open file : ", editor.running_path);
 	if (!file_path) {
-		return create_return_message(TERMINATE, "canceled");
+		return CREATE_RETURN_MESSAGE(TERMINATE, "canceled");
 	}
 	buffer_t *buf = buffer_init(file_path, BUFFER_ROW);
 	editor_buffer_append(buf);
@@ -16,5 +16,5 @@ public return_message open_file_command(char **args)
 	if (file_path) {
 		free(file_path);
 	}
-	return create_return_message(SUCCESS, "file opened");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "file opened");
 }

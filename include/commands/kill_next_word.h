@@ -3,6 +3,6 @@
 
 #include "base.h"
 
-public return_message kill_next_word_command(char **args);
+return_message_t kill_next_word_command(char **args);
 
 #endif

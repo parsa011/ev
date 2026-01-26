@@ -4,6 +4,6 @@
 #include "base.h"
 #include "../tty.h"
 
-public return_message next_line_command(char **args);
+return_message_t next_line_command(char **args);
 
 #endif

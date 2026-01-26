@@ -26,7 +26,7 @@ void buffer_dirty()
 	buf->dirty = buf->render = true;
 }
 
-return_message buffer_file_open(char *filepath)
+return_message_t buffer_file_open(char *filepath)
 {
 	buffer_t *buf = editor_buffer();
 	buf->filepath = filepath;
@@ -35,11 +35,11 @@ return_message buffer_file_open(char *filepath)
 	}
 	if (!file_exists(filepath)) {
 		buffer_append_line(line_init("", 0));
-		return create_return_message(ERROR, "new buffer");
+		return CREATE_RETURN_MESSAGE(ERROR, "new buffer");
 	}
 	buffer_file_load(filepath, REPLACE);
 	buf->render = true;
-	return create_return_message(SUCCESS, "file opened");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "file opened");
 }
 
 void buffer_set_file_name(buffer_t *buf, char *filepath)
@@ -48,21 +48,21 @@ void buffer_set_file_name(buffer_t *buf, char *filepath)
 	buf->name = strdup(file_name(filepath));
 }
 
-return_message buffer_file_close()
+return_message_t buffer_file_close()
 {
-	return create_return_message(SUCCESS, "file closed");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "file closed");
 }
 
-return_message buffer_file_save()
+return_message_t buffer_file_save()
 {
-	return create_return_message(SUCCESS, "file saved");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "file saved");
 }
 
-return_message buffer_file_load(char *filepath, line_load_mode mode)
+return_message_t buffer_file_load(char *filepath, line_load_mode mode)
 {
 	// TODO : Implement other modes :))
 	if (!file_exists(filepath)) {
-		return create_return_message(ERROR, "file does not exists");
+		return CREATE_RETURN_MESSAGE(ERROR, "file does not exists");
 	}
 	buffer_t *buf = editor_buffer();
 	FILE *fp = fopen(filepath, "r");
@@ -93,10 +93,10 @@ return_message buffer_file_load(char *filepath, line_load_mode mode)
 	buf->current_line = buf->first_line;
 	free(line_chars);
 	fclose(fp);
-	return create_return_message(SUCCESS, "file lines loaded");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "file lines loaded");
 }
 
-return_message buffer_append_line(line_t *line)
+return_message_t buffer_append_line(line_t *line)
 {
 	buffer_t *buf = editor_buffer();
 	if (!buf->first_line) {
@@ -105,7 +105,7 @@ return_message buffer_append_line(line_t *line)
 		L_LINK_INSERT(buf->current_line, line);
 	}
 	buf->line_count++;
-	return create_return_message(SUCCESS, "line appended");
+	return CREATE_RETURN_MESSAGE(SUCCESS, "line appended");
 }
 
 void buffer_insert_key(int key)
