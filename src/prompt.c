@@ -61,10 +61,23 @@ int *prompt_int(char *message)
 	char *str = prompt_string(message);
 	if (str) {
 		int *n = malloc(sizeof(int));
-		*n = atoi(str);
+		char *c = str;
+		int sign = *str == '-' * -1;
+		if (sign == -1) {
+			c++;
+		}
+		while (*c != '\0') {
+			if (*c >= '0' && *c <= '9') {
+				*n = *n * 10 + (*c - '0');
+				c++;
+			} else {
+				return null;
+			}
+		}
+		*n = *n * sign;
 		return n;
 	}
-	return 0;
+	return null;
 }
 
 char *prompt_string(char *message)
@@ -96,7 +109,12 @@ char *prompt_read(char *base_value)
 	
 	prompt_store_pos();
 	int cursor_col = START_COL;
-	line_t *line = line_init(base_value, base_value_len);
+	line_t *line;
+	if (base_value_len > 0) {
+		line = line_init(base_value, base_value_len);
+	} else {
+		line = line_init("", 0);
+	}
 	int c = 0;
 	char *str = NULL;
 

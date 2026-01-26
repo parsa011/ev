@@ -16,10 +16,22 @@ void die(int code)
 	exit(code);
 }
 
+void handle_resize_signal(int sig)
+{
+	(void) sig;
+	editor_change_size();
+}
+
+void handle_kill_signal(int sig)
+{
+	(void) sig;
+	editor_close();
+}
+
 void handle_signals()
 {
-	signal(SIGWINCH, editor_change_size);
-	signal(SIGSEGV, editor_close);
+	signal(SIGWINCH, handle_resize_signal);
+	signal(SIGSEGV, handle_kill_signal);
 }
 
 int main(int argc, char **argv)
